@@ -17,6 +17,8 @@ moduleexports.DoorBell = require('../items/DoorBellItem.js');
 moduleexports.MotionSensor = require('../items/MotionSensorItem.js');
 moduleexports.ContactSensor = require('../items/ContactSensorItem.js');
 moduleexports.LightSensor = require('../items/LightSensorItem.js');
+exports.TemperatureItem = require('../items/TemperatureItem.js');
+exports.TemperatureItemActual = require('../items/TemperatureItem.js');
 
 moduleexports.Factory = function(LoxPlatform, homebridge) {
     this.platform = LoxPlatform;
@@ -128,7 +130,9 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
 
     } else if (item.name.indexOf("Humidity") !== -1) {
         item.type = "HumiditySensor";
-
+    } else if(item.type=="IRoomController"){
+        item.type="TemperatureItem";
+    }
     } else if (item.type == "TimedSwitch") {
             item.type = "TimedSwitch";
 
