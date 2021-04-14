@@ -132,7 +132,6 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
         item.type = "HumiditySensor";
     } else if(item.type=="IRoomController"){
         item.type="TemperatureItem";
-    }
     } else if (item.type == "TimedSwitch") {
             item.type = "TimedSwitch";
 
