@@ -12,10 +12,10 @@ var TemperatureItem = function(widget,platform,homebridge) {
     this.stateMode = widget.states.mode;
     this.HeatTempIx = widget.states.currHeatTempIx;
     this.Service = widget.states.serviceMode;
-    this.currentTemperature = undefined;
-    this.targetTemperature = undefined;
+    this.currentTemperature = widget.states.tempActual;
+    this.targetTemperature = widget.states.tempTarget;
     this.currentProfile = undefined;
-    this.targetHcState = undefined;
+    this.targetHcState = widget.states.mode;
     this.ServiceValue = undefined;
     
 
