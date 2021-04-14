@@ -73,7 +73,7 @@ WSListener.prototype.startListener = function () {
         self.uuidCache[uuid] = message;
         if(typeof self.uuidCallbacks[uuid] != 'undefined') {
             for (let r = 0; r < self.uuidCallbacks[uuid].length; r++) {
-                self.uuidCallbacks[uuid][r](message);
+                self.uuidCallbacks[uuid][r](message, uuid);
             }
         }
     });
