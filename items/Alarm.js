@@ -23,10 +23,10 @@ Alarm.prototype.callBack = function (value) {
 Alarm.prototype.getOtherServices = function () {
   var otherService = new this.homebridge.hap.Service.SecuritySystem();
 
-  otherService.getCharacteristic(this.homebridge.hap.Characteristic.On)
+  otherService.getCharacteristic(this.homebridge.hap.Characteristic.SecuritySystemTargetState)
     .on('set', this.setItemState.bind(this))
     .on('get', this.getItemState.bind(this))
-    .updateValue(this.currentState == '1');
+    //.updateValue(this.currentState == '1');
 
   return otherService;
 };
