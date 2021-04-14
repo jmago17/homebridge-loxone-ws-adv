@@ -21,7 +21,7 @@ Alarm.prototype.callBack = function (value) {
 }
 
 Alarm.prototype.getOtherServices = function () {
-  var otherService = new this.homebridge.hap.Service.Switch();
+  var otherService = new this.homebridge.hap.Service.SecuritySystem();
 
   otherService.getCharacteristic(this.homebridge.hap.Characteristic.On)
     .on('set', this.setItemState.bind(this))
