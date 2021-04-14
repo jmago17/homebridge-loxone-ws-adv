@@ -26,7 +26,7 @@ Alarm.prototype.getOtherServices = function () {
   otherService.getCharacteristic(this.homebridge.hap.Characteristic.SecuritySystemTargetState)
     .on('set', this.setItemState.bind(this))
     .on('get', this.getItemState.bind(this))
-    //.updateValue(this.currentState == '1');
+    .updateValue(this.currentState == '1');
 
   return otherService;
 };
