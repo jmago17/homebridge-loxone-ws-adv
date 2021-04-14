@@ -130,7 +130,7 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
 
     } else if (item.name.indexOf("Humidity") !== -1) {
         item.type = "HumiditySensor";
-    } else if(item.type=="IRoomControllerV2"){
+    } else if(item.type=="IRoomController"){
         item.type="TemperatureItem";
     } else if (item.type == "TimedSwitch") {
             item.type = "TimedSwitch";
