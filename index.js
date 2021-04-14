@@ -28,8 +28,8 @@ module.exports = homebridge => {
         Utility.addSupportTo(ItemFactory.DoorBell, ItemFactory.AbstractItem);
         Utility.addSupportTo(ItemFactory.Jalousie, ItemFactory.AbstractItem);
 	//Utility.addSupportTo(ItemFactory.MusicSwitch, ItemFactory.AbstractItem);
-        Utility.addSupportTo(ItemFactory.Temperature, ItemFactory.AbstractItem);
-        Utility.addSupportTo(ItemFactory.TemperatureActual, ItemFactory.AbstractItem);
+        Utility.addSupportTo(ItemFactory.TemperatureItem, ItemFactory.AbstractItem);
+        Utility.addSupportTo(ItemFactory.TemperatureItemActual, ItemFactory.AbstractItem);
 		Utility.addSupportTo(ItemFactory.TimedSwitch, ItemFactory.AbstractItem);
         Utility.addSupportTo(ItemFactory.Switch, ItemFactory.AbstractItem);
             //Add childs of switch
