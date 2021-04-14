@@ -17,7 +17,7 @@ moduleexports.DoorBell = require('../items/DoorBellItem.js');
 moduleexports.MotionSensor = require('../items/MotionSensorItem.js');
 moduleexports.ContactSensor = require('../items/ContactSensorItem.js');
 moduleexports.LightSensor = require('../items/LightSensorItem.js');
-moduleexports.TemperatureItem = require('../items/TemperatureItem.js');
+moduleexports.IRoomControllerV2 = require('../items/TemperatureItem.js');
 moduleexports.TemperatureItemActual = require('../items/TemperatureItem.js');
 
 moduleexports.Factory = function(LoxPlatform, homebridge) {
