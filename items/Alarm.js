@@ -36,19 +36,7 @@ Alarm.prototype.getOtherServices = function () {
 };
 
 Alarm.prototype.getCurrentState = function(callback) {
-	var self = this;
-	self.log("Getting current state");
-	this.getOtherServices(this.readCurrentState, function(err, state) {
-		if (!err) {
-			self.log("Current state is %s", state);
-			if (self.previousCurrentState !== state) {
-				self.previousCurrentState = state;
-				self.log("Current state changed to %s", state);
-			}
-		}
-
-		callback(err, state);
-	});
+	callback(undefined, this.currentState == '1'); //de aqui hasta la } es nuevo
 };
 
 
