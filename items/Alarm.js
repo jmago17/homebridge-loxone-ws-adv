@@ -22,11 +22,13 @@ Alarm.prototype.callBack = function (value) {
 
 Alarm.prototype.getOtherServices = function () {
   var otherService = new this.homebridge.hap.Service.SecuritySystem();
-
-  otherService.getCharacteristic(this.homebridge.hap.Characteristic.SecuritySystemTargetState)
-    .on('set', this.setItemState.bind(this))
-    .on('get', this.getItemState.bind(this))
-    .updateValue(this.currentState == '1');
+	otherService.getCharacteristic(this.homebridge.hap.Characteristic.SecuritySystemCurrentState)
+		.on("get", this.getCurrentState.bind(this));
+	
+	otherService.getCharacteristic(this.homebridge.hap.Characteristic.SecuritySystemTargetState)
+		.on('set', this.setItemState.bind(this))
+		.on('get', this.getItemState.bind(this))
+		.updateValue(this.currentState == '1');
 
   return otherService;
 };
@@ -54,9 +56,19 @@ Alarm.prototype.onCommand = function () {
 };
 
 Alarm.prototype.setItemState = function (value, callback) {
+  this.log("Setting state to %s", value);
   var self = this;
 
-  var command = (value == '1') ? this.onCommand() : 'Off';
+  //var command = (value == '1') ? this.onCommand() : 'Off';
+	if (value == 'STAY_ARM') {
+		var command = '0';}
+	else if (value == 'AWAY_ARM') {
+		var command = '1';}
+	else if (value == 'DISARM') {
+		var command = 'Off';}
+	else if (value == 'NIGHT') {
+		var command = '0';}
+	
   this.log("[Alarm] iOS - send message to " + this.name + ": " + command);
   this.platform.ws.sendCommand(this.uuidAction, command);
   callback();
