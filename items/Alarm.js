@@ -21,6 +21,7 @@ Alarm.prototype.initListener = function () {
 };
 
 Alarm.prototype.callBack = function (value, uuid) {
+  console.log("Funtion value " + value + " " + uuid);
   if(this.stateUuid == uuid){    
      this.currentState = value;
 }
