@@ -51,7 +51,7 @@ Alarm.prototype.getItemState = function (callback) {
   //callback(undefined, this.currentState == '1'); //de aqui hasta la } es nuevo
   this.log("Getting item level");
 	this.log("Getting item state");
-	var state = status;
+	var state = this.currentState;
 	this.log("callbackc item: " + state);
 	callback(state); //de aqui hasta la } es nuevo
 };
