@@ -40,16 +40,16 @@ Alarm.prototype.getCurrentState = function(callback) {
 	var status = this.currentState;
 	this.log("callbackc current status : " + status);
 	if(status== '0'){
-		var state = '3';
+		var state = 3;
 	}
 	if(status == '1'){
-		var state = '0';
+		var state = 0;
 	}
 	if(status == '2'){
-		var state = '1';
+		var state = 1;
 	}
 	if(status == '4'){
-		var state = '4';
+		var state = 4;
 	}
 	this.log("callbackc current: " + state);	
 	callback(state); //de aqui hasta la } es nuevo
@@ -67,16 +67,16 @@ Alarm.prototype.getItemState = function (callback) {
 	var status = this.currentState;
 	this.log("callbackc current status : " + status);
 	if(status== '0'){
-		var state = '3';
+		var state = 3;
 	}
 	if(status == '1'){
-		var state = '0';
+		var state = 0;
 	}
 	if(status == '2'){
-		var state = '1';
+		var state = 1;
 	}
 	if(status == '4'){
-		var state = '4';
+		var state = 4;
 	}
 	this.log("callbackc item: " + state);	
 	callback(state); //de aqui hasta la } es nuevo
