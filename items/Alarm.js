@@ -21,6 +21,7 @@ Alarm.prototype.initListener = function () {
 Alarm.prototype.callBack = function (value, uuid) {
   console.log("Funtion value " + value + " " + uuid);
   this.currentState = value;
+	var status = value;
      
 };
 
@@ -41,7 +42,7 @@ Alarm.prototype.getCurrentState = function(callback) {
 	this.log("Getting current state");
 	var state = this.currentState;
 	this.log("callbackc current: " + state);
-	callback(); //de aqui hasta la } es nuevo
+	callback(state); //de aqui hasta la } es nuevo
 };
 
 
@@ -50,9 +51,9 @@ Alarm.prototype.getItemState = function (callback) {
   //callback(undefined, this.currentState == '1'); //de aqui hasta la } es nuevo
   this.log("Getting item level");
 	this.log("Getting item state");
-	var state = this.currentState;
+	var state = status;
 	this.log("callbackc item: " + state);
-	callback(); //de aqui hasta la } es nuevo
+	callback(state); //de aqui hasta la } es nuevo
 };
 
 Alarm.prototype.onCommand = function () {
