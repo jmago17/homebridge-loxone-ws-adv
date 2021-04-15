@@ -42,7 +42,7 @@ Alarm.prototype.getCurrentState = function(callback) {
 
 
 Alarm.prototype.getItemState = function (callback) {
-  callback(undefined, this.currentState == '1'); //de aqui hasta la } es nuevo
+  callback(undefined, this.currentState == '3'); //de aqui hasta la } es nuevo
   
 };
 
