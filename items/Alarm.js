@@ -6,11 +6,9 @@ var Alarm = function (widget, platform, homebridge) {
 
   this.platform = platform;
   this.uuidAction = widget.uuidAction;
-  this.stateUuid = widget.states.armed;
-  this.levelUuid = widget.states.level;
+  this.stateUuid = "15714a1e-033d-a1f2-ffff8795bbcbc15c";
   this.currentState = undefined;
-  this.targetState = undefined;	
-  this.currentLevel = undefined;
+ 
 	
   Alarm.super_.call(this, widget, platform, homebridge);
 };
@@ -25,9 +23,7 @@ Alarm.prototype.callBack = function (value, uuid) {
   if(this.stateUuid == uuid){    
      this.currentState = value;
 };
- if(this.levelUuid == uuid){
-      this.currentLevel = value;
-};
+
 }
 Alarm.prototype.getOtherServices = function () {
   var otherService = new this.homebridge.hap.Service.SecuritySystem();
@@ -45,12 +41,6 @@ Alarm.prototype.getOtherServices = function () {
 Alarm.prototype.getCurrentState = function(callback) {
 	this.log("Getting current state");
 	var state = this.currentState;
-	var level = this.currentLevel;
-	this.log("Getting current state: " + state);
-	this.log("Getting current level: " + level);
-	if ( level == '2') {
-		state = '4';
-	}
 	this.log("callbackc current: " + state);
 	callback(); //de aqui hasta la } es nuevo
 };
@@ -60,9 +50,9 @@ Alarm.prototype.getCurrentState = function(callback) {
 Alarm.prototype.getItemState = function (callback) {
   //callback(undefined, this.currentState == '1'); //de aqui hasta la } es nuevo
   this.log("Getting item level");
-	var level = this.currentLevel;
-	this.log("Getting item state" + level);
-	this.log("callback:item  " + level);
+	this.log("Getting item state");
+	var state = this.currentState;
+	this.log("callbackc item: " + state);
 	callback(); //de aqui hasta la } es nuevo
 };
 
