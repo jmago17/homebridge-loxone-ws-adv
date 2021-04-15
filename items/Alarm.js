@@ -6,7 +6,8 @@ var Alarm = function (widget, platform, homebridge) {
 
   this.platform = platform;
   this.uuidAction = widget.uuidAction;
-  this.stateUuid = widget.states.armed;
+ //this.stateUuid = widget.states.armed;
+  this.stateUuid = '15714a1e-033d-a1f2-ffff8795bbcbc15c';	
   this.currentState = undefined;
  
 	
