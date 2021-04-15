@@ -40,18 +40,18 @@ Alarm.prototype.getOtherServices = function () {
 
 Alarm.prototype.getCurrentState = function(callback) {
 	this.log("Getting current state");
-	//var state = this.currentState;
+	var state = this.currentState;
 	this.log("callbackc current: " + state);
-	if(this.currentState == '0'){
+	if(state == '0'){
 		var state = 'DISARM';
 	}
-	if(this.currentState == '1'){
+	if(state == '1'){
 		var state = 'STAY_ARM';
 	}
-	if(this.currentState == '2'){
+	if(state == '2'){
 		var state = 'AWAY_ARM';
 	}
-	if(this.currentState == '4'){
+	if(state == '4'){
 		var state = 'ALARM_TRIGGERED';
 	}
 		
@@ -63,17 +63,18 @@ Alarm.prototype.getCurrentState = function(callback) {
 Alarm.prototype.getItemState = function (callback) {
   //callback(undefined, this.currentState == '1'); //de aqui hasta la } es nuevo
   this.log("Getting item level");
+	var state = this.currentState;
 	this.log("callbackc current: " + state);
-	if(this.currentState == '0'){
+	if(state== '0'){
 		var state = 'DISARM';
 	}
-	if(this.currentState == '1'){
+	if(state == '1'){
 		var state = 'STAY_ARM';
 	}
-	if(this.currentState == '2'){
+	if(state == '2'){
 		var state = 'AWAY_ARM';
 	}
-	if(this.currentState == '4'){
+	if(state == '4'){
 		var state = 'ALARM_TRIGGERED';
 	}
 		
