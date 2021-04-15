@@ -7,6 +7,7 @@ var Alarm = function (widget, platform, homebridge) {
   this.platform = platform;
   this.uuidAction = widget.uuidAction;
   this.stateUuid = widget.states.armed;
+  this.levelUuid = widget.states.level;
   this.currentState = undefined;
 
   Alarm.super_.call(this, widget, platform, homebridge);
@@ -14,6 +15,7 @@ var Alarm = function (widget, platform, homebridge) {
 
 Alarm.prototype.initListener = function () {
   this.platform.ws.registerListenerForUUID(this.stateUuid, this.callBack.bind(this));
+  this.platform.ws.registerListenerForUUID(this.levelUuid, this.callBack.bind(this));
 };
 
 Alarm.prototype.callBack = function (value) {
@@ -52,21 +54,8 @@ Alarm.prototype.getCurrentState = function(callback) {
 
 
 Alarm.prototype.getItemState = function (callback) {
-  //callback(undefined, this.currentState == '1'); de aqui hasta la } es nuevo
-  var self = this;
-	self.log("Getting target state");
-
-	this.getOtherServices(this.readTargetState, function(err, state){
-		if (!err) {
-			self.log("Target state is %s", state);
-			if (self.previousTargetState !== state) {
-				self.previousTargetState = state;
-				self.log("Target state changed to %s", state);
-			}
-		}
-
-		callback(err, state);
-	});
+  callback(undefined, this.currentState == '1'); //de aqui hasta la } es nuevo
+  
 };
 
 Alarm.prototype.onCommand = function () {
@@ -89,6 +78,10 @@ Alarm.prototype.setItemState = function (value, callback) {
 	
   this.log("[Alarm] iOS - send message to " + this.name + ": " + command);
   this.platform.ws.sendCommand(this.uuidAction, command);
+  if (command = 'Off') {
+	this.log("[Alarm] iOS - send message to " + this.name + ": " + "quit");
+  	this.platform.ws.sendCommand(this.uuidAction, 'quit');
+  }
   callback();
 
 };
