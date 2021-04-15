@@ -36,13 +36,14 @@ Alarm.prototype.getOtherServices = function () {
 };
 
 Alarm.prototype.getCurrentState = function(callback) {
+	this.log("Getting current state");
 	var state = this.stateUuid;
 	var level = this.levelUuid;
-	
+	this.log("Getting current state" + state);
 	if ( level == '2') {
 		state = '4';
 	}
-	callback(state}; //de aqui hasta la } es nuevo
+	callback(state); //de aqui hasta la } es nuevo
 };
 
 
@@ -50,16 +51,13 @@ Alarm.prototype.getCurrentState = function(callback) {
 Alarm.prototype.getItemState = function (callback) {
   //callback(undefined, this.currentState == '1'); //de aqui hasta la } es nuevo
   this.log("Getting item state");
-	if (callback == "0"){
-	    this.itemState == '0';
-	    }
-	    else if (callback == "1"){
-	    this.itemState == '1';
-	    }
-	   //if (callback == "0"){
-	   // this.currentState == '0';
-	   // }
-	else { callback(undefined, this.currentState == '3')}; //de aqui hasta la } es nuevo
+	var state = this.stateUuid;
+	var level = this.levelUuid;
+	this.log("Getting current state" + state);
+	if ( level == '2') {
+		state = '4';
+	}
+	callback(state); //de aqui hasta la } es nuevo
 };
 
 Alarm.prototype.onCommand = function () {
