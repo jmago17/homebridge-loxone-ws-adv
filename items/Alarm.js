@@ -79,13 +79,13 @@ Alarm.prototype.setItemState = function (value, callback) {
   var self = this;
 
   //var command = (value == '1') ? this.onCommand() : 'Off';
-	if (value == 'STAY_ARM') {
+	if (value == '0') {
 		var command = '0';}
-	else if (value == 'AWAY_ARM') {
+	else if (value == '1') {
 		var command = '1';}
-	else if (value == 'DISARM') {
+	else if (value == '3') {
 		var command = 'Off';}
-	else if (value == 'NIGHT') {
+	else if (value == '2') {
 		var command = '0';}
 	
   this.log("[Alarm] iOS - send message to " + this.name + ": " + command);
