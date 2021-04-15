@@ -36,14 +36,35 @@ Alarm.prototype.getOtherServices = function () {
 };
 
 Alarm.prototype.getCurrentState = function(callback) {
-	callback(undefined, this.currentState == '3'); //de aqui hasta la } es nuevo
+	var self = this;
+	self.log("Getting current state");
+	if (callback == "0"){
+	    this.currentState == '0';
+	    }
+	    else if (callback == "1"){
+	    this.currentState == '1';
+	    }
+	   //if (callback == "0"){
+	   // this.currentState == '0';
+	   // }
+	else { callback(undefined, this.currentState == '3')}; //de aqui hasta la } es nuevo
 };
 
 
 
 Alarm.prototype.getItemState = function (callback) {
-  callback(undefined, this.currentState == '3'); //de aqui hasta la } es nuevo
-  
+  //callback(undefined, this.currentState == '1'); //de aqui hasta la } es nuevo
+  self.log("Getting item state");
+	if (callback == "0"){
+	    this.itemState == '0';
+	    }
+	    else if (callback == "1"){
+	    this.itemState == '1';
+	    }
+	   //if (callback == "0"){
+	   // this.currentState == '0';
+	   // }
+	else { callback(undefined, this.currentState == '3')}; //de aqui hasta la } es nuevo
 };
 
 Alarm.prototype.onCommand = function () {
