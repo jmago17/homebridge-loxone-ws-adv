@@ -54,7 +54,7 @@ Alarm.prototype.getCurrentState = function(callback) {
 
 Alarm.prototype.getItemState = function (callback) {
   //callback(undefined, this.currentState == '1'); //de aqui hasta la } es nuevo
-  self.log("Getting item state");
+  this.log("Getting item state");
 	if (callback == "0"){
 	    this.itemState == '0';
 	    }
