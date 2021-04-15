@@ -79,7 +79,7 @@ WSListener.prototype.startListener = function () {
     });
 
     this.ws.on('update_event_text', (uuid, message) => {
-        self.log("LOXONE WS: update event text " + uuid + ":" + message);
+        //self.log("LOXONE WS: update event text " + uuid + ":" + message);
         self.uuidCache[uuid] = message;
         //self.log('cache now contains ' + Object.keys(self.uuidCache).length + ' items');
         if(typeof self.uuidCallbacks[uuid] != 'undefined') {
@@ -90,7 +90,7 @@ WSListener.prototype.startListener = function () {
     });
 
     this.ws.on('update_event_daytimer', (uuid, message) => {
-        self.log("LOXONE WS: update event timer " + uuid + ":" + message);
+        //self.log("LOXONE WS: update event timer " + uuid + ":" + message);
         if(typeof self.uuidCallbacks[uuid] != 'undefined') {
             for (let r = 0; r < self.uuidCallbacks[uuid].length; r++) {
                 self.uuidCallbacks[uuid][r](message);
@@ -108,11 +108,11 @@ WSListener.prototype.startListener = function () {
     });
 
     this.ws.on('message_invalid', message => {
-        self.log(`LOXONE WS: message invalid ${message}`);
+        //self.log(`LOXONE WS: message invalid ${message}`);
     });
 
     this.ws.on('keepalive', time => {
-        self.log(`LOXONE WS: keepalive ${time}`);
+        //self.log(`LOXONE WS: keepalive ${time}`);
     });
 
 };
