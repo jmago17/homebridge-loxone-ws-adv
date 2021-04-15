@@ -41,7 +41,8 @@ Alarm.prototype.getOtherServices = function () {
 Alarm.prototype.getCurrentState = function(callback) {
 	this.log("Getting current state");
 	var status = this.currentState;
-	this.log("callbackc current: " + state);
+	this.log("callbackc current status : " + status);
+	
 	if(status == '0'){
 		var state = 'DISARM';
 	}
@@ -54,7 +55,7 @@ Alarm.prototype.getCurrentState = function(callback) {
 	if(status == '4'){
 		var state = 'ALARM_TRIGGERED';
 	}
-		
+	this.log("callbackc current: " + state);	
 	callback(state); //de aqui hasta la } es nuevo
 };
 
@@ -64,7 +65,7 @@ Alarm.prototype.getItemState = function (callback) {
   //callback(undefined, this.currentState == '1'); //de aqui hasta la } es nuevo
   this.log("Getting item level");
 	var status = this.currentState;
-	this.log("callbackc current: " + state);
+	this.log("callbackc current status : " + status);
 	if(status== '0'){
 		var state = 'DISARM';
 	}
@@ -77,7 +78,7 @@ Alarm.prototype.getItemState = function (callback) {
 	if(status == '4'){
 		var state = 'ALARM_TRIGGERED';
 	}
-		
+	this.log("callbackc current: " + state);	
 	callback(state); //de aqui hasta la } es nuevo
 };
 
