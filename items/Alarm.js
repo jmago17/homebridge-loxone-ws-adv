@@ -24,11 +24,12 @@ Alarm.prototype.getOtherServices = function () {
   var otherService = new this.homebridge.hap.Service.SecuritySystem();
 	otherService.getCharacteristic(this.homebridge.hap.Characteristic.SecuritySystemCurrentState)
 		.on("get", this.getCurrentState.bind(this));
+		.updateValue(this.currentState == '1');
 	
 	otherService.getCharacteristic(this.homebridge.hap.Characteristic.SecuritySystemTargetState)
 		.on('set', this.setItemState.bind(this))
 		.on('get', this.getItemState.bind(this))
-		.updateValue(this.currentState == '1');
+		.updateValue(this.targetState == '1');
 
   return otherService;
 };
@@ -36,7 +37,7 @@ Alarm.prototype.getOtherServices = function () {
 Alarm.prototype.getCurrentState = function(callback) {
 	var self = this;
 	self.log("Getting current state");
-	this.getState(this.stateUuid {
+	this.getOtherServices(this.readCurrentState, function(err, state) {
 		if (!err) {
 			self.log("Current state is %s", state);
 			if (self.previousCurrentState !== state) {
@@ -56,7 +57,7 @@ Alarm.prototype.getItemState = function (callback) {
   var self = this;
 	self.log("Getting target state");
 
-	this.getState(this.currentState {
+	this.getOtherServices(this.readTargetState, function(err, state){
 		if (!err) {
 			self.log("Target state is %s", state);
 			if (self.previousTargetState !== state) {
