@@ -24,10 +24,10 @@ Alarm.prototype.callBack = function (value, uuid) {
   console.log("Funtion value " + value + " " + uuid);
   if(this.stateUuid == uuid){    
      this.currentState = value;
-}
+};
  if(this.levelUuid == uuid){
       this.currentLevel = value;
-}
+};
 }
 Alarm.prototype.getOtherServices = function () {
   var otherService = new this.homebridge.hap.Service.SecuritySystem();
@@ -91,19 +91,11 @@ Alarm.prototype.setItemState = function (value, callback) {
   	this.platform.ws.sendCommand(this.uuidAction, 'quit');
   }
 	
-  callback(command);
-	this.refreshCurrentState();
+  callback();
+	
 
 };
 
-Alarm.prototype.refreshCurrentState = function() {
-	this.getCurrentState((command) => {
-		
-			this.securityService
-					.getCharacteristic(Characteristic.SecuritySystemCurrentState)
-					.setValue(command);
-		
-	});
-}
+
 
 module.exports = Alarm;
