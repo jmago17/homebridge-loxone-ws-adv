@@ -70,8 +70,20 @@ Alarm.prototype.setItemState = function (value, callback) {
 	this.log("[Alarm] iOS - send message to " + this.name + ": " + "quit");
   	this.platform.ws.sendCommand(this.uuidAction, 'quit');
   }
+	this.refreshCurrentState();
   callback();
 
 };
+
+
+Alarm.prototype.refreshCurrentState = function() {
+	this.getCurrentState((err, state) => {
+		if (!err) {
+			this.securityService
+					.getCharacteristic(Characteristic.SecuritySystemCurrentState)
+					.setValue(state);
+		}
+	});
+}
 
 module.exports = Alarm;
