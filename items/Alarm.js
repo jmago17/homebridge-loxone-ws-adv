@@ -52,7 +52,7 @@ Alarm.prototype.getCurrentState = function(callback) {
 		var state = 4;
 	}
 	this.log("callbackc current: " + state);	
-	callback(state); //de aqui hasta la } es nuevo
+	callback(undefined, state); //de aqui hasta la } es nuevo
 };
 
 //  static readonly STAY_ARM = 0;
@@ -79,7 +79,7 @@ Alarm.prototype.getItemState = function (callback) {
 		var state = 4;
 	}
 	this.log("callbackc item: " + state);	
-	callback(state); //de aqui hasta la } es nuevo
+	callback(undefined, state); //de aqui hasta la } es nuevo
 };
 
 Alarm.prototype.onCommand = function () {
