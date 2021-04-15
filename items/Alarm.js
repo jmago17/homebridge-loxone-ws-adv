@@ -44,22 +44,26 @@ Alarm.prototype.getCurrentState = function(callback) {
 	this.log("callbackc current status : " + status);
 	
 	if(status == '0'){
-		var state = 'DISARM';
+		var state = '0';
 	}
 	if(status == '1'){
-		var state = 'STAY_ARM';
+		var state = '1';
 	}
 	if(status == '2'){
-		var state = 'AWAY_ARM';
+		var state = '2';
 	}
 	if(status == '4'){
-		var state = 'ALARM_TRIGGERED';
+		var state = '4';
 	}
 	this.log("callbackc current: " + state);	
 	callback(state); //de aqui hasta la } es nuevo
 };
 
-
+//  static readonly STAY_ARM = 0;
+ // static readonly AWAY_ARM = 1;
+ // static readonly NIGHT_ARM = 2;
+ // static readonly DISARMED = 3;
+ // static readonly ALARM_TRIGGERED = 4;
 
 Alarm.prototype.getItemState = function (callback) {
   //callback(undefined, this.currentState == '1'); //de aqui hasta la } es nuevo
@@ -67,16 +71,16 @@ Alarm.prototype.getItemState = function (callback) {
 	var status = this.currentState;
 	this.log("callbackc current status : " + status);
 	if(status== '0'){
-		var state = 'DISARM';
+		var state = '0';
 	}
 	if(status == '1'){
-		var state = 'STAY_ARM';
+		var state = '1';
 	}
 	if(status == '2'){
-		var state = 'AWAY_ARM';
+		var state = '2';
 	}
 	if(status == '4'){
-		var state = 'ALARM_TRIGGERED';
+		var state = '4';
 	}
 	this.log("callbackc current: " + state);	
 	callback(state); //de aqui hasta la } es nuevo
