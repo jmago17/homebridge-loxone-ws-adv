@@ -24,7 +24,6 @@ Alarm.prototype.callBack = function (value, uuid) {
      
 };
 
-}
 Alarm.prototype.getOtherServices = function () {
   var otherService = new this.homebridge.hap.Service.SecuritySystem();
 	otherService.getCharacteristic(this.homebridge.hap.Characteristic.SecuritySystemCurrentState)
