@@ -9,6 +9,7 @@ var Alarm = function (widget, platform, homebridge) {
   this.stateUuid = widget.states.armed;
   this.levelUuid = widget.states.level;
   this.currentState = undefined;
+  this.targetState = undefined;	
   this.currentLevel = undefined;
 	
   Alarm.super_.call(this, widget, platform, homebridge);
@@ -44,10 +45,12 @@ Alarm.prototype.getCurrentState = function(callback) {
 	this.log("Getting current state");
 	var state = this.currentState;
 	var level = this.currentLevel;
-	this.log("Getting current state" + state);
+	this.log("Getting current state: " + state);
+	this.log("Getting current level: " + level);
 	if ( level == '2') {
 		state = '4';
 	}
+	this.log("callbackc current: " + state);
 	callback(state); //de aqui hasta la } es nuevo
 };
 
@@ -58,10 +61,12 @@ Alarm.prototype.getItemState = function (callback) {
   this.log("Getting item state");
 	var state = this.currentState;
 	var level = this.currentLevel;
-	this.log("Getting current state" + state);
+	this.log("Getting item state" + state);
+	this.log("Getting item level: " + level);
 	if ( level == '2') {
 		state = '4';
 	}
+	this.log("callback:item  " + state);
 	callback(state); //de aqui hasta la } es nuevo
 };
 
@@ -90,7 +95,7 @@ Alarm.prototype.setItemState = function (value, callback) {
   	this.platform.ws.sendCommand(this.uuidAction, 'quit');
   }
 	
-  callback();
+  callback(command);
 
 };
 
