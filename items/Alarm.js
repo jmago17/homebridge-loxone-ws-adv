@@ -52,18 +52,18 @@ Alarm.prototype.getCurrentState = function(callback) {
 		state = '4';
 	}
 	this.log("callbackc current: " + state);
-	callback(state); //de aqui hasta la } es nuevo
+	callback(); //de aqui hasta la } es nuevo
 };
 
 
 
 Alarm.prototype.getItemState = function (callback) {
   //callback(undefined, this.currentState == '1'); //de aqui hasta la } es nuevo
-  this.log("Getting item state");
-	var state = this.currentState;
-	this.log("Getting item state" + state);
-	this.log("callback:item  " + state);
-	callback(state); //de aqui hasta la } es nuevo
+  this.log("Getting item level");
+	var level = this.currentLevel;
+	this.log("Getting item state" + level);
+	this.log("callback:item  " + level);
+	callback(); //de aqui hasta la } es nuevo
 };
 
 Alarm.prototype.onCommand = function () {
@@ -92,9 +92,18 @@ Alarm.prototype.setItemState = function (value, callback) {
   }
 	
   callback(command);
+	this.refreshCurrentState();
 
 };
 
-
+Alarm.prototype.refreshCurrentState = function() {
+	this.getCurrentState((command) => {
+		
+			this.securityService
+					.getCharacteristic(Characteristic.SecuritySystemCurrentState)
+					.setValue(command);
+		
+	});
+}
 
 module.exports = Alarm;
