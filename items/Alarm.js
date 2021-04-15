@@ -66,7 +66,7 @@ Alarm.prototype.setItemState = function (value, callback) {
 	
   this.log("[Alarm] iOS - send message to " + this.name + ": " + command);
   this.platform.ws.sendCommand(this.uuidAction, command);
-  if (command = 'Off') {
+  if (command == 'Off') {
 	this.log("[Alarm] iOS - send message to " + this.name + ": " + "quit");
   	this.platform.ws.sendCommand(this.uuidAction, 'quit');
   }
