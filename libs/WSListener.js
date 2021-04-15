@@ -69,7 +69,7 @@ WSListener.prototype.startListener = function () {
     });
 
     this.ws.on('update_event_value', (uuid, message) => {
-        self.log("LOXONE WS: update value " + uuid + ":" + message);
+        //self.log("LOXONE WS: update value " + uuid + ":" + message);
         self.uuidCache[uuid] = message;
         if(typeof self.uuidCallbacks[uuid] != 'undefined') {
             for (let r = 0; r < self.uuidCallbacks[uuid].length; r++) {
