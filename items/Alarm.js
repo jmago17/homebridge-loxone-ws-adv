@@ -80,13 +80,13 @@ Alarm.prototype.setItemState = function (value, callback) {
 
   //var command = (value == '1') ? this.onCommand() : 'Off';
 	if (value == '0') {
-		var command = '0';}
+		var command = 'on/0';}
 	else if (value == '1') {
-		var command = '1';}
+		var command = 'on/1';}
 	else if (value == '3') {
 		var command = 'Off';}
 	else if (value == '2') {
-		var command = '0';}
+		var command = 'on/0';}
 	
   this.log("[Alarm] iOS - send message to " + this.name + ": " + command);
   this.platform.ws.sendCommand(this.uuidAction, command);
