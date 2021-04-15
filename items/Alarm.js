@@ -19,9 +19,7 @@ Alarm.prototype.initListener = function () {
 
 Alarm.prototype.callBack = function (value, uuid) {
   console.log("Funtion value " + value + " " + uuid);
-  this.currentState = value;
-	var status = value;
-     
+  this.currentState = value;     
 };
 
 Alarm.prototype.getOtherServices = function () {
@@ -41,15 +39,14 @@ Alarm.prototype.getCurrentState = function(callback) {
 	this.log("Getting current state");
 	var status = this.currentState;
 	this.log("callbackc current status : " + status);
-	
-	if(status == '0'){
-		var state = '0';
+	if(status== '0'){
+		var state = '3';
 	}
 	if(status == '1'){
-		var state = '1';
+		var state = '0';
 	}
 	if(status == '2'){
-		var state = '2';
+		var state = '1';
 	}
 	if(status == '4'){
 		var state = '4';
@@ -70,18 +67,18 @@ Alarm.prototype.getItemState = function (callback) {
 	var status = this.currentState;
 	this.log("callbackc current status : " + status);
 	if(status== '0'){
-		var state = '0';
+		var state = '3';
 	}
 	if(status == '1'){
-		var state = '1';
+		var state = '0';
 	}
 	if(status == '2'){
-		var state = '2';
+		var state = '1';
 	}
 	if(status == '4'){
 		var state = '4';
 	}
-	this.log("callbackc current: " + state);	
+	this.log("callbackc item: " + state);	
 	callback(state); //de aqui hasta la } es nuevo
 };
 
