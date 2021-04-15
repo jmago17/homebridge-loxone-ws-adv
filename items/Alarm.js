@@ -44,10 +44,10 @@ Alarm.prototype.getCurrentState = function(callback) {
 		var state = 3;
 	}
 	if(status == '1'){
-		var state = 0;
+		var state = 1;
 	}
 	if(status == '2'){
-		var state = 1;
+		var state = 0;
 	}
 	if(status == '4'){
 		var state = 4;
@@ -71,10 +71,10 @@ Alarm.prototype.getItemState = function (callback) {
 		var state = 3;
 	}
 	if(status == '1'){
-		var state = 0;
+		var state = 1;
 	}
 	if(status == '2'){
-		var state = 1;
+		var state = 0;
 	}
 	if(status == '4'){
 		var state = 4;
