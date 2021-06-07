@@ -20,7 +20,7 @@ moduleexports.LightSensor = require('../items/LightSensorItem.js');
 moduleexports.TemperatureItem = require('../items/TemperatureItem.js');
 moduleexports.Alarm = require('../items/Alarm.js');
 moduleexports.TemperatureItemActual = require('../items/TemperatureItem.js');
-exports.MusicSwitch = require('../items/MusicSwitchItem.js');
+moduleexports.MusicSwitch = require('../items/MusicSwitchItem.js');
 moduleexports.Factory = function(LoxPlatform, homebridge) {
     this.platform = LoxPlatform;
     this.log = this.platform.log;
@@ -183,7 +183,7 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
             item.type = 'TemperatureSensor';
         }
     }
-	if(item.type=="AudioZone"){
+	if(item.type=="AudioZoneV2"){
         item.type="MusicSwitch";
         
     }
