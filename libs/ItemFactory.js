@@ -183,7 +183,7 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
             item.type = 'TemperatureSensor';
         }
     }
-	if(item.type=="AudioZoneV2"){
+	if(item.type=="AudioZone"){
         item.type="MusicSwitch";
         
     }
