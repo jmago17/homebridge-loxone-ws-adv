@@ -16,6 +16,7 @@ module.exports = homebridge => {
     //Add inheritance of the AbstractItem to the Accessory object
     Utility.addSupportTo(ItemFactory.AbstractItem, Accessory);
         //All other items are child of the abstractItem
+	Utility.addSupportTo(ItemFactory.Outlet, ItemFactory.AbstractItem);
         Utility.addSupportTo(ItemFactory.LightControllerV2MoodSwitch, ItemFactory.AbstractItem);
         Utility.addSupportTo(ItemFactory.TemperatureSensor, ItemFactory.AbstractItem);
         Utility.addSupportTo(ItemFactory.HumiditySensor, ItemFactory.AbstractItem);
