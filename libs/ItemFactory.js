@@ -129,6 +129,9 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
 
     if (item.name.startsWith('Temperat')) {
         item.type = "TemperatureSensor";
+	    
+	} if (item.name.includes('Steckdose')) {
+         item.type = "Outlet";    
 
     } else if (item.name.indexOf("Humidity") !== -1) {
         item.type = "HumiditySensor";
