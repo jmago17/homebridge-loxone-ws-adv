@@ -20,6 +20,7 @@ moduleexports.LightSensor = require('../items/LightSensorItem.js');
 moduleexports.TemperatureItem = require('../items/TemperatureItem.js');
 moduleexports.Alarm = require('../items/Alarm.js');
 moduleexports.TemperatureItemActual = require('../items/TemperatureItem.js');
+moduleexports.Outlet = require('../items/Outlet.js');
 moduleexports.MusicSwitch = require('../items/MusicSwitchItem.js');
 moduleexports.Factory = function(LoxPlatform, homebridge) {
     this.platform = LoxPlatform;
