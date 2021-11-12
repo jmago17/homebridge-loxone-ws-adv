@@ -41,11 +41,11 @@ var IRoomControllerV2 = function(widget,platform,homebridge) {
     this.OldProfileValue = undefined;
     this.OldProfile = undefined;
     
-    TemperatureItem.super_.call(this, widget,platform,homebridge);
+    IRoomControllerV2.super_.call(this, widget,platform,homebridge);
 };
     
 // Register a listener to be notified of changes in this items value
-TemperatureItem.prototype.initListener = function() {
+IRoomControllerV2.prototype.initListener = function() {
     this.platform.ws.registerListenerForUUID(this.HeatTempIx, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateActual, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateTarget, this.callBack.bind(this));
@@ -64,7 +64,7 @@ TemperatureItem.prototype.initListener = function() {
 };
 
 
-TemperatureItem.prototype.callBack = function(value, uuid) {
+IRoomControllerV2.prototype.callBack = function(value, uuid) {
     //function that gets called by the registered ws listener
     //console.log("Funtion value " + value + " " + uuid);
     
