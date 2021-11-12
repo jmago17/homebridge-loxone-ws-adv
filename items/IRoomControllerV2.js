@@ -3,7 +3,7 @@
 var request = require("request");
 
 
-var TemperatureItem = function(widget,platform,homebridge) {
+var IRoomControllerV2 = function(widget,platform,homebridge) {
 
     this.platform = platform;
     this.uuidAction = widget.uuidAction;
@@ -475,4 +475,4 @@ TemperatureItem.prototype.setTergetTemperature = function(Value, callback) {
     }
 }
 
-module.exports = TemperatureItem;
+module.exports = IRoomControllerV2;
