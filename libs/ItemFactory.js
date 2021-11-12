@@ -4,7 +4,6 @@ moduleexports.AbstractItem = require('../items/AbstractItem.js');
 //If not possible, define in checkCustomAttrs which will override in certain cases
 moduleexports.LightControllerV2MoodSwitch = require('../items/LightControllerV2MoodSwitchItem.js');
 moduleexports.TemperatureSensor = require('../items/TemperatureSensorItem.js');
-moduleexports.IRoomControllerV2 = require('../items/IRoomControllerV2.js');
 moduleexports.HumiditySensor = require('../items/HumiditySensorItem.js');
 moduleexports.Switch = require('../items/SwitchItem.js');
 moduleexports.TimedSwitch = require('../items/TimedSwitchItem.js');
@@ -140,9 +139,6 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
         item.type="TemperatureItem";
     } else if (item.type == "TimedSwitch") {
             item.type = "TimedSwitch";
-	    
-    } else if(item.type=="IRoomControllerV2"){
-        item.type="IRoomControllerV2";
 
     } else if (catList[item.cat] !== undefined && catList[item.cat].image === "00000000-0000-0002-2000000000000000.svg") {
         //this is the lightbulb image, which means that this is a lightning control
