@@ -270,7 +270,7 @@ IRoomControllerV2.prototype.callBack = function(value, uuid) {
 
 
 
-TemperatureItem.prototype.getOtherServices = function() {
+IRoomControllerV2.prototype.getOtherServices = function() {
     //setting variable to skip update for intial Value
     this.setInitialState = true;
     
@@ -293,27 +293,27 @@ TemperatureItem.prototype.getOtherServices = function() {
     return otherService;
 };
 
-TemperatureItem.prototype.getTergetTemperature = function(callback) {
+IRoomControllerV2.prototype.getTergetTemperature = function(callback) {
    callback(undefined, this.targetTemperature);
 };
 
-TemperatureItem.prototype.getCurrentTemperature = function(callback) {
+IRoomControllerV2.prototype.getCurrentTemperature = function(callback) {
     callback(undefined, this.currentTemperature);
 };
 
-TemperatureItem.prototype.getTargetHeatingCoolingState = function(callback) {
+IRoomControllerV2.prototype.getTargetHeatingCoolingState = function(callback) {
     callback(undefined, this.targetHcState);
 };
 
 
-TemperatureItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
+IRoomControllerV2.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
     
     //sending new state (ValueHc) to loxone
     //added some logic to prevent a loop when the change because of external event captured by callback
     
     var self = this;
     
-    //console.log("TemperatureItem setTargetHcState : " + ValueHc);
+    //console.log("IRoomControllerV2 setTargetHcState : " + ValueHc);
     
     
     if (this.setInitialState) {
@@ -380,14 +380,14 @@ TemperatureItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callb
 }
 
 
-TemperatureItem.prototype.setTergetTemperature = function(Value, callback) {
+IRoomControllerV2.prototype.setTergetTemperature = function(Value, callback) {
     
     //sending new state (Value) to loxone
     //added some logic to prevent a loop when the change because of external event captured by callback
     
     var self = this;
     
-    //console.log("TemperatureItem setTergetTemperature: " + this.targetTemperature + " " + Value + " " + this.currentProfile + " " +this.targetHcState);
+    //console.log("IRoomControllerV2 setTergetTemperature: " + this.targetTemperature + " " + Value + " " + this.currentProfile + " " +this.targetHcState);
     
     if (this.setInitialState) {
         this.setInitialState = false;
