@@ -284,6 +284,7 @@ TemperatureItem.prototype.getOtherServices = function() {
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
     .on('set', this.setTargetHeatingCoolingState.bind(this))
     .on('get', this.getTargetHeatingCoolingState.bind(this))
+    .setProps({validValues:[0,1,3]})
     .setValue(this.targetHcState);
     
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.CurrentTemperature)
