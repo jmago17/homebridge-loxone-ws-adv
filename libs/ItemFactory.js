@@ -168,7 +168,7 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
         } else if (item.name.indexOf("Door Contact") !== -1) {
             item.type = "ContactSensor";
 
-        } else if (item.name.startsWith == 'O_Acumulador') {
+        } else if (item.name.startsWith == "O_Acumulador") {
             item.type = "Lightbulb";
 	}
 
