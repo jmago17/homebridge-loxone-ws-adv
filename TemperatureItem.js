@@ -285,7 +285,7 @@ TemperatureItem.prototype.getOtherServices = function() {
     .on('set', this.setTargetHeatingCoolingState.bind(this))
     .on('get', this.getTargetHeatingCoolingState.bind(this))
     .setValue(this.targetHcState)
-    .setProps({validValues: [0,1,3]
+    .setProps({validValues: [0,1,3] // Thermostat working modes: add a 2 to enable cooling
               })
     
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.CurrentTemperature)
