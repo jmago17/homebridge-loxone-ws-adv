@@ -169,7 +169,7 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
             item.type = "ContactSensor";
 
         } else if (item.defaultIcon == '00000000-0000-0004-2000000000000000') {
-            item.type = "Lightbulb";
+            item.type = "Outlet";
 	}
 	    
 
