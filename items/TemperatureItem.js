@@ -349,7 +349,7 @@ TemperatureItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callb
         
        
         
-        command = "starttimer/5"+ this.currentProfile + "/" + Value; //Loxone expects a Value 0-6
+        command = "starttimer/5"+ this.currentProfile + "/" + 7200; //Loxone expects a Value 0-6
         this.platform.ws.sendCommand(this.uuidAction, command);
        // this.log(this.name + " Command " + command);
         callback();
@@ -381,7 +381,7 @@ TemperatureItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callb
     
     if(ValueHc == 0){
         // Use Service to turn Valve off
-        var command = "service/1"; //Loxone expects a Value 0-4
+        var command = "stop/1"; //Loxone expects a Value 0-4
         this.platform.ws.sendCommand(this.uuidAction, command);
         //this.log(this.name + " Command " + command);
         callback();
