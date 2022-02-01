@@ -19,15 +19,7 @@ var TemperatureItem = function(widget,platform,homebridge) {
     this.ServiceValue = undefined;
     
 
-    this.ProfileZero = widget.states.temperatures[0];
-    this.ProfileOne = widget.states.temperatures[1];
-    this.ProfileTwo = widget.states.temperatures[2];
-    this.ProfileThree = widget.states.temperatures[3];
-    this.ProfileFour = widget.states.temperatures[4];
-    this.ProfileFive = widget.states.temperatures[5];
-    this.ProfileSix = widget.states.temperatures[6];
-    this.ProfileSeven = widget.states.temperatures[7];
-    
+       
     this.ProfileTempZero = undefined;
     this.ProfileTempOne = undefined;
     this.ProfileTempTwo = undefined;
