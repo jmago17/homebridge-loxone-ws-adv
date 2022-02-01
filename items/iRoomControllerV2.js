@@ -148,24 +148,6 @@ ThermostatItem.prototype.callBack = function(value, uuid) {
                           }.bind(this));
                 return;
             case 3:
-                this.targetHcState = 3;
-                this.setFromLoxone = true;
-                this.otherService
-                .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
-                .setValue(this.targetHcState, function() {
-                          this.setFromLoxone = false;
-                          }.bind(this));
-                return;
-            case 4:
-                this.targetHcState = 3;
-                this.setFromLoxone = true;
-                this.otherService
-                .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
-                .setValue(this.targetHcState, function() {
-                          this.setFromLoxone = false;
-                          }.bind(this));
-                return;
-            case 5:
                 this.targetHcState = 1;
                 this.setFromLoxone = true;
                 this.otherService
@@ -174,7 +156,16 @@ ThermostatItem.prototype.callBack = function(value, uuid) {
                           this.setFromLoxone = false;
                           }.bind(this));
                 return;
-            case 6:
+            case 4:
+                this.targetHcState = 1;
+                this.setFromLoxone = true;
+                this.otherService
+                .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
+                .setValue(this.targetHcState, function() {
+                          this.setFromLoxone = false;
+                          }.bind(this));
+                return;
+            case 5:
                 this.targetHcState = 2;
                 this.setFromLoxone = true;
                 this.otherService
@@ -183,6 +174,7 @@ ThermostatItem.prototype.callBack = function(value, uuid) {
                           this.setFromLoxone = false;
                           }.bind(this));
                 return;
+            
         }
     }
     
