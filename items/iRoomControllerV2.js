@@ -15,11 +15,11 @@ var ThermostatItem = function(widget,platform,homebridge) {
     this.ServiceValue = undefined;
     
        
-    TemperatureItem.super_.call(this, widget,platform,homebridge);
+    ThermostatItem.super_.call(this, widget,platform,homebridge);
 };
     
 // Register a listener to be notified of changes in this items value
-TemperatureItem.prototype.initListener = function() {
+ThermostatItem.prototype.initListener = function() {
     this.platform.ws.registerListenerForUUID(this.stateActual, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateTarget, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateMode, this.callBack.bind(this));
@@ -30,7 +30,7 @@ TemperatureItem.prototype.initListener = function() {
 };
 
 
-TemperatureItem.prototype.callBack = function(value, uuid) {
+ThermostatItem.prototype.callBack = function(value, uuid) {
     //function that gets called by the registered ws listener
     //console.log("Funtion value " + value + " " + uuid);
        
