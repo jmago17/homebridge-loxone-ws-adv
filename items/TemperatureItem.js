@@ -123,7 +123,7 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
             //console.log("Valve is cooling: " + this.name + " " + this.currentTemperature + " > " + this.targetTemperature);
             this.otherService
             .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
-            .setValue(2);
+            .setValue(0); // setValue(2); if cooling is available 
         }
         
         if(this.currentTemperature < this.targetTemperature && this.currentTemperature != undefined && this.targetTemperature != undefined){
@@ -342,6 +342,14 @@ TemperatureItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callb
         
         //Command for Mode
         command = "mode/5"; //Loxone expects a Value 0-6
+        this.platform.ws.sendCommand(this.uuidAction, command);
+       // this.log(this.name + " Command " + command);
+        callback();
+        //2 hours timer
+        
+       
+        
+        command = "starttimer/5"+ this.currentProfile + "/" + Value; //Loxone expects a Value 0-6
         this.platform.ws.sendCommand(this.uuidAction, command);
        // this.log(this.name + " Command " + command);
         callback();
