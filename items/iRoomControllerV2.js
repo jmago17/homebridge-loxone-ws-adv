@@ -10,7 +10,7 @@ var ThermostatItem = function(widget,platform,homebridge) {
     this.stateActual = widget.states.tempActual;
     this.stateTarget = widget.states.tempTarget;
     this.stateMode = widget.states.activemode;
-    this.Service = widget.states.serviceMode;
+    this.operatingMode = widget.states.operatingmode;   
     this.targetOperatingState = widget.states.operatingMode;
     this.ServiceValue = undefined;
     
@@ -23,7 +23,7 @@ ThermostatItem.prototype.initListener = function() {
     this.platform.ws.registerListenerForUUID(this.stateActual, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateTarget, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateMode, this.callBack.bind(this));
-    this.platform.ws.registerListenerForUUID(this.Service, this.callBack.bind(this));
+    this.platform.ws.registerListenerForUUID(this.operatingMode, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.targetOperatingState, this.callBack.bind(this));
     
        
@@ -96,9 +96,9 @@ ThermostatItem.prototype.callBack = function(value, uuid) {
         }
     }
     
-    if(this.Service == uuid){
+    if(this.operatingMode == uuid){
         //console.log("Service Value = " + value);
-        this.ServiceValue == value;
+        this.operatingModeValue == value;
         
         if(value == "1") {
             
@@ -117,7 +117,7 @@ ThermostatItem.prototype.callBack = function(value, uuid) {
         }
     }
     
-    if(this.stateMode == uuid && this.ServiceValue != "1"){
+    if(this.stateMode == uuid){
         console.log("Got new state for Mode " + this.name + ": " + value)
         switch (value) {
             case 0:
@@ -139,7 +139,7 @@ ThermostatItem.prototype.callBack = function(value, uuid) {
                           }.bind(this));
                 return;
             case 2:
-                this.targetHcState = 3;
+                this.targetHcState = 0;
                 this.setFromLoxone = true;
                 this.otherService
                 .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
@@ -156,25 +156,7 @@ ThermostatItem.prototype.callBack = function(value, uuid) {
                           this.setFromLoxone = false;
                           }.bind(this));
                 return;
-            case 4:
-                this.targetHcState = 1;
-                this.setFromLoxone = true;
-                this.otherService
-                .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
-                .setValue(this.targetHcState, function() {
-                          this.setFromLoxone = false;
-                          }.bind(this));
-                return;
-            case 5:
-                this.targetHcState = 2;
-                this.setFromLoxone = true;
-                this.otherService
-                .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
-                .setValue(this.targetHcState, function() {
-                          this.setFromLoxone = false;
-                          }.bind(this));
-                return;
-            
+           
         }
     }
     
@@ -254,7 +236,7 @@ ThermostatItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callba
         //this.platform.ws.sendCommand(this.uuidAction, command);
         
         //Command for Mode
-        command = "mode/4"; //Loxone expects a Value 0-6
+        command = "mode/3"; //Loxone expects a Value 0-6
         this.platform.ws.sendCommand(this.uuidAction, command);
        // this.log(this.name + " Command " + command);
         callback();
@@ -266,7 +248,7 @@ ThermostatItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callba
         //this.platform.ws.sendCommand(this.uuidAction, command);
         
         //Command for Mode
-        command = "mode/5"; //Loxone expects a Value 0-6
+        command = "mode/3"; //Loxone expects a Value 0-6
         this.platform.ws.sendCommand(this.uuidAction, command);
         this.log(this.name + " Command " + command);
         callback();
@@ -286,7 +268,7 @@ ThermostatItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callba
     
     if(ValueHc == 0){
         // Use Service to turn Valve off
-        var command = "service/1"; //Loxone expects a Value 0-4
+        var command = "mode/2"; //Loxone expects a Value 0-4
         this.platform.ws.sendCommand(this.uuidAction, command);
         this.log(this.name + " Command " + command);
         callback();
