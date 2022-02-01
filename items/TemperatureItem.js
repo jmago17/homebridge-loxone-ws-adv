@@ -165,26 +165,7 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
             
         }
     }
-    if(this.stop == uuid){
-        //console.log("Service Value = " + value);
-        this.ServiceValue == value;
-        
-        if(value == "1") {
-            
-           // console.log("Service Mode = All off for: " + this.name);
-            this.setFromLoxone = true;
-            this.otherService
-            .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
-            .setValue(0, function() {
-                      this.setFromLoxone = false;
-                      }.bind(this));
-            
-            this.otherService
-            .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
-            .setValue(0);
-            
-        }
-    }
+    
     
     if(this.stateMode == uuid && this.ServiceValue != "1"){
         //console.log("Got new state for Mode " + this.name + ": " + value)
@@ -403,7 +384,7 @@ TemperatureItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callb
     
     if(ValueHc == 0){
         // Use Service to turn Valve off
-        var command = "stop/1"; //Loxone expects a Value 0-4
+        var command = "Service/1"; //Loxone expects a Value 0-4
         this.platform.ws.sendCommand(this.uuidAction, command);
         //this.log(this.name + " Command " + command);
         callback();
