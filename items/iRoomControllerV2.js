@@ -3,83 +3,37 @@
 var request = require("request");
 
 
-var TemperatureItem = function(widget,platform,homebridge) {
+var ThermostatItem = function(widget,platform,homebridge) {
 
     this.platform = platform;
     this.uuidAction = widget.uuidAction;
     this.stateActual = widget.states.tempActual;
     this.stateTarget = widget.states.tempTarget;
-    this.stateMode = widget.states.mode;
-    this.HeatTempIx = widget.states.currHeatTempIx;
+    this.stateMode = widget.states.activemode;
     this.Service = widget.states.serviceMode;
-    this.currentTemperature = widget.states.tempActual;
-    this.targetTemperature = widget.states.tempTarget;
-    this.currentProfile = undefined;
-    this.targetHcState = widget.states.mode;
+    this.targetOperatingState = widget.states.operatingMode;
     this.ServiceValue = undefined;
     
-    this.ProfileZero = widget.states.temperatures[0];
-    this.ProfileOne = widget.states.temperatures[1];
-    this.ProfileTwo = widget.states.temperatures[2];
-    this.ProfileThree = widget.states.temperatures[3];
-    this.ProfileFour = widget.states.temperatures[4];
-    this.ProfileFive = widget.states.temperatures[5];
-    this.ProfileSix = widget.states.temperatures[6];
-    this.ProfileSeven = widget.states.temperatures[7];
        
-    this.ProfileTempZero = undefined;
-    this.ProfileTempOne = undefined;
-    this.ProfileTempTwo = undefined;
-    this.ProfileTempThree = undefined;
-    this.ProfileTempFour = undefined;
-    this.ProfileTempFive = undefined;
-    this.ProfileTempSix = undefined;
-    this.ProfileTempSeven = undefined;
-    
-    this.ProfileChanged = undefined;
-    this.OldProfileValue = undefined;
-    this.OldProfile = undefined;
-    
     TemperatureItem.super_.call(this, widget,platform,homebridge);
 };
     
 // Register a listener to be notified of changes in this items value
 TemperatureItem.prototype.initListener = function() {
-    this.platform.ws.registerListenerForUUID(this.HeatTempIx, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateActual, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateTarget, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateMode, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.Service, this.callBack.bind(this));
+    this.platform.ws.registerListenerForUUID(this.targetOperatingState, this.callBack.bind(this));
     
-    this.platform.ws.registerListenerForUUID(this.ProfileZero, this.callBack.bind(this));
-    this.platform.ws.registerListenerForUUID(this.ProfileOne, this.callBack.bind(this));
-    this.platform.ws.registerListenerForUUID(this.ProfileTwo, this.callBack.bind(this));
-    this.platform.ws.registerListenerForUUID(this.ProfileThree, this.callBack.bind(this));
-    this.platform.ws.registerListenerForUUID(this.ProfileFour, this.callBack.bind(this));
-    this.platform.ws.registerListenerForUUID(this.ProfileFive, this.callBack.bind(this));
-    this.platform.ws.registerListenerForUUID(this.ProfileSix, this.callBack.bind(this));
-    this.platform.ws.registerListenerForUUID(this.ProfileSeven, this.callBack.bind(this));
-    
+       
 };
 
 
 TemperatureItem.prototype.callBack = function(value, uuid) {
     //function that gets called by the registered ws listener
     //console.log("Funtion value " + value + " " + uuid);
-    
-    if(this.HeatTempIx == uuid){
-        this.currentProfile = value;
-       //console.log("Got new state for Profile " + this.name + ": " + value)
-        
-        if(this.currentProfile != this.OldProfile && this.ProfileChanged && this.OldProfile != undefined && this.OldProfileValue != undefined){
-            //Funktion to set back Value, if Profile is changed
-            //this.log("Profile changed, value is set for: " + this.name + " " + this.OldProfileValue);
-            var command = "settemp/1/"+ this.OldProfileValue; //Loxone expects a Value between 0 and 100
-            this.platform.ws.sendCommand(this.uuidAction, command);
-            this.ProfileChanged = false;
-        }
-    }
-    
+       
     if(this.stateTarget == uuid){
         this.targetTemperature = value;
         //console.log("Got new state for Target Temp " + this.name + ": " + value);
@@ -232,39 +186,7 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
         }
     }
     
-    if(uuid == this.ProfileZero){
-        //console.log("Got new state for ProfileTemp 0: " + value + " " + this.name);
-        this.ProfileTempZero = value; // Economy Basis - Value
-    }
-    if(uuid == this.ProfileOne){
-        //console.log("Got new state for ProfileTemp 1: " + value + " " + this.name);
-        this.ProfileTempOne = value; // Comfort heating Basis
-    }
-    if(uuid == this.ProfileTwo){
-        //console.log("Got new state for ProfileTemp 2: " + value + " " + this.name);
-        this.ProfileTempTwo = value; // Comfort Cooling Basis
-    }
-    if(uuid == this.ProfileThree){
-        //console.log("Got new state for ProfileTemp 3: " + value + " " + this.name);
-        this.ProfileTempThree = value; // Emty House Value
-    }
-    if(uuid == this.ProfileFour){
-        //console.log("Got new state for ProfileTemp 4: " + value + " " + this.name);
-        this.ProfileTempFour = value; // Heat Protection Value
-    }
-    if(uuid == this.ProfileFive){
-        //console.log("Got new state for ProfileTemp 5: " + value + " " + this.name);
-        this.ProfileTempFive = value; // Increased Heat Basis + Value
-    }
-    if(uuid == this.ProfileSix){
-        //console.log("Got new state for ProfileTemp 6: " + value + " " + this.name);
-        this.ProfileTempSix = value; // Party Basis - Value
-    }
-    if(uuid == this.ProfileSeven){
-        //console.log("Got new state for ProfileTemp 7: " + value + " " + this.name);
-        this.ProfileTempSeven = value; // Manual
-    }
-
+    
 }
 
 
@@ -407,72 +329,14 @@ TemperatureItem.prototype.setTergetTemperature = function(Value, callback) {
         return;
     }
     
-    if(this.currentProfile == undefined) {
-        //happens at initial load
-        callback();
-        return;
-    }
-    
+      
     if(this.targetHcState == undefined) {
         //happens at initial load
         callback();
         return;
     }
     
-        if(this.currentProfile == "3" || this.currentProfile == "4"){
-            // Changes in Profile 3,4 and 7 are not allowed
-            this.OldProfile = undefined;
-            this.OldProfileValue = undefined;
-            this.ProfileChanged = false;
-            //this.log("Current Profile: " + this.name + " " + Value + " " + this.currentProfile);
-           callback();
-            return;
-   }
+  }
     
-    if(this.targetHcState == "3" && this.currentProfile != "7"){
-    
-        if(this.currentProfile == "0") {
-            // For Profile 0 we have to add the ProfileValue to the target Value
-            this.log("Value original: " + this.name + " " + Value + " " + this.ProfileTempZero);
-            this.OldProfileValue = Value;
-            this.OldProfile = this.currentProfile;
-            Value = Value + this.ProfileTempZero;
-            this.ProfileChanged = true;
-            // this.log("Value after Offset: " + this.name + " " + Value);
-        }
-        if(this.currentProfile == "5") {
-            // For Profile 5 we have to sub the ProfileValue to the target Value
-            this.log("Value original: " + this.name + " " + Value + " " + this.ProfileTempFive);
-            this.OldProfileValue = Value;
-            this.OldProfile = this.currentProfile;
-            Value = Value - this.ProfileTempFive;
-            this.ProfileChanged = true;
-            //this.log("Value after Offset: " + this.name + " " + Value);
-        }
-        if(this.currentProfile == "6") {
-            // For Profile 6 we have to add the ProfileValue to the target Value
-            this.log("Value original: " + this.name + " " + Value + " " + this.ProfileTempSix);
-            this.OldProfileValue = Value;
-            this.OldProfile = this.currentProfile;
-            Value = Value + this.ProfileTempSix;
-            this.ProfileChanged = true;
-            // this.log("Value after Offset: " + this.name + " " + Value);
-        }
-
-        //this.log("[ Target Temperature] iOS - send Value message to " + this.name + " " + "Profile: " + this.currentProfile  + "/" + Value);
-        var command = "settemp/1/" + Value; //Loxone expects a Value between 10 and 38
-        this.platform.ws.sendCommand(this.uuidAction, command);
-        //this.log(this.name + " Command " + command);
-        callback();
-    }
-    
-    if(this.currentProfile == "7" && (this.targetHcState == "1" || this.targetHcState == "2")){
-        //this.log("[ Target Temperature] iOS - send Value message to " + this.name + " " + "Profile: " + this.currentProfile  + "/" + Value);
-        var command = "settemp/" + this.currentProfile + "/" + Value; //Loxone expects a Value between 10 and 38
-        this.platform.ws.sendCommand(this.uuidAction, command);
-        //this.log(this.name + " Command " + command);
-        callback();
-    }
-}
-
+  
 module.exports = TemperatureItem;
