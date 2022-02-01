@@ -191,7 +191,7 @@ ThermostatItem.prototype.callBack = function(value, uuid) {
 
 
 
-TemperatureItem.prototype.getOtherServices = function() {
+ThermostatItem.prototype.getOtherServices = function() {
     //setting variable to skip update for intial Value
     this.setInitialState = true;
     
@@ -215,20 +215,20 @@ TemperatureItem.prototype.getOtherServices = function() {
     return otherService;
 };
 
-TemperatureItem.prototype.getTergetTemperature = function(callback) {
+ThermostatItem.prototype.getTergetTemperature = function(callback) {
    callback(undefined, this.targetTemperature);
 };
 
-TemperatureItem.prototype.getCurrentTemperature = function(callback) {
+ThermostatItem.prototype.getCurrentTemperature = function(callback) {
     callback(undefined, this.currentTemperature);
 };
 
-TemperatureItem.prototype.getTargetHeatingCoolingState = function(callback) {
+ThermostatItem.prototype.getTargetHeatingCoolingState = function(callback) {
     callback(undefined, this.targetHcState);
 };
 
 
-TemperatureItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
+ThermostatItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
     
     //sending new state (ValueHc) to loxone
     //added some logic to prevent a loop when the change because of external event captured by callback
@@ -302,7 +302,7 @@ TemperatureItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callb
 }
 
 
-TemperatureItem.prototype.setTergetTemperature = function(Value, callback) {
+ThermostatItem.prototype.setTergetTemperature = function(Value, callback) {
     
     //sending new state (Value) to loxone
     //added some logic to prevent a loop when the change because of external event captured by callback
@@ -339,4 +339,4 @@ TemperatureItem.prototype.setTergetTemperature = function(Value, callback) {
   }
     
   
-module.exports = TemperatureItem;
+module.exports = ThermostatItem;
