@@ -258,11 +258,11 @@ ThermostatItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callba
     
     if(ValueHc == 1){
         //Deaktivate Service
-        var command = "service/0"; //Loxone expects a Value 0-4
-        this.platform.ws.sendCommand(this.uuidAction, command);
+        //var command = "service/0"; //Loxone expects a Value 0-4
+        //this.platform.ws.sendCommand(this.uuidAction, command);
         
         //Command for Mode
-        command = "mode/5"; //Loxone expects a Value 0-6
+        command = "mode/4"; //Loxone expects a Value 0-6
         this.platform.ws.sendCommand(this.uuidAction, command);
        // this.log(this.name + " Command " + command);
         callback();
@@ -270,11 +270,11 @@ ThermostatItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callba
     
     if(ValueHc == 2){
         //Deaktivate Service
-        var command = "service/0"; //Loxone expects a Value 0-4
-        this.platform.ws.sendCommand(this.uuidAction, command);
+        //var command = "service/0"; //Loxone expects a Value 0-4
+        //this.platform.ws.sendCommand(this.uuidAction, command);
         
         //Command for Mode
-        command = "mode/6"; //Loxone expects a Value 0-6
+        command = "mode/5"; //Loxone expects a Value 0-6
         this.platform.ws.sendCommand(this.uuidAction, command);
         //this.log(this.name + " Command " + command);
         callback();
@@ -282,11 +282,11 @@ ThermostatItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callba
     
     if(ValueHc == 3){
         //Deaktivate Service
-        var command = "service/0"; //Loxone expects a Value 0-4
-        this.platform.ws.sendCommand(this.uuidAction, command);
+        //var command = "service/0"; //Loxone expects a Value 0-4
+        //this.platform.ws.sendCommand(this.uuidAction, command);
         
         //Command for Mode
-        command = "mode/0"; //Loxone expects a Value 0-6
+        command = "mode/1"; //Loxone expects a Value 0-6
         this.platform.ws.sendCommand(this.uuidAction, command);
         //this.log(this.name + " Command " + command);
         callback();
