@@ -11,6 +11,7 @@ var TemperatureItem = function(widget,platform,homebridge) {
     this.stateTarget = widget.states.tempTarget;
     this.stateMode = widget.states.mode;
     this.HeatTempIx = widget.states.currHeatTempIx;
+    this.stop = widget.states.stop;
     this.Service = widget.states.serviceMode;
     this.currentTemperature = widget.states.tempActual;
     this.targetTemperature = widget.states.tempTarget;
@@ -47,6 +48,7 @@ var TemperatureItem = function(widget,platform,homebridge) {
 // Register a listener to be notified of changes in this items value
 TemperatureItem.prototype.initListener = function() {
     this.platform.ws.registerListenerForUUID(this.HeatTempIx, this.callBack.bind(this));
+    this.platform.ws.registerListenerForUUID(this.stop, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateActual, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateTarget, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateMode, this.callBack.bind(this));
@@ -144,6 +146,26 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
     }
     
     if(this.Service == uuid){
+        //console.log("Service Value = " + value);
+        this.ServiceValue == value;
+        
+        if(value == "1") {
+            
+           // console.log("Service Mode = All off for: " + this.name);
+            this.setFromLoxone = true;
+            this.otherService
+            .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
+            .setValue(0, function() {
+                      this.setFromLoxone = false;
+                      }.bind(this));
+            
+            this.otherService
+            .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
+            .setValue(0);
+            
+        }
+    }
+    if(this.stop == uuid){
         //console.log("Service Value = " + value);
         this.ServiceValue == value;
         
