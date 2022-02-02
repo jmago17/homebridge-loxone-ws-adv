@@ -488,6 +488,10 @@ TemperatureItem.prototype.setTergetTemperature = function(Value, callback) {
         var command = "settemp/" + this.currentProfile + "/" + Value; //Loxone expects a Value between 10 and 38
         this.platform.ws.sendCommand(this.uuidAction, command);
         this.log(this.name + " Command " + command);
+        command = "starttimer/7" + "/7200"; //Loxone expects a Value 0-6
+        this.platform.ws.sendCommand(this.uuidAction, command);
+        this.log(this.name + " Command " + command);
+        callback();
         callback();
     }
 }
