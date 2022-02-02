@@ -345,8 +345,8 @@ TemperatureItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callb
         
         //Command for Mode
         command = "mode/5"; //Loxone expects a Value 0-6
-        //this.platform.ws.sendCommand(this.uuidAction, command);
-       // this.log(this.name + " Command " + command);
+        this.platform.ws.sendCommand(this.uuidAction, command);
+        this.log(this.name + " Command " + command);
         
         //2 hours timer
         
@@ -354,7 +354,7 @@ TemperatureItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callb
         
         command = "starttimer/7" + "/7200"; //Loxone expects a Value 0-6
         this.platform.ws.sendCommand(this.uuidAction, command);
-       // this.log(this.name + " Command " + command);
+       this.log(this.name + " Command " + command);
         callback();
     }
     
