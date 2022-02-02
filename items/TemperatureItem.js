@@ -450,7 +450,7 @@ TemperatureItem.prototype.setTergetTemperature = function(Value, callback) {
             this.OldProfile = this.currentProfile;
             Value = Value + this.ProfileTempZero;
             this.ProfileChanged = true;
-            // this.log("Value after Offset: " + this.name + " " + Value);
+             this.log("Value after Offset: " + this.name + " " + Value);
         }
         if(this.currentProfile == "5") {
             // For Profile 5 we have to sub the ProfileValue to the target Value
@@ -459,7 +459,7 @@ TemperatureItem.prototype.setTergetTemperature = function(Value, callback) {
             this.OldProfile = this.currentProfile;
             Value = Value - this.ProfileTempFive;
             this.ProfileChanged = true;
-            //this.log("Value after Offset: " + this.name + " " + Value);
+            this.log("Value after Offset: " + this.name + " " + Value);
         }
         if(this.currentProfile == "6") {
             // For Profile 6 we have to add the ProfileValue to the target Value
@@ -468,13 +468,13 @@ TemperatureItem.prototype.setTergetTemperature = function(Value, callback) {
             this.OldProfile = this.currentProfile;
             Value = Value + this.ProfileTempSix;
             this.ProfileChanged = true;
-            // this.log("Value after Offset: " + this.name + " " + Value);
+             this.log("Value after Offset: " + this.name + " " + Value);
         }
 
-        //this.log("[ Target Temperature] iOS - send Value message to " + this.name + " " + "Profile: " + this.currentProfile  + "/" + Value);
+        this.log("[ Target Temperature] iOS - send Value message to " + this.name + " " + "Profile: " + this.currentProfile  + "/" + Value);
         var command = "settemp/1/" + Value; //Loxone expects a Value between 10 and 38
         this.platform.ws.sendCommand(this.uuidAction, command);
-        //this.log(this.name + " Command " + command);
+        this.log(this.name + " Command " + command);
         callback();
     }
     
@@ -482,7 +482,7 @@ TemperatureItem.prototype.setTergetTemperature = function(Value, callback) {
         //this.log("[ Target Temperature] iOS - send Value message to " + this.name + " " + "Profile: " + this.currentProfile  + "/" + Value);
         var command = "settemp/" + this.currentProfile + "/" + Value; //Loxone expects a Value between 10 and 38
         this.platform.ws.sendCommand(this.uuidAction, command);
-        //this.log(this.name + " Command " + command);
+        this.log(this.name + " Command " + command);
         callback();
     }
 }
