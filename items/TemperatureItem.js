@@ -492,7 +492,7 @@ TemperatureItem.prototype.setTergetTemperature = function(Value, callback) {
         this.platform.ws.sendCommand(this.uuidAction, command);
         this.log(this.name + " Command " + command);
         callback();
-        callback();
+        
     }
 }
 
