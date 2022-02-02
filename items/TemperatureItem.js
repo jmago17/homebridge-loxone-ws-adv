@@ -436,7 +436,7 @@ TemperatureItem.prototype.setTergetTemperature = function(Value, callback) {
             this.OldProfile = undefined;
             this.OldProfileValue = undefined;
             this.ProfileChanged = false;
-            //this.log("Current Profile: " + this.name + " " + Value + " " + this.currentProfile);
+            this.log("Current Profile: " + this.name + " " + Value + " " + this.currentProfile);
            callback();
             return;
    }
@@ -480,7 +480,7 @@ TemperatureItem.prototype.setTergetTemperature = function(Value, callback) {
     
     if(this.currentProfile == "7" && (this.targetHcState == "1" || this.targetHcState == "2")){
         //this.log("[ Target Temperature] iOS - send Value message to " + this.name + " " + "Profile: " + this.currentProfile  + "/" + Value);
-        var command = "stoptimer;
+        var command = "stoptimer";
         this.platform.ws.sendCommand(this.uuidAction, command);
         this.log(this.name + " Command " + command);
         
