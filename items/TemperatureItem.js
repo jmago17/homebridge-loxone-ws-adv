@@ -352,7 +352,7 @@ TemperatureItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callb
         
        
         
-        command = "starttimer/7" + "/7200"; //Loxone expects a Value 0-6
+        command = "starttimer/22" + "/7200"; //Loxone expects a Value 0-6
         this.platform.ws.sendCommand(this.uuidAction, command);
        this.log(this.name + " Command " + command);
         callback();
