@@ -70,7 +70,7 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
     //function that gets called by the registered ws listener
     console.log("Funtion value " + value + " " + uuid);
     
-    if(this.HeatTempIx == uuid){
+    if(this.HeatTempIx == uuid && this.ServiceValue != "1"){
         this.currentProfile = value;
        console.log("Got new state for Profile " + this.name + ": " + value)
         
@@ -83,7 +83,7 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
         }
     }
     
-    if(this.stateTarget == uuid){
+    if(this.stateTarget == uuid && this.ServiceValue != "1"){
         this.targetTemperature = value;
         console.log("Got new state for Target Temp " + this.name + ": " + value);
         
@@ -110,7 +110,7 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
         console.log("Loxone State tergetTemp (should be false): " + this.setFromLoxone);
     }
     
-    if(this.stateActual == uuid){
+    if(this.stateActual == uuid && this.ServiceValue != "1"){
     this.currentTemperature = Math.round(value);
     console.log("Got new state for Temp " + this.name + ": " + this.currentTemperature);
     
@@ -236,35 +236,35 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
         }
     }
     
-    if(uuid == this.ProfileZero){
+    if(uuid == this.ProfileZero && this.ServiceValue != "1"){
         console.log("Got new state for ProfileTemp 0: " + value + " " + this.name);
         this.ProfileTempZero = value; // Economy Basis - Value
     }
-    if(uuid == this.ProfileOne){
+    if(uuid == this.ProfileOne && this.ServiceValue != "1"){
         console.log("Got new state for ProfileTemp 1: " + value + " " + this.name);
         this.ProfileTempOne = value; // Comfort heating Basis
     }
-    if(uuid == this.ProfileTwo){
+    if(uuid == this.ProfileTwo && this.ServiceValue != "1"){
         console.log("Got new state for ProfileTemp 2: " + value + " " + this.name);
         this.ProfileTempTwo = value; // Comfort Cooling Basis
     }
-    if(uuid == this.ProfileThree){
+    if(uuid == this.ProfileThree && this.ServiceValue != "1"){
         console.log("Got new state for ProfileTemp 3: " + value + " " + this.name);
         this.ProfileTempThree = value; // Emty House Value
     }
-    if(uuid == this.ProfileFour){
+    if(uuid == this.ProfileFour && this.ServiceValue != "1"){
         console.log("Got new state for ProfileTemp 4: " + value + " " + this.name);
         this.ProfileTempFour = value; // Heat Protection Value
     }
-    if(uuid == this.ProfileFive){
+    if(uuid == this.ProfileFive && this.ServiceValue != "1"){
         console.log("Got new state for ProfileTemp 5: " + value + " " + this.name);
         this.ProfileTempFive = value; // Increased Heat Basis + Value
     }
-    if(uuid == this.ProfileSix){
+    if(uuid == this.ProfileSix && this.ServiceValue != "1"){
         console.log("Got new state for ProfileTemp 6: " + value + " " + this.name);
         this.ProfileTempSix = value; // Party Basis - Value
     }
-    if(uuid == this.ProfileSeven){
+    if(uuid == this.ProfileSeven && this.ServiceValue != "1"){
         console.log("Got new state for ProfileTemp 7: " + value + " " + this.name);
         this.ProfileTempSeven = value; // Manual
     }
