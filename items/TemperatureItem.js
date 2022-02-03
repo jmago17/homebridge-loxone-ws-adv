@@ -96,15 +96,24 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
             serviceOn = false;
             console.log("Service Mode = All on for: " + this.name);
             this.setFromLoxone = true;
-            /* this.otherService
+            var targetTest = this.otherService
             .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
-            .setValue(3, function() {
+            .getValue();
+             if (targetTest == 0){
+            var homekitTest = 3;}
+             if (targetTest == 5){
+            var homekitTest = 1;}
+             if (targetTest == 6){
+            var homekitTest = 2;}
+            this.otherService
+            .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
+            .setValue(homekitTest, function() {
                       this.setFromLoxone = false;
                       }.bind(this));
             
             this.otherService
             .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
-            .setValue(3); */
+            .setValue(homekitTest); 
         }
          setFromHomekit = false;
     }
