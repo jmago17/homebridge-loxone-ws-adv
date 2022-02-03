@@ -97,7 +97,7 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
             console.log("Service Mode = All on for: " + this.name);
             this.setFromLoxone = true;
             var targetTest = this.otherService
-            .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
+            .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
             .getValue();
              if (targetTest == 0){
             var homekitTest = 3;}
