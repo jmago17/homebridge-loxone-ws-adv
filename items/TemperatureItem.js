@@ -75,7 +75,7 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
         console.log("Service Value = " + value);
         this.ServiceValue == value;
         
-        if(value == "1" && servideOn == false) {
+        if(value == "1" ) {
             
             console.log("Service Mode = All off for: " + this.name);
             this.setFromLoxone = true;
