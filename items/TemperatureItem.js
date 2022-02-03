@@ -2,7 +2,7 @@
 
 var request = require("request");
 
-
+var serviceOn = false;
 var TemperatureItem = function(widget,platform,homebridge) {
 
     this.platform = platform;
@@ -87,7 +87,7 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
             this.otherService
             .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
             .setValue(0);*/
-            var serviceOn = true;
+            serviceOn = true;
         }
     }
       
