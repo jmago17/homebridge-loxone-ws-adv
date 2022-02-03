@@ -89,7 +89,7 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
             .setValue(0);
             serviceOn = true;
         }
-        if(value != "1") {
+        if(value != "1" && serviceOn) {
             serviceOn = false;
             console.log("Service Mode = All on for: " + this.name);
             this.setFromLoxone = true;
