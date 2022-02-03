@@ -3,6 +3,7 @@
 var request = require("request");
 
 var serviceOn = false;
+var setFromHomekit = false;
 var TemperatureItem = function(widget,platform,homebridge) {
 
     this.platform = platform;
@@ -404,6 +405,7 @@ TemperatureItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callb
         this.platform.ws.sendCommand(this.uuidAction, command);
         this.log(this.name + " Command " + command);
         callback();
+        serviceOn = true;
     }
 }
 
@@ -424,7 +426,7 @@ TemperatureItem.prototype.setTergetTemperature = function(Value, callback) {
     }
     
     if (this.setFromLoxone) {
-        //console.log("setTergetTemperature setFromLoxone");
+        console.log("setTergetTemperature setFromLoxone");
         callback();
         return;
     }
