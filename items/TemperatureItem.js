@@ -71,44 +71,7 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
     //function that gets called by the registered ws listener
     console.log("Funtion value " + value + " " + uuid );
     
-     if(this.Service == uuid){
-        console.log("Service Value = " + value + "set from loxone:" + this.setFromLoxone);
-        this.ServiceValue == value;
-      
-         //if(value == "1" && this.setFromLoxone == true || value == "1" && serviceOn ) {
-          if(value == "1" && setFromHomekit == false ) {  
-            console.log("Service Mode = All off for: " + this.name);
-            this.setFromLoxone = true;
-            this.otherService
-            .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
-            .setValue(0, function() {
-                      this.setFromLoxone = false;
-                      }.bind(this));
-            
-            this.otherService
-            .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
-            .setValue(0);
-            serviceOn = true;
-            
-        }
-       //if(value != "1" && this.setFromLoxone == true || value == "1" && serviceOn) {
-         if(value != "1" && setFromHomekit == false) {
-            serviceOn = false;
-            console.log("Service Mode = All on for: " + this.name);
-            this.setFromLoxone = true;
-            /* this.otherService
-            .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
-            .setValue(3, function() {
-                      this.setFromLoxone = false;
-                      }.bind(this));
-            
-            this.otherService
-            .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
-            .setValue(3);*/ 
-        }
-         setFromHomekit = false;
-    }
-      
+         
     if (serviceOn == false){
     if(this.HeatTempIx == uuid){
         this.currentProfile = value;
@@ -185,7 +148,43 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
         }
     }
     
-   
+   if(this.Service == uuid){
+        console.log("Service Value = " + value + "set from loxone:" + this.setFromLoxone);
+        this.ServiceValue == value;
+      
+         //if(value == "1" && this.setFromLoxone == true || value == "1" && serviceOn ) {
+          if(value == "1" && setFromHomekit == false ) {  
+            console.log("Service Mode = All off for: " + this.name);
+            this.setFromLoxone = true;
+            this.otherService
+            .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
+            .setValue(0, function() {
+                      this.setFromLoxone = false;
+                      }.bind(this));
+            
+            this.otherService
+            .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
+            .setValue(0);
+            serviceOn = true;
+            
+        }
+       //if(value != "1" && this.setFromLoxone == true || value == "1" && serviceOn) {
+         if(value != "1" && setFromHomekit == false) {
+            serviceOn = false;
+            console.log("Service Mode = All on for: " + this.name);
+            this.setFromLoxone = true;
+            /* this.otherService
+            .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
+            .setValue(3, function() {
+                      this.setFromLoxone = false;
+                      }.bind(this));
+            
+            this.otherService
+            .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
+            .setValue(3);*/ 
+        }
+         setFromHomekit = false;
+    }
     
     if(this.stateMode == uuid && this.ServiceValue != "1"){
         console.log("Got new state for Mode " + this.name + ": " + value)
