@@ -4,6 +4,7 @@ var request = require("request");
 
 var serviceOn = false;
 var setFromHomekit = false;
+var targetTest = false;
 var TemperatureItem = function(widget,platform,homebridge) {
 
     this.platform = platform;
@@ -96,9 +97,13 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
             serviceOn = false;
             console.log("Service Mode = All on for: " + this.name);
             this.setFromLoxone = true;
-            var targetTest = this.otherService
+             
+            this.otherService
             .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
-            .getValue();
+            .getValue(targetTest);
+             const isLightOn: boolean = true;
+             return isLightOn;
+             });
              if (targetTest <= 2){
             var homekitTest = 3;}
              if (targetTest == 5){
@@ -320,7 +325,8 @@ TemperatureItem.prototype.getOtherServices = function() {
     .on('set', this.setTargetHeatingCoolingState.bind(this))
     .on('get', this.getTargetHeatingCoolingState.bind(this))
     .setProps({validValues:[0,1,3]}) // Thermostat working modes: to enable cooling, add a 2)
-    .setValue(this.targetHcState);
+    .setValue(this.targetHcState)
+    .getValue(this.targetHcState);
     
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.CurrentTemperature)
     .on('get', this.getCurrentTemperature.bind(this))
