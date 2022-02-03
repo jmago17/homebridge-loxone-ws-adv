@@ -196,7 +196,7 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
     }
     
   
-    if(this.stateMode == uuid && this.ServiceValue != "1"){
+    if(this.stateMode == uuid ){
         console.log("Got new state for Mode " + this.name + ": " + value)
         switch (value) {
             case 0:
