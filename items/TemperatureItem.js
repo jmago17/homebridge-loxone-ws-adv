@@ -75,7 +75,7 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
         console.log("Service Value = " + value + "set from loxone:" + this.setFromLoxone);
         this.ServiceValue == value;
         
-        if(value == "1" && this.setFromLoxone == true || value == "1" && ServiceOn ) {
+        if(value == "1" && this.setFromLoxone == true || value == "1" && serviceOn ) {
             
             console.log("Service Mode = All off for: " + this.name);
             this.setFromLoxone = true;
@@ -90,7 +90,7 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
             .setValue(0);
             serviceOn = true;
         }
-        if(value != "1" && this.setFromLoxone == true || value == "1" && ServiceOn) {
+        if(value != "1" && this.setFromLoxone == true || value == "1" && serviceOn) {
             serviceOn = false;
             console.log("Service Mode = All on for: " + this.name);
             this.setFromLoxone = true;
