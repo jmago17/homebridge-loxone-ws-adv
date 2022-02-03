@@ -69,13 +69,13 @@ TemperatureItem.prototype.initListener = function() {
 
 TemperatureItem.prototype.callBack = function(value, uuid) {
     //function that gets called by the registered ws listener
-    console.log("Funtion value " + value + " " + uuid);
+    console.log("Funtion value " + value + " " + uuid );
     
      if(this.Service == uuid){
-        console.log("Service Value = " + value);
+        console.log("Service Value = " + value + "set from loxone:" + this.setFromLoxone);
         this.ServiceValue == value;
         
-        if(value == "1" && this.setFromLoxone == true ) {
+        if(value == "1" && this.setFromLoxone == true || value == "1" && ServiceOn ) {
             
             console.log("Service Mode = All off for: " + this.name);
             this.setFromLoxone = true;
@@ -90,7 +90,7 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
             .setValue(0);
             serviceOn = true;
         }
-        if(value != "1" && this.setFromLoxone == true) {
+        if(value != "1" && this.setFromLoxone == true || value == "1" && ServiceOn) {
             serviceOn = false;
             console.log("Service Mode = All on for: " + this.name);
             this.setFromLoxone = true;
