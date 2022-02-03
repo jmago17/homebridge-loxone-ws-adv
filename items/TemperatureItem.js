@@ -121,7 +121,7 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
     }
     
          
-   // if (serviceOn == false){
+    if (serviceOn == false){
     if(this.HeatTempIx == uuid){
         this.currentProfile = value;
        console.log("Got new state for Profile " + this.name + ": " + value)
@@ -301,7 +301,7 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
     if(uuid == this.ProfileSeven && this.ServiceValue != "1"){
         console.log("Got new state for ProfileTemp 7: " + value + " " + this.name);
         this.ProfileTempSeven = value; // Manual
-    //}
+    }
     }
 }
 
