@@ -517,9 +517,9 @@ TemperatureItem.prototype.setTergetTemperature = function(Value, callback) {
      if(this.currentProfile == "7" && (this.targetHcState == "1" || this.targetHcState == "2")){
     //if(this.currentProfile == "7"){
         this.log("[ Target Temperature] iOS - send Value message to " + this.name + " " + "Profile: " + this.currentProfile  + "/" + Value);
-        var command = "stoptimer";
-        this.platform.ws.sendCommand(this.uuidAction, command);
-        this.log(this.name + " Command " + command);
+        //var command = "stoptimer";
+        //this.platform.ws.sendCommand(this.uuidAction, command);
+        //this.log(this.name + " Command " + command);
         
         
         var command = "settemp/" + this.currentProfile + "/" + Value; //Loxone expects a Value between 10 and 38
