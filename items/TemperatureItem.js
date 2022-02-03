@@ -76,7 +76,7 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
         this.ServiceValue == value;
       
          //if(value == "1" && this.setFromLoxone == true || value == "1" && serviceOn ) {
-          if(value == "1" && this.setFromLoxone == false ) {  
+          if(value == "1" && setFromHomekit == false ) {  
             console.log("Service Mode = All off for: " + this.name);
             this.setFromLoxone = true;
             this.otherService
@@ -89,9 +89,10 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
             .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
             .setValue(0);
             serviceOn = true;
+            
         }
        //if(value != "1" && this.setFromLoxone == true || value == "1" && serviceOn) {
-         if(value != "1" && this.setFromLoxone == false) {
+         if(value != "1" && setFromHomekit == false) {
             serviceOn = false;
             console.log("Service Mode = All on for: " + this.name);
             this.setFromLoxone = true;
@@ -105,6 +106,7 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
             .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
             .setValue(0);
         }
+         setFromHomekit = false;
     }
       
     if (serviceOn == false){
@@ -374,7 +376,8 @@ TemperatureItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callb
         this.platform.ws.sendCommand(this.uuidAction, command);
        this.log(this.name + " Command " + command);
         callback();
-        
+        serviceOn = false;
+        setFromHomekit = true;
     }
     
     if(ValueHc == 2){
@@ -387,7 +390,8 @@ TemperatureItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callb
         this.platform.ws.sendCommand(this.uuidAction, command);
         this.log(this.name + " Command " + command);
         callback();
-        
+        serviceOn = false;
+        setFromHomekit = true;
     }
     
     if(ValueHc == 3){
@@ -400,7 +404,8 @@ TemperatureItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callb
         this.platform.ws.sendCommand(this.uuidAction, command);
         this.log(this.name + " Command " + command);
         callback();
-        
+        serviceOn = false;
+        setFromHomekit = true;
     }
     
     if(ValueHc == 0){
@@ -409,7 +414,8 @@ TemperatureItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callb
         this.platform.ws.sendCommand(this.uuidAction, command);
         this.log(this.name + " Command " + command);
         callback();
-        
+        serviceOn = true;
+        setFromHomekit = true;
     }
 }
 
