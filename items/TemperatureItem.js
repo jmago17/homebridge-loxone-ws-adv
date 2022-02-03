@@ -201,7 +201,7 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
     if(this.stateMode == uuid ){
        
         console.log("Got new state for Mode " + this.name + ": " + value)
-         if (serviceOn == false){
+        
         switch (value) {
             case 0:
                 this.targetHcState = 3;
@@ -266,7 +266,7 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
                           this.setFromLoxone = false;
                           }.bind(this));
                 return;
-        }
+        
         }
     }
     
