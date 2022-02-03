@@ -373,6 +373,7 @@ TemperatureItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callb
         this.platform.ws.sendCommand(this.uuidAction, command);
        this.log(this.name + " Command " + command);
         callback();
+        serviceOn = false;
     }
     
     if(ValueHc == 2){
@@ -385,6 +386,7 @@ TemperatureItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callb
         this.platform.ws.sendCommand(this.uuidAction, command);
         this.log(this.name + " Command " + command);
         callback();
+        serviceOn = false;
     }
     
     if(ValueHc == 3){
@@ -397,6 +399,7 @@ TemperatureItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callb
         this.platform.ws.sendCommand(this.uuidAction, command);
         this.log(this.name + " Command " + command);
         callback();
+        serviceOn = false;
     }
     
     if(ValueHc == 0){
