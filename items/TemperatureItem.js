@@ -93,7 +93,7 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
             serviceOn = false;
             console.log("Service Mode = All on for: " + this.name);
             this.setFromLoxone = true;
-            this.otherService;
+            this.otherService
             .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
             .setValue(1, function() {
                       this.setFromLoxone = false;
