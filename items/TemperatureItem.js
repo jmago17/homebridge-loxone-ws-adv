@@ -373,9 +373,9 @@ TemperatureItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callb
         //2 hours timer
            
         
-        command = "starttimer/1" + "/7200"; //Loxone expects a Value 0-6
+        command = "starttimer/7" + "/7200"; //Loxone expects a Value 0-6
         this.platform.ws.sendCommand(this.uuidAction, command);
-       this.log(this.name + " Command " + command);
+        this.log(this.name + " Command " + command);
         callback();
         serviceOn = false;
         setFromHomekit = true;
@@ -517,7 +517,7 @@ TemperatureItem.prototype.setTergetTemperature = function(Value, callback) {
      if(this.currentProfile == "7" && (this.targetHcState == "1" || this.targetHcState == "2")){
     //if(this.currentProfile == "7"){
         this.log("[ Target Temperature] iOS - send Value message to " + this.name + " " + "Profile: " + this.currentProfile  + "/" + Value);
-        var command = "stoptimer";
+        //var command = "stoptimer";
         this.platform.ws.sendCommand(this.uuidAction, command);
         this.log(this.name + " Command " + command);
         
@@ -525,9 +525,9 @@ TemperatureItem.prototype.setTergetTemperature = function(Value, callback) {
         var command = "settemp/" + this.currentProfile + "/" + Value; //Loxone expects a Value between 10 and 38
         this.platform.ws.sendCommand(this.uuidAction, command);
         this.log(this.name + " Command " + command);
-        command = "starttimer/"+ this.currentProfile + "/7200"; //
-        this.platform.ws.sendCommand(this.uuidAction, command);
-        this.log(this.name + " Command " + command);
+       // command = "starttimer/"+ this.currentProfile + "/7200"; //
+       // this.platform.ws.sendCommand(this.uuidAction, command);
+       // this.log(this.name + " Command " + command);
         callback();
         
     }
