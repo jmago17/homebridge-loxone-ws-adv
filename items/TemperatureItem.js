@@ -74,9 +74,9 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
      if(this.Service == uuid){
         console.log("Service Value = " + value + "set from loxone:" + this.setFromLoxone);
         this.ServiceValue == value;
-        
-        if(value == "1" && this.setFromLoxone == true || value == "1" && serviceOn ) {
-            
+      
+         //if(value == "1" && this.setFromLoxone == true || value == "1" && serviceOn ) {
+          if(value == "1" && this.setFromLoxone == false ) {  
             console.log("Service Mode = All off for: " + this.name);
             this.setFromLoxone = true;
             this.otherService
@@ -90,7 +90,8 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
             .setValue(0);
             serviceOn = true;
         }
-        if(value != "1" && this.setFromLoxone == true || value == "1" && serviceOn) {
+       //if(value != "1" && this.setFromLoxone == true || value == "1" && serviceOn) {
+         if(value != "1" && this.setFromLoxone == false) {
             serviceOn = false;
             console.log("Service Mode = All on for: " + this.name);
             this.setFromLoxone = true;
@@ -373,7 +374,7 @@ TemperatureItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callb
         this.platform.ws.sendCommand(this.uuidAction, command);
        this.log(this.name + " Command " + command);
         callback();
-        serviceOn = false;
+        
     }
     
     if(ValueHc == 2){
@@ -386,7 +387,7 @@ TemperatureItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callb
         this.platform.ws.sendCommand(this.uuidAction, command);
         this.log(this.name + " Command " + command);
         callback();
-        serviceOn = false;
+        
     }
     
     if(ValueHc == 3){
@@ -399,7 +400,7 @@ TemperatureItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callb
         this.platform.ws.sendCommand(this.uuidAction, command);
         this.log(this.name + " Command " + command);
         callback();
-        serviceOn = false;
+        
     }
     
     if(ValueHc == 0){
@@ -408,7 +409,7 @@ TemperatureItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callb
         this.platform.ws.sendCommand(this.uuidAction, command);
         this.log(this.name + " Command " + command);
         callback();
-        serviceOn = true;
+        
     }
 }
 
