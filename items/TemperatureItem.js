@@ -70,7 +70,29 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
     //function that gets called by the registered ws listener
     console.log("Funtion value " + value + " " + uuid);
     
-    if(this.HeatTempIx == uuid && this.ServiceValue != "1"){
+     if(this.Service == uuid){
+        console.log("Service Value = " + value);
+        this.ServiceValue == value;
+        
+        if(value == "1") {
+            
+            console.log("Service Mode = All off for: " + this.name);
+            this.setFromLoxone = true;
+            this.otherService
+    /*        .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
+            .setValue(0, function() {
+                      this.setFromLoxone = false;
+                      }.bind(this));
+            
+            this.otherService
+            .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
+            .setValue(0);*/
+            var serviceOn = true;
+        }
+    }
+      
+    if (serviceOn == false){
+    if(this.HeatTempIx == uuid){
         this.currentProfile = value;
        console.log("Got new state for Profile " + this.name + ": " + value)
         
@@ -145,27 +167,7 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
         }
     }
     
-    if(this.Service == uuid){
-        console.log("Service Value = " + value);
-        this.ServiceValue == value;
-        
-        if(value == "1") {
-            
-            console.log("Service Mode = All off for: " + this.name);
-            this.setFromLoxone = true;
-            this.otherService
-    /*        .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
-            .setValue(0, function() {
-                      this.setFromLoxone = false;
-                      }.bind(this));
-            
-            this.otherService
-            .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
-            .setValue(0);*/
-            
-        }
-    }
-    
+   
     
     if(this.stateMode == uuid && this.ServiceValue != "1"){
         console.log("Got new state for Mode " + this.name + ": " + value)
@@ -268,7 +270,7 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
         console.log("Got new state for ProfileTemp 7: " + value + " " + this.name);
         this.ProfileTempSeven = value; // Manual
     }
-
+    }
 }
 
 
