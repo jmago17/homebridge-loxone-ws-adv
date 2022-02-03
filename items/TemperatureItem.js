@@ -115,7 +115,7 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
             
             this.otherService
             .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
-            .setValue(homekitTest); 
+            .setValue(0); 
         }
          setFromHomekit = false;
     }
