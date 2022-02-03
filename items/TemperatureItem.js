@@ -113,7 +113,7 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
         console.log("Loxone State tergetTemp (should be false): " + this.setFromLoxone);
     }
     
-    if(this.stateActual == uuid && this.ServiceValue != "1"){
+    if(this.stateActual == uuid ){
     this.currentTemperature = Math.round(value);
     console.log("Got new state for Temp " + this.name + ": " + this.currentTemperature);
     
