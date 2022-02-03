@@ -373,9 +373,9 @@ TemperatureItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callb
         //2 hours timer
            
         
-        command = "starttimer/2" + "/7200"; //Loxone expects a Value 0-6
-        this.platform.ws.sendCommand(this.uuidAction, command);
-        this.log(this.name + " Command " + command);
+        //command = "starttimer/2" + "/7200"; //Loxone expects a Value 0-6
+        //this.platform.ws.sendCommand(this.uuidAction, command);
+        //this.log(this.name + " Command " + command);
         callback();
         serviceOn = false;
         setFromHomekit = true;
@@ -466,9 +466,10 @@ TemperatureItem.prototype.setTergetTemperature = function(Value, callback) {
             this.OldProfileValue = undefined;
             this.ProfileChanged = false;
             this.log("Current Profile: " + this.name + " " + Value + " " + this.currentProfile);
-            command = "starttimer/"+ this.currentProfile + "/7200"; //
-            this.platform.ws.sendCommand(this.uuidAction, command);
-            this.log(this.name + " Command " + command);
+            
+            //command = "starttimer/"+ this.currentProfile + "/7200"; //
+            //this.platform.ws.sendCommand(this.uuidAction, command);
+            //this.log(this.name + " Command " + command);
         
             callback();
             return;
