@@ -514,8 +514,8 @@ TemperatureItem.prototype.setTergetTemperature = function(Value, callback) {
         callback();
     }
     
-    // if(this.currentProfile == "7" && (this.targetHcState == "1" || this.targetHcState == "2")){
-    if(this.currentProfile == "7"){
+     if(this.currentProfile == "7" && (this.targetHcState == "1" || this.targetHcState == "2")){
+    //if(this.currentProfile == "7"){
         this.log("[ Target Temperature] iOS - send Value message to " + this.name + " " + "Profile: " + this.currentProfile  + "/" + Value);
         var command = "stoptimer";
         this.platform.ws.sendCommand(this.uuidAction, command);
