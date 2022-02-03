@@ -97,19 +97,9 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
             serviceOn = false;
             console.log("Service Mode = All on for: " + this.name);
             this.setFromLoxone = true;
-             
             this.otherService
             .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
-            .getValue(targetTest);
-            if (targetTest <= 2){
-            var homekitTest = 3;}
-             if (targetTest == 5){
-            var homekitTest = 1;}
-             if (targetTest == 6){
-            var homekitTest = 2;}
-            this.otherService
-            .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
-            .setValue(homekitTest, function() {
+            .setValue(0, function() {
                       this.setFromLoxone = false;
                       }.bind(this));
             
@@ -198,11 +188,9 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
     }
     
   
-    if(this.stateMode == uuid ){
-       
-        console.log("Got new state for Mode " + this.name + ": " + value)
-        
-        switch (value) {
+    if(this.stateMode == uuid && this.ServiceValue != "1"){
+       console.log("Got new state for Mode " + this.name + ": " + value)
+       switch (value) {
             case 0:
                 this.targetHcState = 3;
                 this.setFromLoxone = true;
@@ -322,8 +310,7 @@ TemperatureItem.prototype.getOtherServices = function() {
     .on('set', this.setTargetHeatingCoolingState.bind(this))
     .on('get', this.getTargetHeatingCoolingState.bind(this))
     .setProps({validValues:[0,1,3]}) // Thermostat working modes: to enable cooling, add a 2)
-    .setValue(this.targetHcState)
-    .getValue(this.targetHcState);
+    .setValue(this.targetHcState);
     
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.CurrentTemperature)
     .on('get', this.getCurrentTemperature.bind(this))
