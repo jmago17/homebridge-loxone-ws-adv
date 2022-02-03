@@ -370,13 +370,13 @@ TemperatureItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callb
         this.platform.ws.sendCommand(this.uuidAction, command);
         this.log(this.name + " Command " + command);
         
-       /* //2 hours timer
+        //2 hours timer
         
        
         
         command = "starttimer/2" + "/7200"; //Loxone expects a Value 0-6
         this.platform.ws.sendCommand(this.uuidAction, command);
-       this.log(this.name + " Command " + command);*/
+       this.log(this.name + " Command " + command);
         callback();
         serviceOn = false;
         setFromHomekit = true;
