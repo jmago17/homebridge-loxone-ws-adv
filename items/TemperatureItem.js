@@ -95,13 +95,13 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
             this.setFromLoxone = true;
             this.otherService
             .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
-            .setValue(1, function() {
+            .setValue(0, function() {
                       this.setFromLoxone = false;
                       }.bind(this));
             
             this.otherService
             .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
-            .setValue(1);
+            .setValue(0);
         }
     }
       
