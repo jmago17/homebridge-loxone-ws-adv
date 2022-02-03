@@ -79,14 +79,14 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
             console.log("Service Mode = All off for: " + this.name);
             this.setFromLoxone = true;
             this.otherService
-    /*        .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
+            .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
             .setValue(0, function() {
                       this.setFromLoxone = false;
                       }.bind(this));
             
             this.otherService
             .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
-            .setValue(0);*/
+            .setValue(0);
             serviceOn = true;
         }
         if(value != "1") {
@@ -94,6 +94,14 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
             console.log("Service Mode = All on for: " + this.name);
             this.setFromLoxone = true;
             this.otherService;
+            .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
+            .setValue(value, function() {
+                      this.setFromLoxone = false;
+                      }.bind(this));
+            
+            this.otherService
+            .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
+            .setValue(value);
         }
     }
       
