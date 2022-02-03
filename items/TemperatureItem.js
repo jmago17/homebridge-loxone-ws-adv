@@ -101,10 +101,7 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
             this.otherService
             .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
             .getValue(targetTest);
-             const isLightOn: boolean = true;
-             return isLightOn;
-             });
-             if (targetTest <= 2){
+            if (targetTest <= 2){
             var homekitTest = 3;}
              if (targetTest == 5){
             var homekitTest = 1;}
