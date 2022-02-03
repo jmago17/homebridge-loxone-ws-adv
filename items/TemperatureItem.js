@@ -99,7 +99,7 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
             var targetTest = this.otherService
             .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
             .getValue();
-             if (targetTest == 0 || targetTest == 1 || targetTest ==2){
+             if (targetTest <= 2){
             var homekitTest = 3;}
              if (targetTest == 5){
             var homekitTest = 1;}
