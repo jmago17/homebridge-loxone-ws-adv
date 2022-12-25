@@ -10,7 +10,7 @@ var Occupancy = function (widget, platform, homebridge) {
   this.stateUuid = widget.states.active;	
   this.currentState = undefined;
   
-	this.log(platform);
+	
 	
   Occupancy.super_.call(this, widget, platform, homebridge);
 };
