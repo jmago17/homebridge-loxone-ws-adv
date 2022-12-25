@@ -28,7 +28,7 @@ Occupancy.prototype.getOtherServices = function () {
   var otherService = new this.homebridge.hap.Service.OccupancySensor;
 	otherService.getCharacteristic(this.homebridge.hap.Characteristic.OccupancyDetected)
 		.on('get', this.getItemState.bind(this))
-		.updateValue(this.getItemState.bind(this))
+		
 		
 		
 
@@ -46,7 +46,11 @@ Occupancy.prototype.getItemState = function (callback) {
 		var state = "0";
 	}
 	else{
-		var state = "1";
+		this.log(`[] - Someone connected to the network`)
+			
+			this.OccupancySensorService
+				.getCharacteristic(Characteristic.OccupancyDetected)
+				.updateValue(1)
 	}
 
 	this.log("callback occupancy item: state" + state + "status " + status);	
