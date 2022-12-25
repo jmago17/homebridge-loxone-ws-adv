@@ -24,13 +24,13 @@ Occupancy.prototype.callBack = function (value, uuid) {
 };
 
 Occupancy.prototype.getOtherServices = function () {
-  var otherService = new this.homebridge.hap.Service.SecuritySystem();
-	otherService.getCharacteristic(this.homebridge.hap.Characteristic.SecuritySystemCurrentState)
+  var otherService = new this.homebridge.hap.Service.OccupancySensorService();
+	otherService.getCharacteristic(this.homebridge.hap.Characteristic.OccupancyDetected)
 		.on("get", this.getCurrentState.bind(this));
 	
-	otherService.getCharacteristic(this.homebridge.hap.Characteristic.SecuritySystemTargetState)
+	
 
-		.on('get', this.getItemState.bind(this))
+		
 		
 
   return otherService;
