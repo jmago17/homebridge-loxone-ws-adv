@@ -62,4 +62,4 @@ SwitchItem.prototype.setItemState = function(value, callback) {
 
 };
 
-module.exports = SwitchItem;
+module.exports = occupancy;
