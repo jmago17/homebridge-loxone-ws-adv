@@ -10,6 +10,7 @@ var Occupancy = function (widget, platform, homebridge) {
   this.stateUuid = widget.states.active;	
   this.currentState = undefined;
   
+	this.log(platform);
 	
   Occupancy.super_.call(this, widget, platform, homebridge);
 };
@@ -41,13 +42,13 @@ Occupancy.prototype.getItemState = function (callback) {
 	var status = this.currentState;
 	this.log("callbackc current status : " + status);
 	if(status== '0'){
-		var state = 0;
+		var state = OCCUPANCY_NOT_DETECTED;
 	}
 	if(status == '1'){
-		var state = 1;
+		var state = OCCUPANCY_DETECTED;
 	}
 
-	this.log("callback occupancy item: " + state + status);	
+	this.log("callback occupancy item: state" + state + "status " + status);	
 	callback(state); 
 };
 
