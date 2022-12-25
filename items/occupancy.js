@@ -24,7 +24,7 @@ Occupancy.prototype.callBack = function (value, uuid) {
 };
 
 Occupancy.prototype.getOtherServices = function () {
-  var otherService = new this.homebridge.hap.Service.OccupancySensorService;
+  var otherService = new this.homebridge.hap.Service.OccupancySensor;
 	otherService.getCharacteristic(this.homebridge.hap.Characteristic.OccupancyDetected)
 		.on("get", this.getCurrentState.bind(this));
 	
