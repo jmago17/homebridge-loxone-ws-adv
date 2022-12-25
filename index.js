@@ -21,7 +21,7 @@ module.exports = homebridge => {
         Utility.addSupportTo(ItemFactory.TemperatureSensor, ItemFactory.AbstractItem);
         Utility.addSupportTo(ItemFactory.HumiditySensor, ItemFactory.AbstractItem);
         Utility.addSupportTo(ItemFactory.MotionSensor, ItemFactory.AbstractItem);
-	Utility.addSupportTo(ItemFactory.occupan, ItemFactory.Switch);
+	
         Utility.addSupportTo(ItemFactory.ContactSensor, ItemFactory.AbstractItem);
         Utility.addSupportTo(ItemFactory.LightSensor, ItemFactory.AbstractItem);
         Utility.addSupportTo(ItemFactory.Dimmer, ItemFactory.AbstractItem);
@@ -39,6 +39,7 @@ module.exports = homebridge => {
             //Add childs of switch
             Utility.addSupportTo(ItemFactory.Lightbulb, ItemFactory.Switch);
             Utility.addSupportTo(ItemFactory.Pushbutton, ItemFactory.Switch);
+	    Utility.addSupportTo(ItemFactory.PresenceDetector, ItemFactory.Switch);
     homebridge.registerPlatform("homebridge-loxoneWs", "LoxoneWs", LoxPlatform);
 };
 
