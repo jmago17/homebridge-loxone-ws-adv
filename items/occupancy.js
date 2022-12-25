@@ -1,21 +1,21 @@
 const request = require("request");
 
-const occupancy = function(widget,platform,homebridge) {
+const OccupancyItem = function(widget,platform,homebridge) {
 
     this.platform = platform;
     this.uuidAction = widget.uuidAction; //to control a switch, use the uuidAction
     this.stateUuid = widget.states.active; //a switch always has a state called active, which is the uuid which will receive the event to read
     this.currentState = undefined; //will be 0 or 1 for Switch
 
-    occupancy.super_.call(this, widget,platform,homebridge);
+    OccupancyItem.super_.call(this, widget,platform,homebridge);
 };
 
 // Register a listener to be notified of changes in this items value
-occupancy.prototype.initListener = function() {
+OccupancyItem.prototype.initListener = function() {
     this.platform.ws.registerListenerForUUID(this.stateUuid, this.callBack.bind(this));
 };
 
-occupancy.prototype.callBack = function(value) {
+OccupancyItem.prototype.callBack = function(value) {
     //function that gets called by the registered ws listener
     //console.log("Got new state for switch: " + value);
     this.currentState = value;
@@ -26,7 +26,7 @@ occupancy.prototype.callBack = function(value) {
         .updateValue(this.currentState == '1');
 };
 
-occupancy.prototype.getOtherServices = function() {
+ OccupancyItem.prototype.getOtherServices = function() {
     const otherService = new this.homebridge.hap.Service.Switch();
 
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.On)
@@ -37,18 +37,18 @@ occupancy.prototype.getOtherServices = function() {
     return otherService;
 };
 
-occupancy.prototype.getItemState = function(callback) {
+OccupancyItem.prototype.getItemState = function(callback) {
     //returns true if currentState is 1
     callback(undefined, this.currentState == '1');
 };
 
-occupancy.prototype.onCommand = () => {
+OccupancyItem.prototype.onCommand = () => {
     //function to set the command to be used for On
     //for a switch, this is 'On', but subclasses can override this to eg Pulse
     return 'On';
 };
 
-occupancy.prototype.setItemState = function(value, callback) {
+OccupancyItem.prototype.setItemState = function(value, callback) {
 
     //sending new state to loxone
     //added some logic to prevent a loop when the change because of external event captured by callback
@@ -62,4 +62,4 @@ occupancy.prototype.setItemState = function(value, callback) {
 
 };
 
-module.exports = occupancy;
+module.exports = OccupancyItem;
