@@ -47,7 +47,7 @@ Occupancy.prototype.getItemState = function (callback) {
 		var state = 1;
 	}
 
-	this.log("callbackc item: " + state);	
+	this.log("callback occupancy item: " + state + status);	
 	callback(state); 
 };
 
