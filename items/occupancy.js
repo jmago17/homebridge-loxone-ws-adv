@@ -44,7 +44,7 @@ Occupancy.prototype.getItemState = function (callback) {
 	if(status== '0'){
 		var state = "0";
 	}
-	if(status == '1'){
+	else{
 		var state = "1";
 	}
 
