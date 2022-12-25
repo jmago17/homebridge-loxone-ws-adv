@@ -19,7 +19,7 @@ Alarm.prototype.initListener = function () {
 };
 
 Alarm.prototype.callBack = function (value, uuid) {
-  console.log("Funtion value " + value + " " + uuid);
+ //  console.log("Funtion value " + value + " " + uuid);
   this.currentState = value;     
 };
 
@@ -37,9 +37,9 @@ Alarm.prototype.getOtherServices = function () {
 };
 
 Alarm.prototype.getCurrentState = function(callback) {
-	this.log("Getting current state");
+	// this.log("Getting current state");
 	var status = this.currentState;
-	this.log("callbackc current status : " + status);
+	// this.log("callbackc current status : " + status);
 	if(status== '0'){
 		var state = 3;
 	}
@@ -52,7 +52,7 @@ Alarm.prototype.getCurrentState = function(callback) {
 	if(status == '4'){
 		var state = 4;
 	}
-	this.log("callbackc current: " + state);	
+	// this.log("callbackc current: " + state);	
 	callback(undefined, state); //de aqui hasta la } es nuevo
 };
 
@@ -64,9 +64,9 @@ Alarm.prototype.getCurrentState = function(callback) {
 
 Alarm.prototype.getItemState = function (callback) {
   //callback(undefined, this.currentState == '1'); //de aqui hasta la } es nuevo
-  this.log("Getting item level");
+  // this.log("Getting item level");
 	var status = this.currentState;
-	this.log("callbackc current status : " + status);
+	// this.log("callbackc current status : " + status);
 	if(status== '0'){
 		var state = 3;
 	}
@@ -79,7 +79,7 @@ Alarm.prototype.getItemState = function (callback) {
 	if(status == '4'){
 		var state = 4;
 	}
-	this.log("callbackc item: " + state);	
+	// this.log("callbackc item: " + state);	
 	callback(undefined, state); //de aqui hasta la } es nuevo
 };
 
@@ -88,7 +88,7 @@ Alarm.prototype.onCommand = function () {
 };
 
 Alarm.prototype.setItemState = function (value, callback) {
-  this.log("Setting state to %s", value);
+//  this.log("Setting state to %s", value);
   var self = this;
 
   //var command = (value == '1') ? this.onCommand() : 'Off';
@@ -101,10 +101,10 @@ Alarm.prototype.setItemState = function (value, callback) {
 	else if (value == '2') {
 		var command = 'on/0';}
 	
-  this.log("[Alarm] iOS - send message to " + this.name + ": " + command);
+  // this.log("[Alarm] iOS - send message to " + this.name + ": " + command);
   this.platform.ws.sendCommand(this.uuidAction, command);
   if (command == 'Off') {
-	this.log("[Alarm] iOS - send message to " + this.name + ": " + "quit");
+		 //this.log("[Alarm] iOS - send message to " + this.name + ": " + "quit");
   	this.platform.ws.sendCommand(this.uuidAction, 'quit');
   }
 	
