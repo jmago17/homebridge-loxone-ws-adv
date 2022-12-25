@@ -184,7 +184,7 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
 
 	
 	if (item.type == "OccupancySensor") {
-		item.type = "PresenceDetector"
+		item.type = "PresenceDetector";
     }
 	
 	
