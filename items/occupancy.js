@@ -27,11 +27,7 @@ Occupancy.prototype.getOtherServices = function () {
   var otherService = new this.homebridge.hap.Service.OccupancySensor;
 	otherService.getCharacteristic(this.homebridge.hap.Characteristic.OccupancyDetected)
 		.on("get", this.getItemState.bind(this))
-		.on('set', this.setItemState.bind(this));
-		
-	
-
-		
+		.updateValue(this.getItemState.bind(this))
 		
 
   return otherService;
@@ -52,34 +48,7 @@ Occupancy.prototype.getItemState = function (callback) {
 	}
 
 	this.log("callbackc item: " + state);	
-	callback(state); //de aqui hasta la } es nuevo
-};
-
-Occupancy.prototype.setItemState = function (value, callback) {
-  this.log("Setting state to %s", value);
-  var self = this;
-
-  //var command = (value == '1') ? this.onCommand() : 'Off';
-	if (value == '0') {
-		var command = 0;}
-	else if (value == '1') {
-		var command = 1;}
-	e
-	
-  this.log("[Presence] iOS - send message to " + this.name + ": " + command);
-  this.platform.ws.sendCommand(this.uuidAction, command);
-  
-	if (command == 'Off') {
-	this.log("[Alarm] iOS - send message to " + this.name + ": " + "quit");
-  	this.platform.ws.sendCommand(this.uuidAction, 'quit');
-  }
-	
-  callback(command);
-	
-
-
-Occupancy.prototype.onCommand = function () {
-  return 'On';
+	callback(state); 
 };
 
 
