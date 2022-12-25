@@ -39,9 +39,9 @@ Occupancy.prototype.getOtherServices = function () {
 
 Occupancy.prototype.getItemState = function (callback) {
   //callback(undefined, this.currentState == '1'); //de aqui hasta la } es nuevo
-  this.log("triggered GET Occupancy detected");
+  // this.log("triggered GET Occupancy detected");
 	var status = this.currentState;
-	this.log("callbackc current status : " + status);
+	// this.log("callbackc current status : " + status);
 	if(status== '0'){
 		var state = 0;
 	}
@@ -49,7 +49,7 @@ Occupancy.prototype.getItemState = function (callback) {
 		var state = 1;
 	}
 
-	this.log("callback occupancy item: state" + state + "status " + status);	
+	// this.log("callback occupancy item: state" + state + "status " + status);	
 	callback(null, state); 
 };
 
