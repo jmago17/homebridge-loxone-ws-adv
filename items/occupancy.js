@@ -42,10 +42,10 @@ Occupancy.prototype.getItemState = function (callback) {
 	var status = this.currentState;
 	this.log("callbackc current status : " + status);
 	if(status== '0'){
-		var state = "OCCUPANCY_NOT_DETECTED";
+		var state = "0";
 	}
 	if(status == '1'){
-		var state = "OCCUPANCY_DETECTED";
+		var state = "1";
 	}
 
 	this.log("callback occupancy item: state" + state + "status " + status);	
