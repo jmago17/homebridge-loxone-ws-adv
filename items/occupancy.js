@@ -27,7 +27,7 @@ Occupancy.prototype.getOtherServices = function () {
   var otherService = new this.homebridge.hap.Service.OccupancySensor;
 	otherService.getCharacteristic(this.homebridge.hap.Characteristic.OccupancyDetected)
 		.on("get", this.getItemState.bind(this));
-		.updateValue(this.isDetected);
+		.on('set', this.setItemState.bind(this));
 	
 
 		
