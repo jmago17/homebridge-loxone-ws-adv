@@ -26,8 +26,9 @@ Occupancy.prototype.callBack = function (value, uuid) {
 Occupancy.prototype.getOtherServices = function () {
   var otherService = new this.homebridge.hap.Service.OccupancySensor;
 	otherService.getCharacteristic(this.homebridge.hap.Characteristic.OccupancyDetected)
+		.on('set', this.setItemState.bind(this))
 		.on("get", this.getItemState.bind(this));
-		.on('set', this.setItemState.bind(this));
+		
 	
 
 		
