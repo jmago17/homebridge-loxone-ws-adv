@@ -11,6 +11,10 @@ moduleexports.Lightbulb = require('../items/LightbulbItem.js');
 moduleexports.Dimmer = require('../items/DimmerItem.js');
 moduleexports.Jalousie = require('../items/BlindsItem.js');
 moduleexports.Pushbutton = require('../items/PushbuttonItem.js');
+
+moduleexports.occupancy = require('../items/occupa.js');
+
+
 moduleexports.Colorpicker = require('../items/ColorpickerItem.js');
 moduleexports.Gate = require('../items/GateItem.js');
 moduleexports.DoorBell = require('../items/DoorBellItem.js');
@@ -178,6 +182,11 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
 
     }
 
+	
+	if (item.type == "PresenceDetector") {
+		item.type = "OccupancySensor"
+    }
+		
     if (item.type == "InfoOnlyAnalog") {
 
         if (item.name.indexOf("Door Contact") !== -1) {
