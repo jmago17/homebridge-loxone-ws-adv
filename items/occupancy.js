@@ -24,7 +24,7 @@ Occupancy.prototype.callBack = function (value, uuid) {
 };
 
 Occupancy.prototype.getOtherServices = function () {
-  var otherService = new this.homebridge.hap.Service.OccupancySensorService();
+  var otherService = new this.homebridge.hap.Service.OccupancySensorService;
 	otherService.getCharacteristic(this.homebridge.hap.Characteristic.OccupancyDetected)
 		.on("get", this.getCurrentState.bind(this));
 	
@@ -41,7 +41,7 @@ Occupancy.prototype.getCurrentState = function(callback) {
 	var status = this.currentState;
 	this.log("callbackc current status : " + status);
 	if(status== '0'){
-		var state = 3;
+		var state = 0;
 	}
 	if(status == '1'){
 		var state = 1;
