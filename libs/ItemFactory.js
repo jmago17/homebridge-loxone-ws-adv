@@ -12,7 +12,7 @@ moduleexports.Dimmer = require('../items/DimmerItem.js');
 moduleexports.Jalousie = require('../items/BlindsItem.js');
 moduleexports.Pushbutton = require('../items/PushbuttonItem.js');
 
-moduleexports.PresenceDetector = require('../items/SwitchItem.js');
+moduleexports.PresenceDetector = require('../items/occupancy.js');
 
 
 moduleexports.Colorpicker = require('../items/ColorpickerItem.js');
