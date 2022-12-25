@@ -7,7 +7,7 @@ var Occupancy = function (widget, platform, homebridge) {
   this.platform = platform;
   this.uuidAction = widget.uuidAction;
  //this.stateUuid = widget.states.armed;
-  this.stateUuid = widget.states.isDetected;	
+  this.stateUuid = widget.states.active;	
   this.currentState = undefined;
   
 	
