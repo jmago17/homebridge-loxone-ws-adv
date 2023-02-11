@@ -1,10 +1,12 @@
 const FanItem = function(widget,platform,homebridge) {
+    const TimedSwitchItem = function(widget,platform,homebridge) {
+
     this.platform = platform;
-    this.widget =  widget;
-    this.homebridge = homebridge;
-    this.log = this.platform.log;
-    this.name = widget.name;
-    this.UUID = homebridge.hap.uuid.generate(String(widget.uuidAction));
+    this.uuidAction = widget.uuidAction; //to control a switch, use the uuidAction
+    this.currentState = undefined; //will be 0 or 1 for Switch
+
+    FanItem.super_.call(this, widget,platform,homebridge);
+};
     
    
 };
