@@ -166,7 +166,7 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
     }
 
     if (item.type == "InfoOnlyDigital") {
-        if (item.defaultIcon == '00000000-0000-0021-2000000000000000') {
+        if (item.name.indexOf("Timbre") !== -1) {
             item.type = "DoorBell";
 
         } else if ((item.name.indexOf("Motion") !== -1) || (item.name.indexOf("Presence") !== -1)) {
