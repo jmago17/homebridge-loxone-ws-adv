@@ -1,79 +1,66 @@
 const request = require("request");
 
-const FanItem = function(widget,platform,homebridge) {
+ const OutletItem = function(widget,platform,homebridge) {
 
-    this.platform = platform;
-    this.uuidAction = widget.uuidAction; //to control a fan, use the uuidAction
-    this.currentState = undefined; //will be 0 or 1 for Switch
+     this.platform = platform;
+     this.uuidAction = widget.uuidAction; //to control a Outlet, use the uuidAction
+     this.stateUuid = widget.states.active; //a Outlet always has a state called active, which is the uuid which will receive the event to read
+     this.currentState = undefined; //will be 0 or 1 for Outlet
 
-    FanItem.super_.call(this, widget,platform,homebridge);
-};
+     OutletItem.super_.call(this, widget,platform,homebridge);
+ };
 
-// Register a listener to be notified of changes in this items value
-FanItem.prototype.initListener = function() {
-    //this.platform.ws.registerListenerForUUID(this.stateUuid, this.callBack.bind(this));
-    this.platform.ws.registerListenerForUUID(this.uuidAction, this.callBack.bind(this));
-};
+ // Register a listener to be notified of changes in this items value
+ OutletItem.prototype.initListener = function() {
+     this.platform.ws.registerListenerForUUID(this.stateUuid, this.callBack.bind(this));
+ };
 
-FanItem.prototype.callBack = function(value) {
-    //function that gets called by the registered ws listener
-    if (value == -1) {
-        //console.log("Got new state for Fan: On");
-    } else if (value == 0) {
-        //console.log("Got new state for Fan: Off");
-    } else if (value > 0) {
-        //console.log("Got new state for Fan: Countdown " + value + "s");
-    }
-    
-    this.currentState = (value !== 0);
+ OutletItem.prototype.callBack = function(value) {
+     //function that gets called by the registered ws listener
+     //console.log("Got new state for Outlet: " + value);
+     this.currentState = value;
 
-    //console.log('set currentState to: ' + this.currentState)
+     //also make sure this change is directly communicated to HomeKit
+     this.otherService
+         .getCharacteristic(this.homebridge.hap.Characteristic.On)
+         .updateValue(this.currentState == '1');
+ };
 
-    this.otherService
-        .getCharacteristic(this.homebridge.hap.Characteristic.On)
-        .updateValue(this.currentState);
-};
+ OutletItem.prototype.getOtherServices = function() {
+     var otherService = new this.homebridge.hap.Service.Fan();
 
-FanItem.prototype.getOtherServices = function() {
-    const otherService = new this.homebridge.hap.Service.Fan();
+     otherService.getCharacteristic(this.homebridge.hap.Characteristic.On)
+         .on('set', this.setItemState.bind(this))
+         .on('get', this.getItemState.bind(this))
+         .updateValue(this.currentState == '1');
 
-    otherService.getCharacteristic(this.homebridge.hap.Characteristic.On)
-        .on('set', this.setItemState.bind(this))
-        .on('get', this.getItemState.bind(this))
-        //.updateValue(this.currentState == '1');
+     return otherService;
+ };
 
-    return otherService;
-};
+ OutletItem.prototype.getItemState = function(callback) {
+     //returns true if currentState is 1
+     callback(undefined, this.currentState == '1');
+ };
 
-FanItem.prototype.getItemState = function(callback) {
-    //returns true if currentState is 1
-    callback(undefined, this.currentState);
-};
+ OutletItem.prototype.onCommand = function() {
+     //function to set the command to be used for On
+     //for a Outlet, this is 'On', but subclasses can override this to eg Pulse
+     return 'On';
+ };
 
-FanItem.prototype.setItemState = function(value, callback) {
+ OutletItem.prototype.setItemState = function(value, callback) {
 
-    //sending new state to loxone
-    //added some logic to prevent a loop when the change because of external event captured by callback
+     //sending new state to loxone
+     //added some logic to prevent a loop when the change because of external event captured by callback
 
+     var self = this;
 
+     var command = (value == '1') ? this.onCommand() : 'Off';
+     this.log("[Outlet] iOS - send message to " + this.name + ": " + command);
+     this.platform.ws.sendCommand(this.uuidAction, command);
+     callback();
 
-    let command = 0;
-    if (value == true) {
-        //this.log('perm on ***');
-        command = 'On';//-1; // perm on
-    } else {
-        //this.log('off ***');
-        command = 'Off';//0; // off
-    }
+ };
 
-    //this.log('setItemState value: ' + value);
-    //this.log('setItemState command: ' + command);
-
-    this.log(`[fan] iOS - send message to ${this.name}: ${command}`);
-    this.platform.ws.sendCommand(this.uuidAction, command);
-    callback();
-
-};
-
-module.exports = FanItem;
+ module.exports = OutletItem;
 
