@@ -19,7 +19,6 @@ const FanItem = function(widget,platform,homebridge) {
     new homebridge.platformAccessory(this.name, this.UUID);
 
 };
-};
 
 FanItem.prototype.getOtherServices = function() {
     const otherService = new this.homebridge.hap.Service.Fan();
