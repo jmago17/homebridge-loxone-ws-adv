@@ -1,6 +1,5 @@
 const FanItem = function(widget,platform,homebridge) {
-    const TimedSwitchItem = function(widget,platform,homebridge) {
-
+  
     this.platform = platform;
     this.uuidAction = widget.uuidAction; //to control a switch, use the uuidAction
     this.currentState = undefined; //will be 0 or 1 for Switch
