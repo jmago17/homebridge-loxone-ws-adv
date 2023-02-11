@@ -11,7 +11,7 @@ moduleexports.Lightbulb = require('../items/LightbulbItem.js');
 moduleexports.Dimmer = require('../items/DimmerItem.js');
 moduleexports.Jalousie = require('../items/BlindsItem.js');
 moduleexports.Pushbutton = require('../items/PushbuttonItem.js');
-moduleexports.Fan = require('../items/Fan.js');
+moduleexports.Fan = require('../items/fan.js');
 moduleexports.PresenceDetector = require('../items/occupancy.js');
 
 
