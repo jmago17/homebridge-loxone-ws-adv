@@ -146,7 +146,7 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
        item.type="IRoomControllerV2";
     } else if (item.type == "TimedSwitch") {
            if (item.name.indexOf("Extractor") !== -1) {
-            item.type = "fan"; 
+            item.type = "Fan"; 
 	   } else { item.type = "TimedSwitch";}
 
     } else if (catList[item.cat] !== undefined && catList[item.cat].image === "00000000-0000-0002-2000000000000000.svg") {
