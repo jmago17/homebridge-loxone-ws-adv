@@ -11,7 +11,7 @@ moduleexports.Lightbulb = require('../items/LightbulbItem.js');
 moduleexports.Dimmer = require('../items/DimmerItem.js');
 moduleexports.Jalousie = require('../items/BlindsItem.js');
 moduleexports.Pushbutton = require('../items/PushbuttonItem.js');
-
+moduleexports.Fan = require('../items/Fan.js');
 moduleexports.PresenceDetector = require('../items/occupancy.js');
 
 
@@ -145,7 +145,9 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
     } else if(item.type=="IRoomControllerV2"){
        item.type="IRoomControllerV2";
     } else if (item.type == "TimedSwitch") {
-            item.type = "TimedSwitch";
+           if (item.name.indexOf("Extractor") !== -1) {
+            item.type = "fan"; 
+	   } else { item.type = "TimedSwitch";}
 
     } else if (catList[item.cat] !== undefined && catList[item.cat].image === "00000000-0000-0002-2000000000000000.svg") {
         //this is the lightbulb image, which means that this is a lightning control
