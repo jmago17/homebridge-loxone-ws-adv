@@ -8,8 +8,6 @@ const FanItem = function(widget,platform,homebridge) {
 };
     
    
-};
-
 FanItem.prototype.getOtherServices = function() {
     const otherService = new this.homebridge.hap.Service.Fan();
 
