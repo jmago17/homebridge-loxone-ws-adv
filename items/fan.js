@@ -1,6 +1,6 @@
 const request = require("request");
 
-const FanItemm = function(widget,platform,homebridge) {
+const FanItem = function(widget,platform,homebridge) {
 
     this.platform = platform;
     this.uuidAction = widget.uuidAction; //to control a fan, use the uuidAction
