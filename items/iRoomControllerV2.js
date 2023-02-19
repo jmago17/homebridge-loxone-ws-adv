@@ -9,9 +9,9 @@ var ThermostatItem = function(widget,platform,homebridge) {
     this.uuidAction = widget.uuidAction;
     this.stateActual = widget.states.tempActual;
     this.stateTarget = widget.states.tempTarget;
-    this.stateMode = widget.states.activemode;
-    this.operatingMode = widget.states.operatingmode;   
-    this.targetOperatingState = widget.states.operatingMode;
+   // this.stateMode = widget.states.activeMode;
+    this.operatingMode = widget.states.operatingMode;   
+  //  this.targetOperatingState = widget.states.operatingMode;
     this.ServiceValue = undefined;
     
        
@@ -22,9 +22,9 @@ var ThermostatItem = function(widget,platform,homebridge) {
 ThermostatItem.prototype.initListener = function() {
     this.platform.ws.registerListenerForUUID(this.stateActual, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateTarget, this.callBack.bind(this));
-    this.platform.ws.registerListenerForUUID(this.stateMode, this.callBack.bind(this));
+   // this.platform.ws.registerListenerForUUID(this.stateMode, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.operatingMode, this.callBack.bind(this));
-    this.platform.ws.registerListenerForUUID(this.targetOperatingState, this.callBack.bind(this));
+   // this.platform.ws.registerListenerForUUID(this.targetOperatingState, this.callBack.bind(this));
     
        
 };
