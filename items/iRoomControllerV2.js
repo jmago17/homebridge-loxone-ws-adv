@@ -2,104 +2,41 @@
 
 var request = require("request");
 
-var serviceOn = false;
-var setFromHomekit = false;
-var targetTest = false;
-var TemperatureItem = function(widget,platform,homebridge) {
+
+var ThermostatItem = function(widget,platform,homebridge) {
 
     this.platform = platform;
     this.uuidAction = widget.uuidAction;
     this.stateActual = widget.states.tempActual;
     this.stateTarget = widget.states.tempTarget;
-    this.stateMode = widget.states.mode;
-    this.HeatTempIx = widget.states.currHeatTempIx;
-    this.stop = widget.states.stop;
-    this.Service = widget.states.serviceMode;
-    this.currentTemperature = widget.states.tempActual;
-    this.targetTemperature = widget.states.tempTarget;
-    this.currentProfile = undefined;
-    this.targetHcState = widget.states.mode;
+    this.stateMode = widget.states.activemode;
+    this.operatingMode = widget.states.operatingmode;   
+    this.targetOperatingState = widget.states.operatingMode;
     this.ServiceValue = undefined;
     
-
        
-    TemperatureItem.super_.call(this, widget,platform,homebridge);
+    ThermostatItem.super_.call(this, widget,platform,homebridge);
 };
     
 // Register a listener to be notified of changes in this items value
-TemperatureItem.prototype.initListener = function() {
-    this.platform.ws.registerListenerForUUID(this.HeatTempIx, this.callBack.bind(this));
-    this.platform.ws.registerListenerForUUID(this.stop, this.callBack.bind(this));
+ThermostatItem.prototype.initListener = function() {
     this.platform.ws.registerListenerForUUID(this.stateActual, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateTarget, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateMode, this.callBack.bind(this));
-    this.platform.ws.registerListenerForUUID(this.Service, this.callBack.bind(this));
+    this.platform.ws.registerListenerForUUID(this.operatingMode, this.callBack.bind(this));
+    this.platform.ws.registerListenerForUUID(this.targetOperatingState, this.callBack.bind(this));
     
-  
-    
+       
 };
 
 
-TemperatureItem.prototype.callBack = function(value, uuid) {
+ThermostatItem.prototype.callBack = function(value, uuid) {
     //function that gets called by the registered ws listener
-    // console.log("Funtion value " + value + " " + uuid );
-
-     if(this.Service == uuid){
-        // console.log("Service Value = " + value + "set from loxone:" + this.setFromLoxone);
-        this.ServiceValue == value;
-      
-         //if(value == "1" && this.setFromLoxone == true || value == "1" && serviceOn ) {
-          if(value == "1" && setFromHomekit == false ) {  
-           // console.log("Service Mode = All off for: " + this.name);
-            this.setFromLoxone = true;
-            this.otherService
-            .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
-            .setValue(0, function() {
-                      this.setFromLoxone = false;
-                      }.bind(this));
-            
-            this.otherService
-            .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
-            .setValue(0);
-            serviceOn = true;
-            
-        }
-       //if(value != "1" && this.setFromLoxone == true || value == "1" && serviceOn) {
-         if(value != "1" && setFromHomekit == false) {
-            serviceOn = false;
-            // console.log("Service Mode = All on for: " + this.name);
-            this.setFromLoxone = true;
-            this.otherService
-            .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
-            .setValue(3, function() {
-                      this.setFromLoxone = false;
-                      }.bind(this));
-            
-            this.otherService
-            .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
-            .setValue(0); 
-        }
-         setFromHomekit = false;
-    }
-    
-         
-    if (serviceOn == false){
-    if(this.HeatTempIx == uuid){
-        this.currentProfile = value;
-    //   console.log("Got new state for Profile " + this.name + ": " + value)
-        
-        if(this.currentProfile != this.OldProfile && this.ProfileChanged && this.OldProfile != undefined && this.OldProfileValue != undefined){
-            //Funktion to set back Value, if Profile is changed
-            this.log("Profile changed, value is set for: " + this.name + " " + this.OldProfileValue);
-            var command = "settemp/1/"+ this.OldProfileValue; //Loxone expects a Value between 0 and 100
-            this.platform.ws.sendCommand(this.uuidAction, command);
-            this.ProfileChanged = false;
-        }
-    }
-    
-    if(this.stateTarget == uuid && this.ServiceValue != "1"){
+    console.log("Funtion value " + value + " " + uuid);
+       
+    if(this.stateTarget == uuid){
         this.targetTemperature = value;
-        //console.log("Got new state for Target Temp " + this.name + ": " + value);
+        console.log("Got new state for Target Temp " + this.name + ": " + value);
         
         if(this.targetTemperature < "10"){
             // min Value of Thermostat
@@ -113,7 +50,7 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
         
         //also make sure this change is directly communicated to HomeKit
         this.setFromLoxone = true;
-      //  console.log("Loxone State tergetTemp (should be true): " + this.setFromLoxone);
+        console.log("Loxone State tergetTemp (should be true): " + this.setFromLoxone);
         this.otherService
         .getCharacteristic(this.homebridge.hap.Characteristic.TargetTemperature)
         .setValue(this.targetTemperature,
@@ -121,12 +58,12 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
                   this.setFromLoxone = false;
                   }.bind(this)
                   );
-      //  console.log("Loxone State tergetTemp (should be false): " + this.setFromLoxone);
+        //console.log("Loxone State tergetTemp (should be false): " + this.setFromLoxone);
     }
     
-    if(this.stateActual == uuid ){
+    if(this.stateActual == uuid){
     this.currentTemperature = Math.round(value);
-    //console.log("Got new state for Temp " + this.name + ": " + this.currentTemperature);
+    console.log("Got new state for Temp " + this.name + ": " + this.currentTemperature);
     
     //also make sure this change is directly communicated to HomeKit
     this.otherService
@@ -136,15 +73,15 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
         // take a look what the valve is doing
         if(this.currentTemperature > this.targetTemperature && this.currentTemperature != undefined && this.targetTemperature != undefined){
             // Current Cooling
-           // console.log("Valve is cooling: " + this.name + " " + this.currentTemperature + " > " + this.targetTemperature);
+            console.log("Valve is cooling: " + this.name + " " + this.currentTemperature + " > " + this.targetTemperature);
             this.otherService
             .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
-            .setValue(0); // setValue(2); if cooling is available 
+            .setValue(2);
         }
         
         if(this.currentTemperature < this.targetTemperature && this.currentTemperature != undefined && this.targetTemperature != undefined){
             // Current Heating
-           // console.log("Valve is heating: " + this.name + " " + this.currentTemperature + " < " + this.targetTemperature);
+            console.log("Valve is heating: " + this.name + " " + this.currentTemperature + " < " + this.targetTemperature);
             this.otherService
             .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
             .setValue(1);
@@ -152,17 +89,37 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
         
         if(this.currentTemperature == this.targetTemperature &&  this.currentTemperature != undefined && this.targetTemperature != undefined){
             // Current Heating and Cooling off
-          //  console.log("Valve is off: " + this.name + " " + this.currentTemperature + " = " + this.targetTemperature);
+            console.log("Valve is off: " + this.name + " " + this.currentTemperature + " = " + this.targetTemperature);
             this.otherService
             .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
             .setValue(0);
         }
     }
     
-  
-    if(this.stateMode == uuid && this.ServiceValue != "1"){
-     //  console.log("Got new state for Mode " + this.name + ": " + value)
-       switch (value) {
+    if(this.operatingMode == uuid){
+        //console.log("Service Value = " + value);
+        this.operatingModeValue == value;
+        
+        if(value == "1") {
+            
+           console.log("Service Mode = All off for: " + this.name);
+            this.setFromLoxone = true;
+            this.otherService
+            .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
+            .setValue(0, function() {
+                      this.setFromLoxone = false;
+                      }.bind(this));
+            
+            this.otherService
+            .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
+            .setValue(0);
+            
+        }
+    }
+    
+    if(this.stateMode == uuid){
+        console.log("Got new state for Mode " + this.name + ": " + value)
+        switch (value) {
             case 0:
                 this.targetHcState = 3;
                 this.setFromLoxone = true;
@@ -182,7 +139,7 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
                           }.bind(this));
                 return;
             case 2:
-                this.targetHcState = 3;
+                this.targetHcState = 0;
                 this.setFromLoxone = true;
                 this.otherService
                 .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
@@ -191,24 +148,6 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
                           }.bind(this));
                 return;
             case 3:
-                this.targetHcState = 3;
-                this.setFromLoxone = true;
-                this.otherService
-                .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
-                .setValue(this.targetHcState, function() {
-                          this.setFromLoxone = false;
-                          }.bind(this));
-                return;
-            case 4:
-                this.targetHcState = 3;
-                this.setFromLoxone = true;
-                this.otherService
-                .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
-                .setValue(this.targetHcState, function() {
-                          this.setFromLoxone = false;
-                          }.bind(this));
-                return;
-            case 5:
                 this.targetHcState = 1;
                 this.setFromLoxone = true;
                 this.otherService
@@ -217,26 +156,16 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
                           this.setFromLoxone = false;
                           }.bind(this));
                 return;
-            case 6:
-                this.targetHcState = 2;
-                this.setFromLoxone = true;
-                this.otherService
-                .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
-                .setValue(this.targetHcState, function() {
-                          this.setFromLoxone = false;
-                          }.bind(this));
-                return;
-        
+           
         }
     }
     
- 
-    }
+    
 }
 
 
 
-TemperatureItem.prototype.getOtherServices = function() {
+ThermostatItem.prototype.getOtherServices = function() {
     //setting variable to skip update for intial Value
     this.setInitialState = true;
     
@@ -260,20 +189,20 @@ TemperatureItem.prototype.getOtherServices = function() {
     return otherService;
 };
 
-TemperatureItem.prototype.getTergetTemperature = function(callback) {
+ThermostatItem.prototype.getTergetTemperature = function(callback) {
    callback(undefined, this.targetTemperature);
 };
 
-TemperatureItem.prototype.getCurrentTemperature = function(callback) {
+ThermostatItem.prototype.getCurrentTemperature = function(callback) {
     callback(undefined, this.currentTemperature);
 };
 
-TemperatureItem.prototype.getTargetHeatingCoolingState = function(callback) {
+ThermostatItem.prototype.getTargetHeatingCoolingState = function(callback) {
     callback(undefined, this.targetHcState);
 };
 
 
-TemperatureItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
+ThermostatItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
     
     //sending new state (ValueHc) to loxone
     //added some logic to prevent a loop when the change because of external event captured by callback
@@ -303,66 +232,51 @@ TemperatureItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callb
     
     if(ValueHc == 1){
         //Deaktivate Service
-        var command = "service/0"; //Loxone expects a Value 0-4
-        this.platform.ws.sendCommand(this.uuidAction, command);
+        //var command = "service/0"; //Loxone expects a Value 0-4
+        //this.platform.ws.sendCommand(this.uuidAction, command);
         
         //Command for Mode
-        command = "mode/5"; //Loxone expects a Value 0-6
+        command = "mode/3"; //Loxone expects a Value 0-6
         this.platform.ws.sendCommand(this.uuidAction, command);
-        this.log(this.name + " Command " + command);
-        
-        //2 hours timer
-           
-        
-        //command = "starttimer/2" + "/7200"; //Loxone expects a Value 0-6
-        //this.platform.ws.sendCommand(this.uuidAction, command);
-        //this.log(this.name + " Command " + command);
+       // this.log(this.name + " Command " + command);
         callback();
-        serviceOn = false;
-        setFromHomekit = true;
     }
     
     if(ValueHc == 2){
         //Deaktivate Service
-        var command = "service/0"; //Loxone expects a Value 0-4
-        this.platform.ws.sendCommand(this.uuidAction, command);
+        //var command = "service/0"; //Loxone expects a Value 0-4
+        //this.platform.ws.sendCommand(this.uuidAction, command);
         
         //Command for Mode
-        command = "mode/6"; //Loxone expects a Value 0-6
+        command = "mode/3"; //Loxone expects a Value 0-6
         this.platform.ws.sendCommand(this.uuidAction, command);
         this.log(this.name + " Command " + command);
         callback();
-        serviceOn = false;
-        setFromHomekit = true;
     }
     
     if(ValueHc == 3){
         //Deaktivate Service
-        var command = "service/0"; //Loxone expects a Value 0-4
-        this.platform.ws.sendCommand(this.uuidAction, command);
+        //var command = "service/0"; //Loxone expects a Value 0-4
+        //this.platform.ws.sendCommand(this.uuidAction, command);
         
         //Command for Mode
-        command = "mode/0"; //Loxone expects a Value 0-6
+        command = "mode/1"; //Loxone expects a Value 0-6
         this.platform.ws.sendCommand(this.uuidAction, command);
         this.log(this.name + " Command " + command);
         callback();
-        serviceOn = false;
-        setFromHomekit = true;
     }
     
     if(ValueHc == 0){
         // Use Service to turn Valve off
-        var command = "service/1"; //Loxone expects a Value 0-4
+        var command = "mode/2"; //Loxone expects a Value 0-4
         this.platform.ws.sendCommand(this.uuidAction, command);
         this.log(this.name + " Command " + command);
         callback();
-        serviceOn = true;
-        setFromHomekit = true;
     }
 }
 
 
-TemperatureItem.prototype.setTergetTemperature = function(Value, callback) {
+ThermostatItem.prototype.setTergetTemperature = function(Value, callback) {
     
     //sending new state (Value) to loxone
     //added some logic to prevent a loop when the change because of external event captured by callback
@@ -378,7 +292,7 @@ TemperatureItem.prototype.setTergetTemperature = function(Value, callback) {
     }
     
     if (this.setFromLoxone) {
-       // console.log("setTergetTemperature setFromLoxone");
+        //console.log("setTergetTemperature setFromLoxone");
         callback();
         return;
     }
@@ -389,90 +303,18 @@ TemperatureItem.prototype.setTergetTemperature = function(Value, callback) {
         return;
     }
     
-    if(this.currentProfile == undefined) {
-        //happens at initial load
-        callback();
-        return;
-    }
-    
+      
     if(this.targetHcState == undefined) {
         //happens at initial load
         callback();
         return;
     }
-    
-        if(this.currentProfile == "3" || this.currentProfile == "4"){
-            // Changes in Profile 3,4 and 7 are not allowed
-            this.OldProfile = undefined;
-            this.OldProfileValue = undefined;
-            this.ProfileChanged = false;
-            this.log("Current Profile: " + this.name + " " + Value + " " + this.currentProfile);
-            
-            //command = "starttimer/"+ this.currentProfile + "/7200"; //
-            //this.platform.ws.sendCommand(this.uuidAction, command);
-            //this.log(this.name + " Command " + command);
-        
-            callback();
-            return;
-   }
-    
-    if(this.targetHcState == "3" && this.currentProfile != "7"){
-    
-        if(this.currentProfile == "0") {
-            // For Profile 0 we have to add the ProfileValue to the target Value
-            this.log("Value original: " + this.name + " " + Value + " " + this.ProfileTempZero);
-            this.OldProfileValue = Value;
-            this.OldProfile = this.currentProfile;
-            Value = Value + this.ProfileTempZero;
-            this.ProfileChanged = true;
-             this.log("Value after Offset: " + this.name + " " + Value);
-        }
-        if(this.currentProfile == "5") {
-            // For Profile 5 we have to sub the ProfileValue to the target Value
-            this.log("Value original: " + this.name + " " + Value + " " + this.ProfileTempFive);
-            this.OldProfileValue = Value;
-            this.OldProfile = this.currentProfile;
-            Value = Value - this.ProfileTempFive;
-            this.ProfileChanged = true;
-            this.log("Value after Offset: " + this.name + " " + Value);
-        }
-        if(this.currentProfile == "6") {
-            // For Profile 6 we have to add the ProfileValue to the target Value
-            this.log("Value original: " + this.name + " " + Value + " " + this.ProfileTempSix);
-            this.OldProfileValue = Value;
-            this.OldProfile = this.currentProfile;
-            Value = Value + this.ProfileTempSix;
-            this.ProfileChanged = true;
-             this.log("Value after Offset: " + this.name + " " + Value);
-        }
-
-        this.log("[ Target Temperature] iOS - send Value message to " + this.name + " " + "Profile: " + this.currentProfile  + "/" + Value);
-        var command = "settemp/1/" + Value; //Loxone expects a Value between 10 and 38
+     var command = "setManualTemperature/" + Value; //Loxone expects a Value between 10 and 38
         this.platform.ws.sendCommand(this.uuidAction, command);
-        this.log(this.name + " Command " + command);
-        //command = "starttimer/"+ this.currentProfile + "/7200"; //
-        //this.platform.ws.sendCommand(this.uuidAction, command);
         //this.log(this.name + " Command " + command);
         callback();
-    }
     
-     if(this.currentProfile == "7" && (this.targetHcState == "1" || this.targetHcState == "2")){
-    //if(this.currentProfile == "7"){
-        this.log("[ Target Temperature] iOS - send Value message to " + this.name + " " + "Profile: " + this.currentProfile  + "/" + Value);
-        //var command = "stoptimer";
-        //this.platform.ws.sendCommand(this.uuidAction, command);
-        //this.log(this.name + " Command " + command);
-        
-        
-        var command = "settemp/" + this.currentProfile + "/" + Value; //Loxone expects a Value between 10 and 38
-        this.platform.ws.sendCommand(this.uuidAction, command);
-        this.log(this.name + " Command " + command);
-        command = "starttimer/"+ 5 + "/120"; //
-        this.platform.ws.sendCommand(this.uuidAction, command);
-        this.log(this.name + " Command " + command);
-        callback();
-        
-    }
-}
-
-module.exports = TemperatureItem;
+  }
+    
+  
+module.exports = ThermostatItem;
