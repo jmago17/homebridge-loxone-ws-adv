@@ -22,28 +22,7 @@ var TemperatureItem = function(widget,platform,homebridge) {
     this.ServiceValue = undefined;
     
 
-    this.ProfileZero = widget.states.temperatures[0];
-    this.ProfileOne = widget.states.temperatures[1];
-    this.ProfileTwo = widget.states.temperatures[2];
-    this.ProfileThree = widget.states.temperatures[3];
-    this.ProfileFour = widget.states.temperatures[4];
-    this.ProfileFive = widget.states.temperatures[5];
-    this.ProfileSix = widget.states.temperatures[6];
-    this.ProfileSeven = widget.states.temperatures[7];
-    
-    this.ProfileTempZero = undefined;
-    this.ProfileTempOne = undefined;
-    this.ProfileTempTwo = undefined;
-    this.ProfileTempThree = undefined;
-    this.ProfileTempFour = undefined;
-    this.ProfileTempFive = undefined;
-    this.ProfileTempSix = undefined;
-    this.ProfileTempSeven = undefined;
-    
-    this.ProfileChanged = undefined;
-    this.OldProfileValue = undefined;
-    this.OldProfile = undefined;
-    
+       
     TemperatureItem.super_.call(this, widget,platform,homebridge);
 };
     
@@ -56,14 +35,7 @@ TemperatureItem.prototype.initListener = function() {
     this.platform.ws.registerListenerForUUID(this.stateMode, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.Service, this.callBack.bind(this));
     
-    this.platform.ws.registerListenerForUUID(this.ProfileZero, this.callBack.bind(this));
-    this.platform.ws.registerListenerForUUID(this.ProfileOne, this.callBack.bind(this));
-    this.platform.ws.registerListenerForUUID(this.ProfileTwo, this.callBack.bind(this));
-    this.platform.ws.registerListenerForUUID(this.ProfileThree, this.callBack.bind(this));
-    this.platform.ws.registerListenerForUUID(this.ProfileFour, this.callBack.bind(this));
-    this.platform.ws.registerListenerForUUID(this.ProfileFive, this.callBack.bind(this));
-    this.platform.ws.registerListenerForUUID(this.ProfileSix, this.callBack.bind(this));
-    this.platform.ws.registerListenerForUUID(this.ProfileSeven, this.callBack.bind(this));
+  
     
 };
 
@@ -258,35 +230,35 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
         }
     }
     
-    if(uuid == this.ProfileZero && this.ServiceValue != "1"){
+    if(uuid == this.ServiceValue != "1"){
       //  console.log("Got new state for ProfileTemp 0: " + value + " " + this.name);
         this.ProfileTempZero = value; // Economy Basis - Value
     }
-    if(uuid == this.ProfileOne && this.ServiceValue != "1"){
+    if(uuid ==  this.ServiceValue != "1"){
        // console.log("Got new state for ProfileTemp 1: " + value + " " + this.name);
         this.ProfileTempOne = value; // Comfort heating Basis
     }
-    if(uuid == this.ProfileTwo && this.ServiceValue != "1"){
+    if(uuid ==  this.ServiceValue != "1"){
       //  console.log("Got new state for ProfileTemp 2: " + value + " " + this.name);
         this.ProfileTempTwo = value; // Comfort Cooling Basis
     }
-    if(uuid == this.ProfileThree && this.ServiceValue != "1"){
+    if(uuid ==  this.ServiceValue != "1"){
       //  console.log("Got new state for ProfileTemp 3: " + value + " " + this.name);
         this.ProfileTempThree = value; // Emty House Value
     }
-    if(uuid == this.ProfileFour && this.ServiceValue != "1"){
+    if(uuid ==  this.ServiceValue != "1"){
        // console.log("Got new state for ProfileTemp 4: " + value + " " + this.name);
         this.ProfileTempFour = value; // Heat Protection Value
     }
-    if(uuid == this.ProfileFive && this.ServiceValue != "1"){
+    if(uuid ==  this.ServiceValue != "1"){
       //  console.log("Got new state for ProfileTemp 5: " + value + " " + this.name);
         this.ProfileTempFive = value; // Increased Heat Basis + Value
     }
-    if(uuid == this.ProfileSix && this.ServiceValue != "1"){
+    if(uuid ==  this.ServiceValue != "1"){
      //   console.log("Got new state for ProfileTemp 6: " + value + " " + this.name);
         this.ProfileTempSix = value; // Party Basis - Value
     }
-    if(uuid == this.ProfileSeven && this.ServiceValue != "1"){
+    if(uuid ==  this.ServiceValue != "1"){
         console.log("Got new state for ProfileTemp 7: " + value + " " + this.name);
         this.ProfileTempSeven = value; // Manual
     }
