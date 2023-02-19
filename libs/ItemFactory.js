@@ -13,7 +13,7 @@ moduleexports.Jalousie = require('../items/BlindsItem.js');
 moduleexports.Pushbutton = require('../items/PushbuttonItem.js');
 // moduleexports.Fan = require('../items/Fan.js'); not currently in use. 
 moduleexports.PresenceDetector = require('../items/occupancy.js');
-
+moduleexports.PresenceDetector = require('../items/test.js');
 
 moduleexports.Colorpicker = require('../items/ColorpickerItem.js');
 moduleexports.Gate = require('../items/GateItem.js');
@@ -24,7 +24,7 @@ moduleexports.LightSensor = require('../items/LightSensorItem.js');
 moduleexports.TemperatureItem = require('../items/TemperatureItem.js');
 moduleexports.Alarm = require('../items/Alarm.js');
 moduleexports.TemperatureItemActual = require('../items/TemperatureItem.js');
-moduleexports.IRoomControllerV2 = require('../items/iRoomControllerV2.js');
+// moduleexports.IRoomControllerV2 = require('../items/iRoomControllerV2.js');
 moduleexports.Outlet = require('../items/Outlet.js');
 moduleexports.MusicSwitch = require('../items/MusicSwitchItem.js');
 moduleexports.Factory = function(LoxPlatform, homebridge) {
