@@ -4,10 +4,10 @@ var request = require("request");
 var iRoomControllerV2 = function(widget,platform,homebridge) {
     this.platform = platform;
     this.uuidAction = widget.uuidAction;
-    this.stateActual = widget.states.tempActual;
-    this.stateTarget = widget.states.tempTarget;
-    this.stateMode = widget.states.activeMode;
-    this.operatingMode = widget.states.operatingMode;   
+   // this.stateActual = widget.states.tempActual;
+    //this.stateTarget = widget.states.tempTarget;
+    //this.stateMode = widget.states.activeMode;
+    //this.operatingMode = widget.states.operatingMode;   
 
   //  this.targetOperatingState = widget.states.operatingMode;
   //  this.ServiceValue = undefined;
