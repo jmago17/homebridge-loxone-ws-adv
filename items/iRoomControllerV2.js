@@ -230,38 +230,7 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
         }
     }
     
-    if(uuid == this.ServiceValue != "1"){
-      //  console.log("Got new state for ProfileTemp 0: " + value + " " + this.name);
-        this.ProfileTempZero = value; // Economy Basis - Value
-    }
-    if(uuid ==  this.ServiceValue != "1"){
-       // console.log("Got new state for ProfileTemp 1: " + value + " " + this.name);
-        this.ProfileTempOne = value; // Comfort heating Basis
-    }
-    if(uuid ==  this.ServiceValue != "1"){
-      //  console.log("Got new state for ProfileTemp 2: " + value + " " + this.name);
-        this.ProfileTempTwo = value; // Comfort Cooling Basis
-    }
-    if(uuid ==  this.ServiceValue != "1"){
-      //  console.log("Got new state for ProfileTemp 3: " + value + " " + this.name);
-        this.ProfileTempThree = value; // Emty House Value
-    }
-    if(uuid ==  this.ServiceValue != "1"){
-       // console.log("Got new state for ProfileTemp 4: " + value + " " + this.name);
-        this.ProfileTempFour = value; // Heat Protection Value
-    }
-    if(uuid ==  this.ServiceValue != "1"){
-      //  console.log("Got new state for ProfileTemp 5: " + value + " " + this.name);
-        this.ProfileTempFive = value; // Increased Heat Basis + Value
-    }
-    if(uuid ==  this.ServiceValue != "1"){
-     //   console.log("Got new state for ProfileTemp 6: " + value + " " + this.name);
-        this.ProfileTempSix = value; // Party Basis - Value
-    }
-    if(uuid ==  this.ServiceValue != "1"){
-        console.log("Got new state for ProfileTemp 7: " + value + " " + this.name);
-        this.ProfileTempSeven = value; // Manual
-    }
+ 
     }
 }
 
