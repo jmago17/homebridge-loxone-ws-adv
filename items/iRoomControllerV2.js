@@ -11,7 +11,7 @@ var ThermostatItem = function(widget,platform,homebridge) {
     this.stateTarget = widget.states.tempTarget;
     this.stateMode = widget.states.activeMode;
     this.operatingMode = widget.states.operatingMode;   
-    this.targetOperatingState = widget.states.operatingMode;
+  //  this.targetOperatingState = widget.states.operatingMode;
     this.ServiceValue = undefined;
     
        
