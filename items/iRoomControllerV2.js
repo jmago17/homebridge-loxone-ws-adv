@@ -12,10 +12,10 @@ var ThermostatItem = function(widget,platform,homebridge) {
     this.stateMode = widget.states.activeMode;
     this.operatingMode = widget.states.operatingMode;   
     this.targetOperatingState = widget.states.operatingMode;
-    //this.ServiceValue = undefined;
+    this.ServiceValue = undefined;
     
        
-    ThermostatItem.super_.call(this, widget, platform, homebridge);
+    ThermostatItem.super_.call(this, widget,platform,homebridge);
 };
     
 // Register a listener to be notified of changes in this items value
