@@ -153,7 +153,8 @@ TemperatureItem.prototype.callBack = function(value, uuid) {
     }
     
     if(this.stateActual == uuid ){
-    this.currentTemperature = Math.round(value);
+    //this.currentTemperature = Math.round(value);
+    this.currentTemperature = value;
     //console.log("Got new state for Temp " + this.name + ": " + this.currentTemperature);
     
     //also make sure this change is directly communicated to HomeKit
