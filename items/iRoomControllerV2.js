@@ -8,13 +8,12 @@ var ThermostatItem = function(widget,platform,homebridge) {
     this.platform = platform;
     this.uuidAction = widget.uuidAction;
     //this.stateActual = widget.states.tempActual;
-    this.stateTarget = widget.states.modelist;
-    this.stateTarget = widget.states.mode;
+
    // this.stateTarget = widget.states.tempTarget;
    // this.stateMode = widget.states.activeMode;
    // this.operatingMode = widget.states.operatingMode;   
   //  this.targetOperatingState = widget.states.operatingMode;
-    this.ServiceValue = undefined;
+   // this.ServiceValue = undefined;
     
        
     ThermostatItem.super_.call(this, widget,platform,homebridge);
@@ -22,10 +21,10 @@ var ThermostatItem = function(widget,platform,homebridge) {
     
 // Register a listener to be notified of changes in this items value
 ThermostatItem.prototype.initListener = function() {
-    this.platform.ws.registerListenerForUUID(this.stateActual, this.callBack.bind(this));
-    this.platform.ws.registerListenerForUUID(this.stateTarget, this.callBack.bind(this));
+ //   this.platform.ws.registerListenerForUUID(this.stateActual, this.callBack.bind(this));
+   // this.platform.ws.registerListenerForUUID(this.stateTarget, this.callBack.bind(this));
    // this.platform.ws.registerListenerForUUID(this.stateMode, this.callBack.bind(this));
-    this.platform.ws.registerListenerForUUID(this.operatingMode, this.callBack.bind(this));
+   // this.platform.ws.registerListenerForUUID(this.operatingMode, this.callBack.bind(this));
    // this.platform.ws.registerListenerForUUID(this.targetOperatingState, this.callBack.bind(this));
     
        
