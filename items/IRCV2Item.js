@@ -83,14 +83,6 @@ if(this.stateCurrentMode == uuid){
 } 
     
     if(this.stateHeatingTemp == uuid){
-/*        this.heatingTargetTemp = value;
-    console.log("Got new state for heating target " + this.name + ": " + this.heatingTargetTemp);
-    
-    //also make sure this change is directly communicated to HomeKit
-    this.otherService
-    .getCharacteristic(this.homebridge.hap.Characteristic.HeatingThresholdTemperature)
-    .setValue(this.heatingTargetTemp);   
-  */      
         
         this.heatingTargetTemp = value;
       //  console.log("Got new state for Target Heating Temp " + this.name + ": " + value);
@@ -107,11 +99,10 @@ if(this.stateCurrentMode == uuid){
         
         //also make sure this change is directly communicated to HomeKit
         this.setFromLoxone = true;
-       console.log("Loxone State heatingTargetTemp (should be true): " + this.setFromLoxone);
+        console.log("Loxone State heatingTargetTemp (should be true): " + this.setFromLoxone);
         this.otherService
         .getCharacteristic(this.homebridge.hap.Characteristic.HeatingThresholdTemperature)
-        .setValue(this.heatingTargetTemp,
-                  function() {
+        .setValue(this.heatingTargetTemp, function() {
                   this.setFromLoxone = false;
                   }.bind(this)
                   );
@@ -147,8 +138,7 @@ if(this.stateCurrentMode == uuid){
         console.log("Loxone State heatingTargetTemp (should be true): " + this.setFromLoxone);
         this.otherService
         .getCharacteristic(this.homebridge.hap.Characteristic.CoolingThresholdTemperature)
-        .setValue(this.coolingTargetTemp,
-                  function() {
+        .setValue(this.coolingTargetTemp, function() {
                   this.setFromLoxone = false;
                   }.bind(this)
                   );
