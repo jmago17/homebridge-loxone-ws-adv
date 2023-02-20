@@ -75,8 +75,8 @@ if(this.stateCurrentMode == uuid){
 }          
     
     if(this.stateOverride == uuid){
-       this.stateOverride = value;
-    console.log("Got new state for override " + this.name + ": " + this.stateOverride);
+       this.override = value;
+    console.log("Got new state for override " + this.name + ": " + this.override);
     
     //also make sure this change is directly communicated to HomeKit
    
