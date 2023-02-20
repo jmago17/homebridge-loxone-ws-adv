@@ -11,6 +11,7 @@ var IRCV2Item = function(widget,platform,homebridge) {
     this.stateActual = widget.states.tempActual;
     this.stateOverride = widget.states.overrideEntries;
     this.stateMode = widget.states.operatingMode;
+    this.stateTarget = widget.states.temptarget;
     this.stateHeatingTemp = widget.states.comfortTemperature;
     this.stateCoolingTemp = widget.states.comfortTemperatureCool;
     this.stateCurrentMode = widget.states.currentMode;   
@@ -23,6 +24,7 @@ var IRCV2Item = function(widget,platform,homebridge) {
 // Register a listener to be notified of changes in this items value
 IRCV2Item.prototype.initListener = function() {
     this.platform.ws.registerListenerForUUID(this.stateActual, this.callBack.bind(this));
+    this.platform.ws.registerListenerForUUID(this.stateTarget, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateHeatingTemp, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateCoolingTemp, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateOverride, this.callBack.bind(this));
