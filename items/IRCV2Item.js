@@ -39,7 +39,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
     //function that gets called by the registered ws listener
     console.log("Funtion value " + value + " " + uuid);
        
-   /* if(this.stateTarget == uuid){
+    if(this.stateTarget == uuid){
         this.targetTemperature = value;
         console.log("Got new state for Target Temp " + this.name + ": " + value);
         
@@ -65,7 +65,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
                   );
         //console.log("Loxone State tergetTemp (should be false): " + this.setFromLoxone);
     }
-    */
+    
 if(this.stateCurrentMode == uuid){
        this.currentMode = value;
     console.log("Got new state for current mode " + this.name + ": " + this.currentMode);
