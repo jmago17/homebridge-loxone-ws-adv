@@ -11,6 +11,8 @@ var IRCV2Item = function(widget,platform,homebridge) {
     this.stateActual = widget.states.tempActual;
     this.stateTarget = widget.states.tempTarget;
     this.stateMode = widget.states.activeMode;
+    this.stateHeatingTemp = widget.states.comfortTemperature;
+    this.stateCoolingTemp = widget.states.comfortTemperatureCool;
     this.operatingMode = widget.states.operatingMode;   
     this.targetOperatingState = widget.states.operatingMode;
     this.ServiceValue = undefined;
@@ -20,7 +22,9 @@ var IRCV2Item = function(widget,platform,homebridge) {
     
 // Register a listener to be notified of changes in this items value
 IRCV2Item.prototype.initListener = function() {
-  this.platform.ws.registerListenerForUUID(this.stateActual, this.callBack.bind(this));
+    this.platform.ws.registerListenerForUUID(this.stateActual, this.callBack.bind(this));
+    this.platform.ws.registerListenerForUUID(this.stateHeatingTemp, this.callBack.bind(this));
+    this.platform.ws.registerListenerForUUID(this.stateCoolingTemp, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateTarget, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateMode, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.operatingMode, this.callBack.bind(this));
@@ -61,8 +65,30 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
         //console.log("Loxone State tergetTemp (should be false): " + this.setFromLoxone);
     }
     
+    
+    if(this.stateHeatingTemp == uuid){
+        this.heatingTargetTemp = value;
+    console.log("Got new state for heating target " + this.name + ": " + this.heatingTargetTemp);
+    
+    //also make sure this change is directly communicated to HomeKit
+    this.otherService
+    .getCharacteristic(this.homebridge.hap.Characteristic.HeatingThresholdTemperature)
+    .setValue(this.heatingTargetTemp);   
+        
+    }   
+    
+    if(this.stateCoolingTemp == uuid){
+        this.coolingTargetTemp = value;
+     console.log("Got new state for cooling target " + this.name + ": " + this.coolingTargetTemp);
+    //also make sure this change is directly communicated to HomeKit
+    this.otherService
+    .getCharacteristic(this.homebridge.hap.Characteristic.CoolingThresholdTemperature)
+    .setValue(this.coolingTargetTemp);   
+        
+    }   
+        
+        
     if(this.stateActual == uuid){
-    //this.currentTemperature = Math.round(value);
     this.currentTemperature = value;
     console.log("Got new state for Temp " + this.name + ": " + this.currentTemperature);
     
@@ -197,9 +223,20 @@ IRCV2Item.prototype.getTergetTemperature = function(callback) {
 IRCV2Item.prototype.getCurrentTemperature = function(callback) {
     callback(undefined, this.currentTemperature);
 };
+IRCV2Item.prototype.getCurrentTemperature = function(callback) {
+    callback(undefined, this.currentTemperature);
+};
 
 IRCV2Item.prototype.getTargetHeatingCoolingState = function(callback) {
     callback(undefined, this.targetHcState);
+};
+
+IRCV2Item.prototype.getCoolingTemperature = function(callback) {
+    callback(undefined, this.coolingTargetTemp);
+};
+
+IRCV2Item.prototype.getHeatingTemperature = function(callback) {
+    callback(undefined, this.heatingTargetTemp);
 };
 
 
