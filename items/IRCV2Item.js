@@ -40,7 +40,7 @@ IRCV2Item.prototype.initListener = function() {
 IRCV2Item.prototype.callBack = function(value, uuid) {
     //function that gets called by the registered ws listener
     console.log("Funtion value " + value + " " + uuid);
-       
+   /*    
     if(this.stateTarget == uuid){
         this.targetTemperature = value;
         console.log("Got new state for Target Temp " + this.name + ": " + value);
@@ -67,7 +67,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
                   );
         //console.log("Loxone State tergetTemp (should be false): " + this.setFromLoxone);
     }
-    
+    */
 if(this.stateCurrentMode == uuid){
        this.currentMode = value;
     console.log("Got new state for current mode " + this.name + ": " + this.currentMode);
@@ -101,27 +101,19 @@ if(this.stateCurrentMode == uuid){
         
         //also make sure this change is directly communicated to HomeKit
         this.setFromLoxone = true;
-        console.log("Loxone State heatingTargetTemp (should be true): " + this.setFromLoxone);
+     //   console.log("Loxone State heatingTargetTemp (should be true): " + this.setFromLoxone);
         this.otherService
         .getCharacteristic(this.homebridge.hap.Characteristic.HeatingThresholdTemperature)
         .setValue(this.heatingTargetTemp, function() {
                   this.setFromLoxone = false;
                   }.bind(this)
                   );
-        console.log("Loxone State tergetTemp (should be false): " + this.setFromLoxone);
-        
-        
+      //  console.log("Loxone State tergetTemp (should be false): " + this.setFromLoxone);
+                
     }   
     
     if(this.stateCoolingTemp == uuid){
-   /*     this.coolingTargetTemp = value;
-     console.log("Got new state for cooling target " + this.name + ": " + this.coolingTargetTemp);
-    //also make sure this change is directly communicated to HomeKit
-    this.otherService
-    .getCharacteristic(this.homebridge.hap.Characteristic.CoolingThresholdTemperature)
-    .setValue(this.coolingTargetTemp);   
-        
-     */   
+  
          this.coolingTargetTemp = value;
     //    console.log("Got new state for Target Cooling Temp " + this.name + ": " + value);
         
@@ -137,19 +129,16 @@ if(this.stateCurrentMode == uuid){
         
         //also make sure this change is directly communicated to HomeKit
         this.setFromLoxone = true;
-        console.log("Loxone State heatingTargetTemp (should be true): " + this.setFromLoxone);
+    //    console.log("Loxone State heatingTargetTemp (should be true): " + this.setFromLoxone);
         this.otherService
         .getCharacteristic(this.homebridge.hap.Characteristic.CoolingThresholdTemperature)
         .setValue(this.coolingTargetTemp, function() {
                   this.setFromLoxone = false;
                   }.bind(this)
                   );
-        console.log("Loxone State tergetTemp (should be false): " + this.setFromLoxone);
-        
-        
-        
-        
-        
+   //     console.log("Loxone State tergetTemp (should be false): " + this.setFromLoxone);
+          
+     
     }   
         
         
@@ -163,7 +152,7 @@ if(this.stateCurrentMode == uuid){
     .setValue(this.currentTemperature);
     
         // take a look what the valve is doing
-        if(this.currentTemperature > this.targetTemperature && this.currentTemperature != undefined && this.targetTemperature != undefined){
+        if(this.currentTemperature > this.coolingTargetTemp && this.currentTemperature != undefined && this.coolingTargetTemp != undefined){
             // Current Cooling
             console.log("Valve is cooling: " + this.name + " " + this.currentTemperature + " > " + this.targetTemperature);
             this.otherService
@@ -171,7 +160,7 @@ if(this.stateCurrentMode == uuid){
             .setValue(2);
         }
         
-        if(this.currentTemperature < this.targetTemperature && this.currentTemperature != undefined && this.targetTemperature != undefined){
+        if(this.currentTemperature < this.heatingTargetTemp && this.currentTemperature != undefined && this.heatingTargetTemp != undefined){
             // Current Heating
             console.log("Valve is heating: " + this.name + " " + this.currentTemperature + " < " + this.targetTemperature);
             this.otherService
@@ -179,7 +168,7 @@ if(this.stateCurrentMode == uuid){
             .setValue(1);
         }
         
-        if(this.currentTemperature == this.targetTemperature &&  this.currentTemperature != undefined && this.targetTemperature != undefined){
+        if(this.currentTemperature > this.heatingTargetTemp && this.currentTemperature < this.coolingTargetTemp && this.currentTemperature != undefined && this.coolingTargetTemp != undefined  && this.heatingTargetTemp != undefined){
             // Current Heating and Cooling off
             console.log("Valve is off: " + this.name + " " + this.currentTemperature + " = " + this.targetTemperature);
             this.otherService
