@@ -54,7 +54,7 @@ moduleexports.Factory.prototype.parseSitemap = function(jsonSitemap) {
 
     //this is the function that gets called by index.js
     //first, parse the Loxone JSON that holds all controls
-	this.log(jsonSitemap)
+	
     moduleexports.Factory.prototype.traverseSitemap(jsonSitemap, this);
     //now convert these controls in accessories
     const accessoryList = [];
@@ -72,9 +72,9 @@ moduleexports.Factory.prototype.parseSitemap = function(jsonSitemap) {
                 this.log(`Platform - The widget '${this.itemList[key].name}' of type ${this.itemList[key].type} was skipped.`);
                 continue;
             }
-
+		this.log(`Platform - Accessory Found: ${this.itemList[key].name} of type ${this.itemList[key].type}`);
             const accessory = new moduleexports[this.itemList[key].type](this.itemList[key], this.platform, this.homebridge);
-            this.log(`Platform - Accessory Found: ${this.itemList[key].name}`);
+            this.log(`Platform - Accessory added: ${this.itemList[key].name} of type ${this.itemList[key].type}`);
 
             if (accessoryList.length > 99) {
                 // https://github.com/nfarina/homebridge/issues/509
