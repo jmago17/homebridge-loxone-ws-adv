@@ -15,7 +15,7 @@ const AbstractItem = function(widget,platform,homebridge) {
     //other variables used by child classes
     this.setFromLoxone = false;
     
-	console.log("Generating new homebridge accessory '" + this.name + " type " +this.type + "' with UUID: " + this.UUID + " from accessory with ID: " + widget.uuidAction);
+	console.log("Generating new homebridge accessory '" + this.name + "' with UUID: " + this.UUID + " from accessory with ID: " + widget.uuidAction);
 
     //Add as ACCESSORY (parent class)
     //AbstractItem.super_.call(this, this.name, this.UUID);
