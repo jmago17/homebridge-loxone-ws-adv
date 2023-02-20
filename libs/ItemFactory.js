@@ -54,6 +54,7 @@ moduleexports.Factory.prototype.parseSitemap = function(jsonSitemap) {
 
     //this is the function that gets called by index.js
     //first, parse the Loxone JSON that holds all controls
+	this.log(jsonSitemap)
     moduleexports.Factory.prototype.traverseSitemap(jsonSitemap, this);
     //now convert these controls in accessories
     const accessoryList = [];
