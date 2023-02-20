@@ -9,7 +9,7 @@ var IRCV2Item = function(widget,platform,homebridge) {
     this.platform = platform;
     this.uuidAction = widget.uuidAction;
     this.stateActual = widget.states.tempActual;
-    this.stateTarget = widget.states.tempTarget;
+    // this.stateTarget = widget.states.tempTarget;
     this.stateMode = widget.states.activeMode;
     this.stateHeatingTemp = widget.states.comfortTemperature;
     this.stateCoolingTemp = widget.states.comfortTemperatureCool;
@@ -25,7 +25,7 @@ IRCV2Item.prototype.initListener = function() {
     this.platform.ws.registerListenerForUUID(this.stateActual, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateHeatingTemp, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateCoolingTemp, this.callBack.bind(this));
-    this.platform.ws.registerListenerForUUID(this.stateTarget, this.callBack.bind(this));
+    //this.platform.ws.registerListenerForUUID(this.stateTarget, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateMode, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.operatingMode, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.targetOperatingState, this.callBack.bind(this));
@@ -38,7 +38,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
     //function that gets called by the registered ws listener
     console.log("Funtion value " + value + " " + uuid);
        
-    if(this.stateTarget == uuid){
+   /* if(this.stateTarget == uuid){
         this.targetTemperature = value;
         console.log("Got new state for Target Temp " + this.name + ": " + value);
         
@@ -64,26 +64,83 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
                   );
         //console.log("Loxone State tergetTemp (should be false): " + this.setFromLoxone);
     }
-    
+    */
     
     if(this.stateHeatingTemp == uuid){
-        this.heatingTargetTemp = value;
+/*        this.heatingTargetTemp = value;
     console.log("Got new state for heating target " + this.name + ": " + this.heatingTargetTemp);
     
     //also make sure this change is directly communicated to HomeKit
     this.otherService
     .getCharacteristic(this.homebridge.hap.Characteristic.HeatingThresholdTemperature)
     .setValue(this.heatingTargetTemp);   
+  */      
+        
+        this.heatingTargetTemp = value;
+        console.log("Got new state for Target Heating Temp " + this.name + ": " + value);
+        
+        if(this.heatingTargetTemperature < "10"){
+            // min Value of Thermostat
+            this.heatingTargetTemp = 10;
+        }
+        
+        if(this.heatingTargetTemp > "38"){
+            // max Value of Thermostat
+            this.heatingTargetTemp = 38;
+        }
+        
+        //also make sure this change is directly communicated to HomeKit
+        this.setFromLoxone = true;
+        console.log("Loxone State heatingTargetTemp (should be true): " + this.setFromLoxone);
+        this.otherService
+        .getCharacteristic(this.homebridge.hap.Characteristic.HeatingThresholdTemperature)
+        .setValue(this.heatingTargetTemp,
+                  function() {
+                  this.setFromLoxone = false;
+                  }.bind(this)
+                  );
+        //console.log("Loxone State tergetTemp (should be false): " + this.setFromLoxone);
+        
         
     }   
     
     if(this.stateCoolingTemp == uuid){
-        this.coolingTargetTemp = value;
+   /*     this.coolingTargetTemp = value;
      console.log("Got new state for cooling target " + this.name + ": " + this.coolingTargetTemp);
     //also make sure this change is directly communicated to HomeKit
     this.otherService
     .getCharacteristic(this.homebridge.hap.Characteristic.CoolingThresholdTemperature)
     .setValue(this.coolingTargetTemp);   
+        
+     */   
+         this.coolingTargetTemp = value;
+        console.log("Got new state for Target Cooling Temp " + this.name + ": " + value);
+        
+        if(this.coolingTargetTemp < "10"){
+            // min Value of Thermostat
+            this.heatingTargetTemp = 10;
+        }
+        
+        if(this.coolingTargetTemp > "38"){
+            // max Value of Thermostat
+            this.heatingTargetTemp = 38;
+        }
+        
+        //also make sure this change is directly communicated to HomeKit
+        this.setFromLoxone = true;
+        console.log("Loxone State heatingTargetTemp (should be true): " + this.setFromLoxone);
+        this.otherService
+        .getCharacteristic(this.homebridge.hap.Characteristic.CoolingThresholdTemperature)
+        .setValue(this.coolingTargetTemp,
+                  function() {
+                  this.setFromLoxone = false;
+                  }.bind(this)
+                  );
+        //console.log("Loxone State tergetTemp (should be false): " + this.setFromLoxone);
+        
+        
+        
+        
         
     }   
         
@@ -197,12 +254,12 @@ IRCV2Item.prototype.getOtherServices = function() {
     this.setInitialState = true;
     
     var otherService = new this.homebridge.hap.Service.Thermostat();
-    
+    /*
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.TargetTemperature)
     .on('set', this.setTergetTemperature.bind(this))
     .on('get', this.getTergetTemperature.bind(this))
     .setValue(this.targetTemperature);
-    
+    */
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.CoolingThresholdTemperature)
     .on('set', this.setCoolingTemperature.bind(this))
     .on('get', this.getCoolingTemperature.bind(this))
@@ -226,9 +283,9 @@ IRCV2Item.prototype.getOtherServices = function() {
     return otherService;
 };
 
-IRCV2Item.prototype.getTergetTemperature = function(callback) {
+/*IRCV2Item.prototype.getTergetTemperature = function(callback) {
    callback(undefined, this.targetTemperature);
-};
+};*/
 
 IRCV2Item.prototype.getCurrentTemperature = function(callback) {
     callback(undefined, this.currentTemperature);
@@ -397,7 +454,7 @@ IRCV2Item.prototype.setCoolingTemperature = function(Value, callback) {
         callback();
     
 }
-
+/*
 IRCV2Item.prototype.setTergetTemperature = function(Value, callback) {
     
     //sending new state (Value) to loxone
@@ -436,7 +493,7 @@ IRCV2Item.prototype.setTergetTemperature = function(Value, callback) {
         //this.log(this.name + " Command " + command);
         callback();
     
-  }
+  }*/
     
   
 module.exports = IRCV2Item;
