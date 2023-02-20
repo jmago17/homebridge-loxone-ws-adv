@@ -186,24 +186,6 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
         console.log("Got new state for Mode " + this.name + ": " + value)
         switch (value) {
             case 0:
-                this.targetHcState = 3;
-                this.setFromLoxone = true;
-                this.otherService
-                .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
-                .setValue(this.targetHcState, function() {
-                          this.setFromLoxone = false;
-                          }.bind(this));
-                return;
-            case 1:
-                this.targetHcState = 3;
-                this.setFromLoxone = true;
-                this.otherService
-                .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
-                .setValue(this.targetHcState, function() {
-                          this.setFromLoxone = false;
-                          }.bind(this));
-                return;
-            case 2:
                 this.targetHcState = 0;
                 this.setFromLoxone = true;
                 this.otherService
@@ -212,7 +194,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
                           this.setFromLoxone = false;
                           }.bind(this));
                 return;
-            case 3:
+            case 1:
                 this.targetHcState = 1;
                 this.setFromLoxone = true;
                 this.otherService
@@ -221,6 +203,41 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
                           this.setFromLoxone = false;
                           }.bind(this));
                 return;
+            case 2:
+                this.targetHcState = 2;
+                this.setFromLoxone = true;
+                this.otherService
+                .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
+                .setValue(this.targetHcState, function() {
+                          this.setFromLoxone = false;
+                          }.bind(this));
+                return;
+            case 3:
+                this.targetHcState = 0;
+                this.setFromLoxone = true;
+                this.otherService
+                .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
+                .setValue(this.targetHcState, function() {
+                          this.setFromLoxone = false;
+                          }.bind(this));
+                return;
+                case 4:
+                this.targetHcState = 1;
+                this.setFromLoxone = true;
+                this.otherService
+                .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
+                .setValue(this.targetHcState, function() {
+                          this.setFromLoxone = false;
+                          }.bind(this));
+                return;
+                      case 5:
+                this.targetHcState = 2;
+                this.setFromLoxone = true;
+                this.otherService
+                .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
+                .setValue(this.targetHcState, function() {
+                          this.setFromLoxone = false;
+                          }.bind(this));
            
         }
     }
