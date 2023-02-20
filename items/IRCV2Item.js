@@ -204,13 +204,13 @@ IRCV2Item.prototype.getOtherServices = function() {
     .setValue(this.targetTemperature);
     
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.CoolingThresholdTemperature)
-    .on('set', this.setCoolingTemperature.bind(this))
-    .on('get', this.getCoolingTemperature.bind(this))
+    .on('set', this.setCoolingThresholdTemperature.bind(this))
+    .on('get', this.getCoolingThresholdTemperature.bind(this))
     .setValue(this.coolingTargetTemp);
     
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.HeatingThresholdTemperature)
-    .on('set', this.setHeatingTemperature.bind(this))
-    .on('get', this.getHeatingTemperature.bind(this))
+    .on('set', this.setHeatingThresholdTemperature.bind(this))
+    .on('get', this.getHeatingThresholdTemperature.bind(this))
     .setValue(this.heatingTargetTemp);
     
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
