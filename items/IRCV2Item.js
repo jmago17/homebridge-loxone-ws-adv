@@ -256,7 +256,7 @@ if(this.stateCurrentMode == uuid){
 
 IRCV2Item.prototype.getOtherServices = function() {
     //setting variable to skip update for intial Value
-    this.setInitialState = false;
+    this.setInitialState = true;
     
     var otherService = new this.homebridge.hap.Service.Thermostat();
     /*
