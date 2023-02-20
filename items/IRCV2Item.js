@@ -437,7 +437,7 @@ IRCV2Item.prototype.setCoolingTemperature = function(Value, callback) {
     
     var self = this;
     
-    console.log("TemperatureItem setManualCoolingTemperature: " + this.heaingTargetTemp);
+    console.log("TemperatureItem setManualCoolingTemperature: " + this.coolingTargetTemp);
     
     if (this.setInitialState) {
         this.setInitialState = false;
