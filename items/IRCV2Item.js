@@ -3,17 +3,17 @@
 var request = require("request");
 
 
-var ThermostatItem = function(widget,platform,homebridge) {
+var IRCV2Item = function(widget,platform,homebridge) {
 
     this.platform = platform;
     this.widget =  widget.uuidAction;
     
        
-    ThermostatItem.super_.call(this, widget,platform,homebridge);
+    IRCV2Item.super_.call(this, widget,platform,homebridge);
 };
     
 // Register a listener to be notified of changes in this items value
-ThermostatItem.prototype.initListener = function() {
+IRCV2Item.prototype.initListener = function() {
  //   this.platform.ws.registerListenerForUUID(this.stateActual, this.callBack.bind(this));
    // this.platform.ws.registerListenerForUUID(this.stateTarget, this.callBack.bind(this));
    // this.platform.ws.registerListenerForUUID(this.stateMode, this.callBack.bind(this));
@@ -24,7 +24,7 @@ ThermostatItem.prototype.initListener = function() {
 };
 
 
-ThermostatItem.prototype.callBack = function(value, uuid) {
+IRCV2Item.prototype.callBack = function(value, uuid) {
     //function that gets called by the registered ws listener
     console.log("Funtion value " + value + " " + uuid);
        
@@ -159,7 +159,7 @@ ThermostatItem.prototype.callBack = function(value, uuid) {
 
 
 
-ThermostatItem.prototype.getOtherServices = function() {
+IRCV2Item.prototype.getOtherServices = function() {
     //setting variable to skip update for intial Value
     this.setInitialState = true;
     
@@ -183,20 +183,20 @@ ThermostatItem.prototype.getOtherServices = function() {
     return otherService;
 };
 
-ThermostatItem.prototype.getTergetTemperature = function(callback) {
+IRCV2Item.prototype.getTergetTemperature = function(callback) {
    callback(undefined, this.targetTemperature);
 };
 
-ThermostatItem.prototype.getCurrentTemperature = function(callback) {
+IRCV2Item.prototype.getCurrentTemperature = function(callback) {
     callback(undefined, this.currentTemperature);
 };
 
-ThermostatItem.prototype.getTargetHeatingCoolingState = function(callback) {
+IRCV2Item.prototype.getTargetHeatingCoolingState = function(callback) {
     callback(undefined, this.targetHcState);
 };
 
 
-ThermostatItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
+IRCV2Item.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
     
     //sending new state (ValueHc) to loxone
     //added some logic to prevent a loop when the change because of external event captured by callback
@@ -270,7 +270,7 @@ ThermostatItem.prototype.setTargetHeatingCoolingState = function(ValueHc, callba
 }
 
 
-ThermostatItem.prototype.setTergetTemperature = function(Value, callback) {
+IRCV2Item.prototype.setTergetTemperature = function(Value, callback) {
     
     //sending new state (Value) to loxone
     //added some logic to prevent a loop when the change because of external event captured by callback
@@ -311,4 +311,4 @@ ThermostatItem.prototype.setTergetTemperature = function(Value, callback) {
   }
     
   
-module.exports = ThermostatItem;
+module.exports = IRCV2Item;
