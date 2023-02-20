@@ -186,7 +186,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
         console.log("Got new state for Mode " + this.name + ": " + value)
         switch (value) {
             case 0:
-                this.targetHcState = 0;
+                this.targetHcState = 3;
                 this.setFromLoxone = true;
                 this.otherService
                 .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
