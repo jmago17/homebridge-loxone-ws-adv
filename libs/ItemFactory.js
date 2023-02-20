@@ -25,7 +25,7 @@ moduleexports.LightSensor = require('../items/LightSensorItem.js');
 moduleexports.TemperatureItem = require('../items/TemperatureItem.js');
 moduleexports.Alarm = require('../items/Alarm.js');
 moduleexports.TemperatureItemActual = require('../items/TemperatureItem.js');
-moduleexports.IRoomControllerV2 = require('../items/IRCV2Item.js');
+moduleexports.IRoomControllerV2 = require('../items/iRoomControllerV2.js');
 moduleexports.Outlet = require('../items/Outlet.js');
 moduleexports.MusicSwitch = require('../items/MusicSwitchItem.js');
 moduleexports.Factory = function(LoxPlatform, homebridge) {
@@ -54,7 +54,6 @@ moduleexports.Factory.prototype.parseSitemap = function(jsonSitemap) {
 
     //this is the function that gets called by index.js
     //first, parse the Loxone JSON that holds all controls
-	
     moduleexports.Factory.prototype.traverseSitemap(jsonSitemap, this);
     //now convert these controls in accessories
     const accessoryList = [];
@@ -72,9 +71,9 @@ moduleexports.Factory.prototype.parseSitemap = function(jsonSitemap) {
                 this.log(`Platform - The widget '${this.itemList[key].name}' of type ${this.itemList[key].type} was skipped.`);
                 continue;
             }
-		this.log(`Platform - Accessory Found: ${this.itemList[key].name} of type ${this.itemList[key].type}`);
+
             const accessory = new moduleexports[this.itemList[key].type](this.itemList[key], this.platform, this.homebridge);
-            this.log(`Platform - Accessory added: ${this.itemList[key].name} of type ${this.itemList[key].type}`);
+            this.log(`Platform - Accessory Found: ${this.itemList[key].name}`);
 
             if (accessoryList.length > 99) {
                 // https://github.com/nfarina/homebridge/issues/509
