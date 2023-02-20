@@ -9,11 +9,11 @@ var IRCV2Item = function(widget,platform,homebridge) {
     this.platform = platform;
     this.uuidAction = widget.uuidAction;
     this.stateActual = widget.states.tempActual;
-    // this.stateTarget = widget.states.tempTarget;
+    this.stateOverride = widget.states.OverrideEntries;
     this.stateMode = widget.states.operatingMode;
     this.stateHeatingTemp = widget.states.comfortTemperature;
     this.stateCoolingTemp = widget.states.comfortTemperatureCool;
-  //  this.operatingMode = widget.states.operatingMode;   
+    this.stateCurrentMode = widget.states.currentMode;   
     // this.targetOperatingState = widget.states.operatingMode;
     this.ServiceValue = undefined;
        
@@ -25,8 +25,9 @@ IRCV2Item.prototype.initListener = function() {
     this.platform.ws.registerListenerForUUID(this.stateActual, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateHeatingTemp, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateCoolingTemp, this.callBack.bind(this));
-    //this.platform.ws.registerListenerForUUID(this.stateTarget, this.callBack.bind(this));
+    this.platform.ws.registerListenerForUUID(this.stateOverride, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateMode, this.callBack.bind(this));
+    this.platform.ws.registerListenerForUUID(this.stateCurrentMode, this.callBack.bind(this));
     //this.platform.ws.registerListenerForUUID(this.operatingMode, this.callBack.bind(this));
  //   this.platform.ws.registerListenerForUUID(this.targetOperatingState, this.callBack.bind(this));
     
@@ -65,6 +66,21 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
         //console.log("Loxone State tergetTemp (should be false): " + this.setFromLoxone);
     }
     */
+if(this.stateCurrentMode == uuid){
+       this.currentMode = value;
+    console.log("Got new state for current mode " + this.name + ": " + this.currentMode);
+    
+    //also make sure this change is directly communicated to HomeKit
+    
+}          
+    
+    if(this.stateOverride == uuid){
+       this.stateOverride = value;
+    console.log("Got new state for override " + this.name + ": " + this.stateOverride);
+    
+    //also make sure this change is directly communicated to HomeKit
+   
+} 
     
     if(this.stateHeatingTemp == uuid){
 /*        this.heatingTargetTemp = value;
