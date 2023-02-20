@@ -6,21 +6,8 @@ var request = require("request");
 var ThermostatItem = function(widget,platform,homebridge) {
 
     this.platform = platform;
-    this.widget =  widget;
-    this.name = widget.name;
-    this.UUID = homebridge.hap.uuid.generate(String(widget.uuidAction));
+    this.widget =  widget.uuidAction;
     
-    // provide explicit UUID to prevent automatic UUID generation by homebridge (which would fail because of possibly equal item name)
-    this.uuid_base = this.UUID;
-
-    //other variables used by child classes
-    this.setFromLoxone = false;
-    
-	console.log("Generating new homebridge accessory '" + this.name + "' with UUID: " + this.UUID + " from accessory with ID: " + widget.uuidAction);
-
-    //Add as ACCESSORY (parent class)
-    //AbstractItem.super_.call(this, this.name, this.UUID);
-    new homebridge.platformAccessory(this.name, this.UUID);
        
     ThermostatItem.super_.call(this, widget,platform,homebridge);
 };
