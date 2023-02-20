@@ -93,7 +93,7 @@ if(this.stateCurrentMode == uuid){
   */      
         
         this.heatingTargetTemp = value;
-        console.log("Got new state for Target Heating Temp " + this.name + ": " + value);
+      //  console.log("Got new state for Target Heating Temp " + this.name + ": " + value);
         
         if(this.heatingTargetTemperature < "10"){
             // min Value of Thermostat
@@ -107,7 +107,7 @@ if(this.stateCurrentMode == uuid){
         
         //also make sure this change is directly communicated to HomeKit
         this.setFromLoxone = true;
-        console.log("Loxone State heatingTargetTemp (should be true): " + this.setFromLoxone);
+     //   console.log("Loxone State heatingTargetTemp (should be true): " + this.setFromLoxone);
         this.otherService
         .getCharacteristic(this.homebridge.hap.Characteristic.HeatingThresholdTemperature)
         .setValue(this.heatingTargetTemp,
@@ -130,7 +130,7 @@ if(this.stateCurrentMode == uuid){
         
      */   
          this.coolingTargetTemp = value;
-        console.log("Got new state for Target Cooling Temp " + this.name + ": " + value);
+    //    console.log("Got new state for Target Cooling Temp " + this.name + ": " + value);
         
         if(this.coolingTargetTemp < "10"){
             // min Value of Thermostat
@@ -144,7 +144,7 @@ if(this.stateCurrentMode == uuid){
         
         //also make sure this change is directly communicated to HomeKit
         this.setFromLoxone = true;
-        console.log("Loxone State heatingTargetTemp (should be true): " + this.setFromLoxone);
+      //  console.log("Loxone State heatingTargetTemp (should be true): " + this.setFromLoxone);
         this.otherService
         .getCharacteristic(this.homebridge.hap.Characteristic.CoolingThresholdTemperature)
         .setValue(this.coolingTargetTemp,
@@ -163,7 +163,7 @@ if(this.stateCurrentMode == uuid){
         
     if(this.stateActual == uuid){
     this.currentTemperature = value;
-    console.log("Got new state for Temp " + this.name + ": " + this.currentTemperature);
+    console.log("Got new state  " + this.name + ": " + this.currentTemperature);
     
     //also make sure this change is directly communicated to HomeKit
     this.otherService
