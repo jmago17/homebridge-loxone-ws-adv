@@ -180,26 +180,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
         }
     }
     
-    if(this.operatingMode == uuid){
-        //console.log("Service Value = " + value);
-        this.operatingModeValue == value;
-        
-        if(value == "1") {
-            
-           console.log("Service Mode = All off for: " + this.name);
-            this.setFromLoxone = true;
-            this.otherService
-            .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
-            .setValue(0, function() {
-                      this.setFromLoxone = false;
-                      }.bind(this));
-            
-            this.otherService
-            .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
-            .setValue(0);
-            
-        }
-    }
+   
     
     if(this.stateMode == uuid){
         console.log("Got new state for Mode " + this.name + ": " + value)
