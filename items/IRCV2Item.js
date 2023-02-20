@@ -426,7 +426,7 @@ IRCV2Item.prototype.setHeatingTemperature = function(Value, callback) {
     }
      var command = "setComfortTemperature/" + Value; //Loxone expects a Value between 10 and 38
         this.platform.ws.sendCommand(this.uuidAction, command);
-        //this.log(this.name + " Command " + command);
+        this.log(this.name + " Command " + command);
         callback();
     
 }
@@ -465,7 +465,7 @@ IRCV2Item.prototype.setCoolingTemperature = function(Value, callback) {
     }
      var command = "setComfortTemperatureCool/" + Value; //Loxone expects a Value between 10 and 38
         this.platform.ws.sendCommand(this.uuidAction, command);
-        //this.log(this.name + " Command " + command);
+        this.log(this.name + " Command " + command);
         callback();
     
 }
