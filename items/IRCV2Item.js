@@ -321,6 +321,7 @@ IRCV2Item.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
     
     if (this.setInitialState) {
         this.setInitialState = false;
+        console.log("setManualCoolingTemperature initial state = true");
         callback();
         return;
     }
@@ -392,6 +393,7 @@ IRCV2Item.prototype.setHeatingTemperature = function(Value, callback) {
    console.log("TemperatureItem setHeatingTemperature: " + Value);  
     if (this.setInitialState) {
         this.setInitialState = false;
+        console.log("setManualCoolingTemperature initial state = true");
         callback();
         return;
     }
@@ -431,6 +433,7 @@ IRCV2Item.prototype.setCoolingTemperature = function(Value, callback) {
     
     if (this.setInitialState) {
         this.setInitialState = false;
+        console.log("setManualCoolingTemperature initial state = true");
         callback();
         return;
     }
