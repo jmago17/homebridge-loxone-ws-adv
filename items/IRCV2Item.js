@@ -10,10 +10,10 @@ var IRCV2Item = function(widget,platform,homebridge) {
     this.uuidAction = widget.uuidAction;
     this.stateActual = widget.states.tempActual;
     // this.stateTarget = widget.states.tempTarget;
-    this.stateMode = widget.states.activeMode;
+    this.stateMode = widget.states.operatingMode;
     this.stateHeatingTemp = widget.states.comfortTemperature;
     this.stateCoolingTemp = widget.states.comfortTemperatureCool;
-    this.operatingMode = widget.states.operatingMode;   
+  //  this.operatingMode = widget.states.operatingMode;   
     this.targetOperatingState = widget.states.operatingMode;
     this.ServiceValue = undefined;
        
@@ -27,7 +27,7 @@ IRCV2Item.prototype.initListener = function() {
     this.platform.ws.registerListenerForUUID(this.stateCoolingTemp, this.callBack.bind(this));
     //this.platform.ws.registerListenerForUUID(this.stateTarget, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateMode, this.callBack.bind(this));
-    this.platform.ws.registerListenerForUUID(this.operatingMode, this.callBack.bind(this));
+    //this.platform.ws.registerListenerForUUID(this.operatingMode, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.targetOperatingState, this.callBack.bind(this));
     
        
