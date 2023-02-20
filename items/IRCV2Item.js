@@ -398,8 +398,8 @@ IRCV2Item.prototype.setHeatingTemperature = function(Value, callback) {
     
     var self = this;
     
-    console.log("TemperatureItem setHeatingTemperature: " + this.coolingTargetTemp);
-    
+    console.log("TemperatureItem setHeatingTemperature: " + this.heatingTargetTemp);
+   console.log("TemperatureItem setHeatingTemperature: " + Value);  
     if (this.setInitialState) {
         this.setInitialState = false;
         callback();
