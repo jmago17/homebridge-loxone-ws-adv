@@ -498,7 +498,7 @@ IRCV2Item.prototype.setHeatingTemperature = function(Value, callback) {
    		 //console.log("date 2010 in seconds" + date2009.getTime())
       
    		 var datenow = new Date();
-   		 datetomorrow.setHours(0,0);
+   	
  		   //console.log("date now in seconds" + datenow.getTime())
  		  let timer = Math.round((Math.abs(datenow - date2009))/1000 + 6000);
  		  var command = "override/2/"+ timer; 
