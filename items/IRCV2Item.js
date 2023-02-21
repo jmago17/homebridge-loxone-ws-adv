@@ -14,7 +14,8 @@ var IRCV2Item = function(widget,platform,homebridge) {
     this.stateTarget = widget.states.temptarget;
     this.stateHeatingTemp = widget.states.comfortTemperature;
     this.stateCoolingTemp = widget.states.comfortTemperatureCool;
-    this.stateCurrentMode = widget.states.currentMode;   
+    this.stateCurrentMode = widget.states.currentMode;  
+    this.stateActiveMode =  widget.states.ActiveMode;   
     // this.targetOperatingState = widget.states.operatingMode;
     this.ServiceValue = undefined;
        
@@ -30,6 +31,7 @@ IRCV2Item.prototype.initListener = function() {
     this.platform.ws.registerListenerForUUID(this.stateOverride, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateMode, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateCurrentMode, this.callBack.bind(this));
+    this.platform.ws.registerListenerForUUID(this.stateActiveMode, this.callBack.bind(this));
     //this.platform.ws.registerListenerForUUID(this.operatingMode, this.callBack.bind(this));
  //   this.platform.ws.registerListenerForUUID(this.targetOperatingState, this.callBack.bind(this));
     
@@ -68,6 +70,14 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
         //console.log("Loxone State tergetTemp (should be false): " + this.setFromLoxone);
     }
     */
+    
+    if(this.stateActiveMode == uuid){
+       this.activeMode = value;
+    console.log("Got new state for current mode " + this.name + ": " + this.activeMode);
+    
+    //also make sure this change is directly communicated to HomeKit
+    
+}       
 if(this.stateCurrentMode == uuid){
        this.currentMode = value;
     console.log("Got new state for current mode " + this.name + ": " + this.currentMode);
