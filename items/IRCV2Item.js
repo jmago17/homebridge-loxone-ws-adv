@@ -57,8 +57,8 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
 		     console.log("economy mode enabled");
 		     this.manual = false;     
               this.targetHcState = 3;
-		this.heatingTargetTemp = this.heatingTargetTemp - this.EcoMaxTempOffset;
-		this.coolingTargetTemp = this.coolingTargetTemp + this.EcoMinTempOffset;
+		this.heatingTargetTemp = this.heatingTargetTemp - this.EcoMinTempOffset;
+		this.coolingTargetTemp = this.coolingTargetTemp + this.EcoMaxTempOffset;
               this.setFromLoxone = true;
                 this.otherService
                 .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
@@ -533,7 +533,11 @@ IRCV2Item.prototype.setHeatingTemperature = function(Value, callback) {
         callback();
         return;
     }
-     var command = "setComfortTemperature/" + Value; //Loxone expects a Value between 10 and 38
+	if(this.economymode){
+		var temperature = Value + this.EcoMaxTempOffset;
+	}
+	else{ var temperature = Value;}
+     var command = "setComfortTemperature/" + temperature; //Loxone expects a Value between 10 and 38
         this.platform.ws.sendCommand(this.uuidAction, command);
         this.log(this.name + " Command " + command);
         callback();
@@ -573,7 +577,12 @@ IRCV2Item.prototype.setCoolingTemperature = function(Value, callback) {
         callback();
         return;
     }
-     var command = "setComfortTemperatureCool/" + Value; //Loxone expects a Value between 10 and 38
+	
+	if(this.economymode){
+		var temperature = Value - this.EcoMinTempOffset;
+	}
+	else{ var temperature = Value;}
+     var command = "setComfortTemperatureCool/" + temperature; //Loxone expects a Value between 10 and 38
         this.platform.ws.sendCommand(this.uuidAction, command);
         this.log(this.name + " Command " + command);
         callback();
