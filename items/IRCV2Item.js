@@ -101,7 +101,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
              case 3:
                 this.manual = true;
 		this.economymode = false;
-		this.targetHcState = 3;
+		this.targetHcState = 1;
                 this.setFromLoxone = true;
                 this.otherService
                 .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
