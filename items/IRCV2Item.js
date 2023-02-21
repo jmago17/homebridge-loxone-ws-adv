@@ -57,6 +57,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
 		     console.log("economy mode enabled");
 		     this.manual = false;     
               this.targetHcState = 3;
+		     this.heatingTargetTemp = this.heatingTargetTemp + this.EcoMaxTempOffset;
                 this.setFromLoxone = true;
                 this.otherService
                 .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
