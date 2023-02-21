@@ -279,12 +279,12 @@ IRCV2Item.prototype.getOtherServices = function() {
     this.setInitialState = true;
     
     var otherService = new this.homebridge.hap.Service.Thermostat();
-    /*
+    
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.TargetTemperature)
     .on('set', this.setTergetTemperature.bind(this))
     .on('get', this.getTergetTemperature.bind(this))
     .setValue(this.targetTemperature);
-    */
+    
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.CoolingThresholdTemperature)
     .on('set', this.setCoolingTemperature.bind(this))
     .on('get', this.getCoolingTemperature.bind(this))
@@ -308,9 +308,9 @@ IRCV2Item.prototype.getOtherServices = function() {
     return otherService;
 };
 
-/*IRCV2Item.prototype.getTergetTemperature = function(callback) {
+IRCV2Item.prototype.getTergetTemperature = function(callback) {
    callback(undefined, this.targetTemperature);
-};*/
+};
 
 IRCV2Item.prototype.getCurrentTemperature = function(callback) {
     callback(undefined, this.currentTemperature);
@@ -413,6 +413,48 @@ IRCV2Item.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
         callback();
     }
 }
+
+IRCV2Item.prototype.setTergetTemperature = function(Value, callback) {
+    //sending new state (Value) to loxone
+    //added some logic to prevent a loop when the change because of external event captured by callback
+    
+    var self = this;
+    
+    console.log("TemperatureItem setTergetTemperature: " + this.heatingTargetTemp);
+   console.log("TemperatureItem setTergetTemperature: " + Value);  
+    if (this.setInitialState) {
+        this.setInitialState = false;
+        console.log("setManualCoolingTemperature initial state = true");
+        callback();
+        return;
+    }
+    
+    if (this.setFromLoxone) {
+        console.log("setHeatingTemperature setFromLoxone");
+        callback();
+        return;
+    }
+    
+    if(Value == undefined) {
+        //happens at initial load
+        callback();
+        return;
+    }
+    
+      
+    if(this.targetHcState == undefined) {
+        //happens at initial load
+        callback();
+        return;
+    }
+     var command = "setManualTemperature/" + Value; //Loxone expects a Value between 10 and 38
+        this.platform.ws.sendCommand(this.uuidAction, command);
+        this.log(this.name + " Command " + command);
+        callback();
+    
+}
+
+
 
 IRCV2Item.prototype.setHeatingTemperature = function(Value, callback) {
     //sending new state (Value) to loxone
