@@ -46,33 +46,6 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
     //function that gets called by the registered ws listener
     console.log("Funtion value " + value + " " + uuid);
        
-    if(this.stateTarget == uuid){
-        this.targetTemperature = value;
-        console.log("Got new state for Target Temp " + this.name + ": " + this.targetTemperature);
-        
-        if(this.targetTemperature < "10"){
-            // min Value of Thermostat
-            this.targetTemperature = 10;
-        }
-        
-        if(this.targetTemperature > "38"){
-            // max Value of Thermostat
-            this.targetTemperature = 38;
-        }
-        
-        //also make sure this change is directly communicated to HomeKit
-        this.setFromLoxone = true;
-        //console.log("Loxone State tergetTemp (should be true): " + this.setFromLoxone);
-        this.otherService
-        .getCharacteristic(this.homebridge.hap.Characteristic.TargetTemperature)
-        .setValue(this.targetTemperature,
-                  function() {
-                  this.setFromLoxone = false;
-                  }.bind(this)
-                  );
-        //console.log("Loxone State tergetTemp (should be false): " + this.setFromLoxone);
-    }
-    
     
     if(this.stateActiveMode == uuid){
        this.activeMode = value;
@@ -128,6 +101,36 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
     //also make sure this change is directly communicated to HomeKit
    
 }
+    if(this.stateTarget == uuid){
+	    if(this.economymode){}
+	    else{
+        this.targetTemperature = value;
+        console.log("Got new state for Target Temp " + this.name + ": " + this.targetTemperature);
+        
+        if(this.targetTemperature < "10"){
+            // min Value of Thermostat
+            this.targetTemperature = 10;
+        }
+        
+        if(this.targetTemperature > "38"){
+            // max Value of Thermostat
+            this.targetTemperature = 38;
+        }
+        
+        //also make sure this change is directly communicated to HomeKit
+        this.setFromLoxone = true;
+        //console.log("Loxone State tergetTemp (should be true): " + this.setFromLoxone);
+        this.otherService
+        .getCharacteristic(this.homebridge.hap.Characteristic.TargetTemperature)
+        .setValue(this.targetTemperature,
+                  function() {
+                  this.setFromLoxone = false;
+                  }.bind(this)
+                  );
+        //console.log("Loxone State tergetTemp (should be false): " + this.setFromLoxone);
+	    }
+    }
+    
     
     if(this.stateHeatingTemp == uuid){
      if(this.economymode) { this.heatingTargetTemp = value + this.EcoMaxTempOffset;}   
