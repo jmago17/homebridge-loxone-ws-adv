@@ -329,6 +329,7 @@ IRCV2Item.prototype.getHeatingTemperature = function(callback) {
 };
 
 
+
 IRCV2Item.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
     
     //sending new state (ValueHc) to loxone
