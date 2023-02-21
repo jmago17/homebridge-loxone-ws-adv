@@ -86,6 +86,16 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
                 .setValue(this.targetHcState, function() {
                           this.setFromLoxone = false;
                           }.bind(this));
+		      this.otherService
+                 .getCharacteristic(this.homebridge.hap.Characteristic.HeatingThresholdTemperature)
+       		 .setValue(this.heatingTargetTemp, function() {
+                  this.setFromLoxone = false;
+                  }.bind(this));
+			   this.otherService
+             .getCharacteristic(this.homebridge.hap.Characteristic.CoolingThresholdTemperature)
+             .setValue(this.coolingTargetTemp, function() {
+                  this.setFromLoxone = false;
+                  }.bind(this)); 
               return;
              case 2:
                 this.targetHcState = 0;
@@ -97,6 +107,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
                 .setValue(this.targetHcState, function() {
                           this.setFromLoxone = false;
                           }.bind(this));
+		     
               return;
              case 3:
                 this.manual = true;
@@ -480,7 +491,7 @@ IRCV2Item.prototype.setHeatingTemperature = function(Value, callback) {
         return;
     }
 	if(this.economymode){
-		var temperature = Value + this.EcoMaxTempOffset;
+		var temperature = Value + this.EcoMaxTempOffset- this.heatingTargetTemp ;
 	}
 	else{ var temperature = Value - this.heatingTargetTemp ;} // 
      var command = "setComfortModeTemp/" + temperature; //Loxone expects a Value between 10 and 38
