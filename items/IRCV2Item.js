@@ -78,21 +78,14 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
     //also make sure this change is directly communicated to HomeKit
     
 }       
-if(this.stateCurrentMode == uuid){
-       this.currentMode = value;
-    console.log("Got new state for current mode " + this.name + ": " + this.currentMode);
-    
-    //also make sure this change is directly communicated to HomeKit
-    
-}          
-    
+   /*
     if(this.stateOverride == uuid){
        this.override = value;
     console.log("Got new state for override " + this.name + ": " + this.override);
     
     //also make sure this change is directly communicated to HomeKit
    
-} 
+} */
     
     if(this.stateHeatingTemp == uuid){
         
@@ -191,6 +184,7 @@ if(this.stateCurrentMode == uuid){
     
     if(this.stateMode == uuid){
         console.log("Got new state for Mode " + this.name + ": " + value)
+        if (this.activeMode == 3){
         switch (value) {
             case 0:
                 //meter logica para detectar modo apagado. Como responde loxone al apagarlo?
