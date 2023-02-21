@@ -161,7 +161,8 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
   if(this.economymode){ this.coolingTargetTemp = value - this.EcoMinTempOffset;
   }
      else{   this.coolingTargetTemp = value;}
-    //    console.log("Got new state for Target Cooling Temp " + this.name + ": " + value);
+	console.log("Got new state for Target Cooling Temp (offset value) "+ this.EcoMinTempOffset);
+        console.log("Got new state for Target Cooling Temp " + this.name + ": " + value);
         
         if(this.coolingTargetTemp < "10"){
             // min Value of Thermostat
