@@ -341,9 +341,11 @@ IRCV2Item.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
     //console.log("date 2010 in seconds" + date2009.getTime())
       
     var datenow = new Date();
+    var datetomorrow = new Date(datenow.getDate()+1);
+    datetomorrow.setHours(0,0,0,0);
     //console.log("date now in seconds" + datenow.getTime())
     let timer = Math.round((Math.abs(datenow - date2009))/1000 + 6000);
-    
+    let timer2 = Math.round((Math.abs(datenow - date2009))/1000 + 6000);
     var self = this;
     
     console.log("TemperatureItem setTargetHcState : " + ValueHc);
@@ -407,7 +409,7 @@ IRCV2Item.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
     
     if(ValueHc == 0){
         // Use Service to turn Valve off
-        var command = "override/5/7200/24"; //Loxone expects a Value 0-4
+        var command = "override/2/7200/24"; //Loxone expects a Value 0-4
         //this.platform.ws.sendCommand(this.uuidAction, command);
         //this.log(this.name + " Command " + command);
         callback();
