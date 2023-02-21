@@ -78,6 +78,15 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
      switch (value) {
             case 1:
               this.manual = false;
+             this.targetHcState = 3;
+                this.setFromLoxone = true;
+                this.manual = true;
+                this.otherService
+                .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
+                .setValue(this.targetHcState, function() {
+                          this.setFromLoxone = false;
+                          }.bind(this));
+              return;
              return;
             case 2:
                 this.targetHcState = 0;
