@@ -73,7 +73,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
     
     if(this.stateActiveMode == uuid){
        this.activeMode = value;
-    console.log("Got new state for current mode " + this.name + ": " + this.activeMode);
+    console.log("Got new state for active mode " + this.name + ": " + this.activeMode);
     
     //also make sure this change is directly communicated to HomeKit
     
