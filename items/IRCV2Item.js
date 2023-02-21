@@ -135,7 +135,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
     if(this.stateHeatingTemp == uuid){
      if(this.economymode) { this.heatingTargetTemp = value + this.EcoMaxTempOffset;}   
         else {this.heatingTargetTemp = value;}
-      //  console.log("Got new state for Target Heating Temp " + this.name + ": " + value);
+        console.log("Got new state for Target Heating Temp " + this.name + ": " + value);
         
         if(this.heatingTargetTemperature < "10"){
             // min Value of Thermostat
