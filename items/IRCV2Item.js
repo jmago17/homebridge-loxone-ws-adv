@@ -308,8 +308,10 @@ IRCV2Item.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
     
     //getting seconds since 2009
     var date2009 = new Date("2009-01-01 00:00:00");
-    console.log("date 2010 in seconds" + date2009)
+    console.log("date 2010 in seconds" + date2009.gettime())
+      
     var datenow = new Date();
+    console.log("date now in seconds" + datenow.gettime())
     let timer = Math.abs(datenow - date2009) + 8935;
     
     var self = this;
