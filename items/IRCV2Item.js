@@ -548,14 +548,14 @@ IRCV2Item.prototype.setHeatingTemperature = function(Value, callback) {
    		 //console.log("date 2010 in seconds" + date2009.getTime())
       
    		 var datenow = new Date();
-   		 var command = "setComfortModeTemp/" + temperature; //Loxone expects a Value between 10 and 38
-    		 this.platform.ws.sendCommand(this.uuidAction, command);
-        	this.log(this.name + " Command " + command);
+   		 //var command = "setComfortModeTemp/" + temperature; //Loxone expects a Value between 10 and 38
+    		 //this.platform.ws.sendCommand(this.uuidAction, command);
+        	//this.log(this.name + " Command " + command);
  		   //console.log("date now in seconds" + datenow.getTime())
  		  let timer = Math.round((Math.abs(datenow - date2009))/1000 + 6000);
- 		  var command = "override/1/"+ timer; 
-		//this.platform.ws.sendCommand(this.uuidAction, command);
-       		// this.log(this.name + " Command " + command);
+ 		  var command = "override/3/"+ timer + "/" + this.targetTemperature; 
+		this.platform.ws.sendCommand(this.uuidAction, command);
+       		 this.log(this.name + " Command " + command);
 	}
 	else{ var temperature = Value - this.heatingTargetTemp ; // 
      var command = "setComfortModeTemp/" + temperature; //Loxone expects a Value between 10 and 38
