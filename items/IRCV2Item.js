@@ -543,7 +543,7 @@ IRCV2Item.prototype.setHeatingTemperature = function(Value, callback) {
 	if(this.economymode){
 		//var temperature = Value + this.EcoMaxTempOffset- this.heatingTargetTemp ;
 		var temperature = Value - this.heatingTargetTemp
-		this.heatingTargetTemp = var temperature;
+		this.heatingTargetTemp = temperature;
 		      this.otherService
                  .getCharacteristic(this.homebridge.hap.Characteristic.HeatingThresholdTemperature)
        		 .setValue(this.heatingTargetTemp, function() {
