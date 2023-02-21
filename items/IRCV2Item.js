@@ -73,10 +73,22 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
     
     if(this.stateActiveMode == uuid){
        this.activeMode = value;
-    console.log("Got new state for active mode " + this.name + ": " + this.activeMode);
+       console.log("Got new state for active mode " + this.name + ": " + this.activeMode);
     
-    //also make sure this change is directly communicated to HomeKit
-    
+     switch (value) {
+            case 2:
+                this.targetHcState = 0;
+                this.setFromLoxone = true;
+                this.otherService
+                .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
+                .setValue(this.targetHcState, function() {
+                          this.setFromLoxone = false;
+                          }.bind(this));
+              return;
+             case 3:
+                this.manual = true;
+              return;
+     }
 }       
    /*
     if(this.stateOverride == uuid){
@@ -184,10 +196,9 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
     
     if(this.stateMode == uuid){
         console.log("Got new state for Mode " + this.name + ": " + value)
-        if (this.activeMode == 3){
+
         switch (value) {
             case 0:
-                //meter logica para detectar modo apagado. Como responde loxone al apagarlo?
                 this.targetHcState = 3;
                 this.setFromLoxone = true;
                 this.otherService
