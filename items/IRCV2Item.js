@@ -537,7 +537,7 @@ IRCV2Item.prototype.setHeatingTemperature = function(Value, callback) {
 	if(this.economymode){
 		var temperature = Value + this.EcoMaxTempOffset;
 	}
-	else{ var temperature = Value ;} // - this.heatingTargetTemp
+	else{ var temperature = Value - this.heatingTargetTemp ;} // 
      var command = "setComfortModeTemp/" + temperature; //Loxone expects a Value between 10 and 38
         this.platform.ws.sendCommand(this.uuidAction, command);
         this.log(this.name + " Command " + command);
