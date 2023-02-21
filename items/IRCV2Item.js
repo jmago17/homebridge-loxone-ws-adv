@@ -312,7 +312,7 @@ IRCV2Item.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
       
     var datenow = new Date();
     //console.log("date now in seconds" + datenow.getTime())
-    let timer = (Math.abs(datenow - date2009))/1000 + 7200;
+    let timer = Math.round((Math.abs(datenow - date2009))/1000 + 7200);
     
     var self = this;
     
