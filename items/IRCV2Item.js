@@ -15,7 +15,7 @@ var IRCV2Item = function(widget,platform,homebridge) {
     this.stateHeatingTemp = widget.states.comfortTemperature;
     this.stateCoolingTemp = widget.states.comfortTemperatureCool;
     this.stateCurrentMode = widget.states.currentMode;  
-    this.stateActiveMode =  widget.states.ActiveMode;   
+    this.stateActiveMode =  widget.states.activeMode;   
     // this.targetOperatingState = widget.states.operatingMode;
     this.ServiceValue = undefined;
        
