@@ -410,8 +410,8 @@ IRCV2Item.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
     if(ValueHc == 0){
         // Use Service to turn Valve off
         var command = "override/2/7200/24"; //Loxone expects a Value 0-4
-        //this.platform.ws.sendCommand(this.uuidAction, command);
-        //this.log(this.name + " Command " + command);
+        this.platform.ws.sendCommand(this.uuidAction, command);
+        this.log(this.name + " Command " + command);
         callback();
     }
 }
