@@ -45,7 +45,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
        
     if(this.stateTarget == uuid){
         this.targetTemperature = value;
-        console.log("Got new state for Target Temp " + this.name + ": " + value);
+        console.log("Got new state for Target Temp " + this.name + ": " + this.targetTemperature);
         
         if(this.targetTemperature < "10"){
             // min Value of Thermostat
@@ -59,7 +59,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
         
         //also make sure this change is directly communicated to HomeKit
         this.setFromLoxone = true;
-        console.log("Loxone State tergetTemp (should be true): " + this.setFromLoxone);
+        //console.log("Loxone State tergetTemp (should be true): " + this.setFromLoxone);
         this.otherService
         .getCharacteristic(this.homebridge.hap.Characteristic.TargetTemperature)
         .setValue(this.targetTemperature,
