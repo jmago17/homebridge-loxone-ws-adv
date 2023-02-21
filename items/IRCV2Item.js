@@ -443,6 +443,7 @@ IRCV2Item.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
         //this.platform.ws.sendCommand(this.uuidAction, command);
         
         //Command for Mode
+	    this.ComfortTemperature = 
         command = "stopOverride"; //Loxone expects a Value 0-6
         this.platform.ws.sendCommand(this.uuidAction, command);
         this.log(this.name + " Command " + command);
@@ -581,7 +582,7 @@ IRCV2Item.prototype.setCoolingTemperature = function(Value, callback) {
 	if(this.economymode){
 		var temperature = Value - this.EcoMinTempOffset;
 	}
-	else{ var temperature = Value;}
+	else{ var temperature = Value - this.heatingTargetTemp;}
      var command = "setComfortTemperatureCool/" + temperature; //Loxone expects a Value between 10 and 38
         this.platform.ws.sendCommand(this.uuidAction, command);
         this.log(this.name + " Command " + command);
