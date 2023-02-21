@@ -402,7 +402,7 @@ IRCV2Item.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
         //this.platform.ws.sendCommand(this.uuidAction, command);
         
         //Command for Mode
-        command = "setOperatingMode/0"; //Loxone expects a Value 0-6
+        command = "stopOverride"; //Loxone expects a Value 0-6
         this.platform.ws.sendCommand(this.uuidAction, command);
         this.log(this.name + " Command " + command);
         callback();
