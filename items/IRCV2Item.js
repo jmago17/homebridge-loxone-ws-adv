@@ -57,15 +57,15 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
 		     console.log("economy mode enabled");
 		     this.manual = false;     
               this.targetHcState = 3;
-		this.heatingTargetTemp = this.heatingTargetTemp - this.EcoMaxTempOffset;
+	/*	this.heatingTargetTemp = this.heatingTargetTemp - this.EcoMaxTempOffset;
 		this.coolingTargetTemp = this.coolingTargetTemp + this.EcoMinTempOffset;
-                this.setFromLoxone = true;
+          */      this.setFromLoxone = true;
                 this.otherService
                 .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
                 .setValue(this.targetHcState, function() {
                           this.setFromLoxone = false;
                           }.bind(this));
-		     this.otherService
+	/*	     this.otherService
                  .getCharacteristic(this.homebridge.hap.Characteristic.HeatingThresholdTemperature)
        		 .setValue(this.heatingTargetTemp, function() {
                   this.setFromLoxone = false;
@@ -74,7 +74,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
         .getCharacteristic(this.homebridge.hap.Characteristic.CoolingThresholdTemperature)
         .setValue(this.coolingTargetTemp, function() {
                   this.setFromLoxone = false;
-                  }.bind(this));
+                  }.bind(this)); */
 		     return;
 	     case 1:
               this.economymode = false;
