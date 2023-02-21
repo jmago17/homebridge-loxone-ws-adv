@@ -74,7 +74,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
         .getCharacteristic(this.homebridge.hap.Characteristic.CoolingThresholdTemperature)
         .setValue(this.coolingTargetTemp, function() {
                   this.setFromLoxone = false;
-                  }.bind(this)); */
+                  }.bind(this)); 
 		     return;
 	     case 1:
               this.economymode = false;
