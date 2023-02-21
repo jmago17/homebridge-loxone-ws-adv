@@ -305,6 +305,12 @@ IRCV2Item.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
     //sending new state (ValueHc) to loxone
     //added some logic to prevent a loop when the change because of external event captured by callback
     
+    
+    //getting seconds since 2009
+    var date2009 = new Date("2009-01-01");
+    var datenow = new Date();
+    let timer = Math.abs(datenow.getTime() - date2009.getTime()) + 7200;
+    
     var self = this;
     
     console.log("TemperatureItem setTargetHcState : " + ValueHc);
@@ -335,7 +341,8 @@ IRCV2Item.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
         //this.platform.ws.sendCommand(this.uuidAction, command);
         
         //Command for Mode
-        command = "setOperatingMode/1"; //Loxone expects a Value 0-6
+       // command = "setOperatingMode/1"; //Loxone expects a Value 0-6
+        var command = "override/1/"+ timer +"/24"; //Loxone expects a Value 0-4
         this.platform.ws.sendCommand(this.uuidAction, command);
        // this.log(this.name + " Command " + command);
         callback();
