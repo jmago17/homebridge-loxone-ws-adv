@@ -151,7 +151,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
     
     
     if(this.stateHeatingTemp == uuid){
-     if(this.economymode) { this.heatingTargetTemp = value + this.EcoMaxTempOffset;
+     if(this.economymode) { this.heatingTargetTemp = value - this.EcoMaxTempOffset;
 			  console.log("Got new state for Target Heating Temp (WITH offset) " + this.name + ": " + value);}   
         else {this.heatingTargetTemp = value;
 	     console.log("Got new state for Target Heating Temp (withOUT offset) " + this.name + ": " + value);
@@ -182,7 +182,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
     }   
     
     if(this.stateCoolingTemp == uuid){
-  if(this.economymode){ this.coolingTargetTemp = value - this.EcoMinTempOffset;
+  if(this.economymode){ this.coolingTargetTemp = value + this.EcoMinTempOffset;
   }
      else{   this.coolingTargetTemp = value;}
 	console.log("Got new state for Target Cooling Temp (offset value) "+ this.EcoMinTempOffset);
