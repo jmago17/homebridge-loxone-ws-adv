@@ -28,9 +28,9 @@ IRCV2Item.prototype.initListener = function() {
     this.platform.ws.registerListenerForUUID(this.stateTarget, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateHeatingTemp, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateCoolingTemp, this.callBack.bind(this));
-    this.platform.ws.registerListenerForUUID(this.stateOverride, this.callBack.bind(this));
+  //  this.platform.ws.registerListenerForUUID(this.stateOverride, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateMode, this.callBack.bind(this));
-    this.platform.ws.registerListenerForUUID(this.stateCurrentMode, this.callBack.bind(this));
+  //  this.platform.ws.registerListenerForUUID(this.stateCurrentMode, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateActiveMode, this.callBack.bind(this));
     //this.platform.ws.registerListenerForUUID(this.operatingMode, this.callBack.bind(this));
  //   this.platform.ws.registerListenerForUUID(this.targetOperatingState, this.callBack.bind(this));
