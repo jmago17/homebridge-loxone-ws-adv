@@ -81,7 +81,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
      switch (value) {
 	     case 0:
 		     this.economymode = true;
-		     console.log("economy mode enabled);
+		     console.log("economy mode enabled");
 		     this.manual = false;
 		     return;
 	     case 1:
