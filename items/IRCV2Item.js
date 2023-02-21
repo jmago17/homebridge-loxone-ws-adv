@@ -200,7 +200,8 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
     
     if(this.stateMode == uuid){
         console.log("Got new state for Mode " + this.name + ": " + value)
-
+        if (this.manual){console.log("manual mode set up from active mode");}
+        else {
         switch (value) {
             case 0:
                 this.targetHcState = 3;
@@ -256,7 +257,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
                           this.setFromLoxone = false;
                           }.bind(this));
            
-        }
+        }}
     }
     
     
