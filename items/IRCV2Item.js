@@ -81,12 +81,13 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
      switch (value) {
 	     case 0:
 		     this.economymode = true;
+		     console.log("economy mode enabled);
 		     this.manual = false;
 		     return;
 	     case 1:
               this.manual = false;
 	      this.economymode = false;
-             this.targetHcState = 3;
+              this.targetHcState = 3;
                 this.setFromLoxone = true;
                 this.manual = true;
                 this.otherService
@@ -95,8 +96,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
                           this.setFromLoxone = false;
                           }.bind(this));
               return;
-             return;
-            case 2:
+             case 2:
                 this.targetHcState = 0;
 		this.economymode = false;
                 this.setFromLoxone = true;
@@ -111,19 +111,19 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
                 this.manual = true;
 		this.economymode = false;
               return;
-     }
-}       
+   	  }
+	}       
  
     if(this.stateEcoMinTempOffset == uuid){
        this.EcoMinTempOffset = value;
-    console.log("Got new state for EcoMinTempOffset " + this.name + ": " + this.override);
+    console.log("Got new state for EcoMinTempOffset " + this.name + ": " + this.EcoMinTempOffset );
     
     //also make sure this change is directly communicated to HomeKit
    
 }
 	if(this.stateEcoMaxTempOffset == uuid){
        this.EcoMaxTempOffset = value;
-    console.log("Got new state for EcoMaxTempOffset " + this.name + ": " + this.override);
+    console.log("Got new state for EcoMaxTempOffset " + this.name + ": " + this.EcoMaxTempOffset);
     
     //also make sure this change is directly communicated to HomeKit
    
