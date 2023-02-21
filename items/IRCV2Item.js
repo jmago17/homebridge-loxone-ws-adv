@@ -335,7 +335,7 @@ IRCV2Item.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
         //this.platform.ws.sendCommand(this.uuidAction, command);
         
         //Command for Mode
-        command = "mode/3"; //Loxone expects a Value 0-6
+        command = "setOperatingMode/1"; //Loxone expects a Value 0-6
         this.platform.ws.sendCommand(this.uuidAction, command);
        // this.log(this.name + " Command " + command);
         callback();
@@ -347,7 +347,7 @@ IRCV2Item.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
         //this.platform.ws.sendCommand(this.uuidAction, command);
         
         //Command for Mode
-        command = "mode/3"; //Loxone expects a Value 0-6
+        command = "setOperatingMode/2"; //Loxone expects a Value 0-6
         this.platform.ws.sendCommand(this.uuidAction, command);
         this.log(this.name + " Command " + command);
         callback();
@@ -359,7 +359,7 @@ IRCV2Item.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
         //this.platform.ws.sendCommand(this.uuidAction, command);
         
         //Command for Mode
-        command = "mode/1"; //Loxone expects a Value 0-6
+        command = "setOperatingMode/0"; //Loxone expects a Value 0-6
         this.platform.ws.sendCommand(this.uuidAction, command);
         this.log(this.name + " Command " + command);
         callback();
@@ -367,9 +367,9 @@ IRCV2Item.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
     
     if(ValueHc == 0){
         // Use Service to turn Valve off
-        var command = "mode/2"; //Loxone expects a Value 0-4
-        this.platform.ws.sendCommand(this.uuidAction, command);
-        this.log(this.name + " Command " + command);
+        var command = "override/5/7200/24"; //Loxone expects a Value 0-4
+        //this.platform.ws.sendCommand(this.uuidAction, command);
+        //this.log(this.name + " Command " + command);
         callback();
     }
 }
