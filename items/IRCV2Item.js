@@ -62,7 +62,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
 	      this.economymode = false;
               this.targetHcState = 3;
                 this.setFromLoxone = true;
-                this.manual = true;
+                this.manual = false;
                 this.otherService
                 .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
                 .setValue(this.targetHcState, function() {
@@ -73,7 +73,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
                 this.targetHcState = 0;
 		this.economymode = false;
                 this.setFromLoxone = true;
-                this.manual = true;
+                this.manual = false;
                 this.otherService
                 .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
                 .setValue(this.targetHcState, function() {
