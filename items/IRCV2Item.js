@@ -57,15 +57,15 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
 		     console.log("economy mode enabled");
 		     this.manual = false;     
               this.targetHcState = 3;
-	/*	this.heatingTargetTemp = this.heatingTargetTemp - this.EcoMaxTempOffset;
+		this.heatingTargetTemp = this.heatingTargetTemp - this.EcoMaxTempOffset;
 		this.coolingTargetTemp = this.coolingTargetTemp + this.EcoMinTempOffset;
-          */      this.setFromLoxone = true;
+              this.setFromLoxone = true;
                 this.otherService
                 .getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
                 .setValue(this.targetHcState, function() {
                           this.setFromLoxone = false;
                           }.bind(this));
-	/*	     this.otherService
+	         this.otherService
                  .getCharacteristic(this.homebridge.hap.Characteristic.HeatingThresholdTemperature)
        		 .setValue(this.heatingTargetTemp, function() {
                   this.setFromLoxone = false;
@@ -151,11 +151,10 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
     
     
     if(this.stateHeatingTemp == uuid){
-     if(this.economymode) { this.heatingTargetTemp = value - this.EcoMaxTempOffset;
-			  console.log("Got new state for Target Heating Temp (WITH offset) " + this.name + ": " + value);}   
-        else {this.heatingTargetTemp = value;
+     
+    this.heatingTargetTemp = value;
 	     console.log("Got new state for Target Heating Temp (withOUT offset) " + this.name + ": " + value);
-	     }
+	     
         
         
         if(this.heatingTargetTemperature < "10"){
@@ -182,10 +181,9 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
     }   
     
     if(this.stateCoolingTemp == uuid){
-  if(this.economymode){ this.coolingTargetTemp = value + this.EcoMinTempOffset;
-  }
-     else{   this.coolingTargetTemp = value;}
-	console.log("Got new state for Target Cooling Temp (offset value) "+ this.EcoMinTempOffset);
+  
+       this.coolingTargetTemp = value;
+
         console.log("Got new state for Target Cooling Temp " + this.name + ": " + value);
         
         if(this.coolingTargetTemp < "10"){
