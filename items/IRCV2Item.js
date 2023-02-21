@@ -238,7 +238,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
     this.otherService
     .getCharacteristic(this.homebridge.hap.Characteristic.CurrentTemperature)
     .setValue(this.currentTemperature);
-    if{this.economymode){   // take a look what the valve is doing
+    if(this.economymode){   // take a look what the valve is doing
         if(this.currentTemperature > this.coolingTargetTemp + this.EcoMaxTempOffset && this.currentTemperature != undefined && this.coolingTargetTemp != undefined){
             // Current Cooling
          //   console.log("Valve is cooling: " + this.name + " " + this.currentTemperature + " > " + this.targetTemperature);
