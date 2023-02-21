@@ -14,8 +14,10 @@ var IRCV2Item = function(widget,platform,homebridge) {
     this.stateTarget = widget.states.tempTarget;
     this.stateHeatingTemp = widget.states.comfortTemperature;
     this.stateCoolingTemp = widget.states.comfortTemperatureCool;
-    this.stateCurrentMode = widget.states.currentMode;  
+    this.stateEcoMinTempOffset = widget.states.absentMinOffset;  
+    this.stateEcoMaxTempOffset = widget.states.absentMaxOffset;  
     this.stateActiveMode =  widget.states.activeMode;   
+	
     // this.targetOperatingState = widget.states.operatingMode;
     this.ServiceValue = undefined;
        
@@ -28,7 +30,8 @@ IRCV2Item.prototype.initListener = function() {
     this.platform.ws.registerListenerForUUID(this.stateTarget, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateHeatingTemp, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateCoolingTemp, this.callBack.bind(this));
-  //  this.platform.ws.registerListenerForUUID(this.stateOverride, this.callBack.bind(this));
+    this.platform.ws.registerListenerForUUID(this.stateEcoMinTempOffset, this.callBack.bind(this));
+    this.platform.ws.registerListenerForUUID(this.stateEcoMaxTempOffset, this.callBack.bind(this));	
     this.platform.ws.registerListenerForUUID(this.stateMode, this.callBack.bind(this));
   //  this.platform.ws.registerListenerForUUID(this.stateCurrentMode, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateActiveMode, this.callBack.bind(this));
@@ -76,8 +79,13 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
        console.log("Got new state for active mode " + this.name + ": " + this.activeMode);
     
      switch (value) {
-            case 1:
+	     case 0:
+		     this.economymode = true;
+		     this.manual = false;
+		     return;
+	     case 1:
               this.manual = false;
+	      this.economymode = false;
              this.targetHcState = 3;
                 this.setFromLoxone = true;
                 this.manual = true;
@@ -90,6 +98,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
              return;
             case 2:
                 this.targetHcState = 0;
+		this.economymode = false;
                 this.setFromLoxone = true;
                 this.manual = true;
                 this.otherService
@@ -100,21 +109,29 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
               return;
              case 3:
                 this.manual = true;
+		this.economymode = false;
               return;
      }
 }       
-   /*
-    if(this.stateOverride == uuid){
-       this.override = value;
-    console.log("Got new state for override " + this.name + ": " + this.override);
+ 
+    if(this.stateEcoMinTempOffset == uuid){
+       this.EcoMinTempOffset = value;
+    console.log("Got new state for EcoMinTempOffset " + this.name + ": " + this.override);
     
     //also make sure this change is directly communicated to HomeKit
    
-} */
+}
+	if(this.stateEcoMaxTempOffset == uuid){
+       this.EcoMaxTempOffset = value;
+    console.log("Got new state for EcoMaxTempOffset " + this.name + ": " + this.override);
+    
+    //also make sure this change is directly communicated to HomeKit
+   
+}
     
     if(this.stateHeatingTemp == uuid){
-        
-        this.heatingTargetTemp = value;
+     if(this.economymode) { this.heatingTargetTemp = value + this.EcoMaxTempOffset;}   
+        else {this.heatingTargetTemp = value;}
       //  console.log("Got new state for Target Heating Temp " + this.name + ": " + value);
         
         if(this.heatingTargetTemperature < "10"){
@@ -141,8 +158,9 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
     }   
     
     if(this.stateCoolingTemp == uuid){
-  
-         this.coolingTargetTemp = value;
+  if(this.economymode){ this.coolingTargetTemp = value - this.EcoMinTempOffset;
+  }
+     else{   this.coolingTargetTemp = value;}
     //    console.log("Got new state for Target Cooling Temp " + this.name + ": " + value);
         
         if(this.coolingTargetTemp < "10"){
