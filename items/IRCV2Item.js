@@ -342,7 +342,7 @@ IRCV2Item.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
       
     var datenow = new Date();
     //console.log("date now in seconds" + datenow.getTime())
-    let timer = Math.round((Math.abs(datenow - date2009))/1000 + 7200);
+    let timer = Math.round((Math.abs(datenow - date2009))/1000 + 6000);
     
     var self = this;
     
@@ -374,8 +374,8 @@ IRCV2Item.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
         //this.platform.ws.sendCommand(this.uuidAction, command);
         
         //Command for Mode
-       // command = "setOperatingMode/1"; //Loxone expects a Value 0-6
-        var command = "override/3/"+ timer +"/"+this.targetTemperature; //Loxone expects a Value 0-4
+   
+        var command = "override/3/"+ timer +"/"+this.targetTemperature; 
         this.platform.ws.sendCommand(this.uuidAction, command);
         this.log(this.name + " Command " + command);
         callback();
@@ -387,7 +387,7 @@ IRCV2Item.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
         //this.platform.ws.sendCommand(this.uuidAction, command);
         
         //Command for Mode
-        command = "setOperatingMode/2"; //Loxone expects a Value 0-6
+        var command = "override/3/"+ timer +"/"+this.targetTemperature; 
         this.platform.ws.sendCommand(this.uuidAction, command);
         this.log(this.name + " Command " + command);
         callback();
