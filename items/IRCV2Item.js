@@ -74,7 +74,30 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
             .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
             .setValue(0);}
 	}
-		else{if(this.HeatingOn){
+		else{if(this.manualMode){
+		if(this.currentTemperature > this.targetTemperature  && this.currentTemperature != undefined && this.targetTemperature != undefined){
+            // Current Cooling
+         //   console.log("Valve is cooling: " + this.name + " " + this.currentTemperature + " > " + this.targetTemperature);
+            this.otherService
+            .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
+            .setValue(2);
+        }	 
+			if(this.currentTemperature < this.targetTemperature && this.currentTemperature != undefined && this.targetTemperature != undefined){
+            // Current Heating
+        //    console.log("Valve is heating: " + this.name + " " + this.currentTemperature + " < " + this.targetTemperature);
+            this.otherService
+            .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
+            .setValue(1);
+        }
+			}
+		else{
+			  // Current Heating and Cooling off
+          //  read from current operatingmode value =0 
+			this.otherService
+            .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
+            .setValue(0);}
+		     else{
+			if(this.HeatingOn){
 			if(this.currentTemperature > this.coolingTargetTemp  && this.currentTemperature != undefined && this.coolingTargetTemp != undefined){
             // Current Cooling
          //   console.log("Valve is cooling: " + this.name + " " + this.currentTemperature + " > " + this.targetTemperature);
