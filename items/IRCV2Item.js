@@ -11,7 +11,7 @@ var IRCV2Item = function(widget, platform, homebridge) {
     this.stateActual = widget.states.tempActual;
     this.stateOverride = widget.states.overrideEntries;
     
-    if(this.uuidAction == '1a98f01a-00fa-ab68-ffff06d286d49b63') {this.stateModePasillo = '10779045-01b8-1071-ffff8795bbcbc15c';}
+    if(this.uuidAction == '1a98f01a-00fa-ab68-ffff06d286d49b63') {this.stateMode = '10779045-01b8-1071-ffff8795bbcbc15c';}
     
     //this.stateModeCocina = '10779045-01b8-1068-ffff8795bbcbc15c';
     this.stateTarget = widget.states.tempTarget;
