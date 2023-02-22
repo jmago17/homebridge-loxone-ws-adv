@@ -146,7 +146,6 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
     } else if (item.type == "TimedSwitch") {
         if (item.name.indexOf("Extractor") !== -1) {
             item.type = "Fan";
-            Fan type not in use
         } else {
             item.type = "TimedSwitch";
         }
