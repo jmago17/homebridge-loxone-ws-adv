@@ -69,7 +69,7 @@ TimedSwitchItem.prototype.setItemState = function(value, callback) {
     //this.log('setItemState value: ' + value);
     //this.log('setItemState command: ' + command);
 
-    this.log(`[timedswitch] iOS - send message to ${this.name}: ${command}`);
+    this.log(`[timedswitch] iOS - send message to speaker ${this.name}: ${command}`);
     this.platform.ws.sendCommand(this.uuidAction, command);
     callback();
 
