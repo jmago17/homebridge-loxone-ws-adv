@@ -27,7 +27,7 @@ bellSpeaker.prototype.callBack = function(value) {
 };
 
 bellSpeaker.prototype.getOtherServices = function() {
-    const otherService = new this.homebridge.hap.Service.Switch();
+    const otherService = new this.homebridge.hap.Service.Speaker();
 
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.On)
         .on('set', this.setItemState.bind(this))
