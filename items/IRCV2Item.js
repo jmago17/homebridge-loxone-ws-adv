@@ -12,6 +12,7 @@ var IRCV2Item = function(widget,platform,homebridge) {
     this.stateOverride = widget.states.overrideEntries;
     //this.stateMode = widget.states.operatingMode;
     this.stateTarget = widget.states.tempTarget;
+    this.stateHeatingOn = widget.states.H;	
     this.stateHeatingTemp = widget.states.comfortTemperature;
     this.stateCoolingTemp = widget.states.comfortTemperatureCool;
     this.stateEcoMinTempOffset = widget.states.absentMinOffset;  
@@ -28,6 +29,7 @@ var IRCV2Item = function(widget,platform,homebridge) {
 IRCV2Item.prototype.initListener = function() {
     this.platform.ws.registerListenerForUUID(this.stateActual, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateTarget, this.callBack.bind(this));
+    this.platform.ws.registerListenerForUUID(this.stateHeatingOn, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateHeatingTemp, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateCoolingTemp, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateEcoMinTempOffset, this.callBack.bind(this));
@@ -45,7 +47,11 @@ IRCV2Item.prototype.initListener = function() {
 IRCV2Item.prototype.callBack = function(value, uuid) {
     //function that gets called by the registered ws listener
     console.log("Funtion value " + value + " " + uuid);
-       
+    
+	if(this.stateHeatingOn == uuid){
+       this.HeatintOn = value;
+       console.log("Got new state for active mode " + this.name + ": " + this.HeatingOn);
+	}
     
     if(this.stateActiveMode == uuid){
        this.activeMode = value;
