@@ -50,7 +50,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
 	if(this.stateMode == uuid){
        this.HeatingOn = value;
        console.log("Got new state for heating                        mode " + this.name + ": " + this.HeatingOn);
-		if(this.HeatingOn == 1){
+	/*	if(this.HeatingOn == 1){
 				  // Current Heating ON and Cooling off
           //  read from current operatingmode value =1 for heating
 			this.otherService
@@ -67,7 +67,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
           //  read from current operatingmode value =2 for cooling
 			this.otherService
             .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
-            .setValue(2);}
+            .setValue(2);}*/
 	}
        
     
@@ -262,6 +262,24 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
     this.otherService
     .getCharacteristic(this.homebridge.hap.Characteristic.CurrentTemperature)
     .setValue(this.currentTemperature);
+	    		if(this.HeatingOn == 1){
+				  // Current Heating ON and Cooling off
+          //  read from current operatingmode value =1 for heating
+			this.otherService
+            .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
+            .setValue(1);}
+		if(this.HeatingOn == 0){
+			  // Current Heating and Cooling off
+          //  read from current operatingmode value =0 
+			this.otherService
+            .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
+            .setValue(0);}
+		if(this.HeatingOn == 2){ 
+	  // Current heatiung off and cooling ON off
+          //  read from current operatingmode value =2 for cooling
+			this.otherService
+            .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
+            .setValue(2);}
    /* if(this.economymode){   // take a look what the valve is doing
         if(this.currentTemperature > this.coolingTargetTemp + this.EcoMaxTempOffset && this.currentTemperature != undefined && this.coolingTargetTemp != undefined){
             // Current Cooling
