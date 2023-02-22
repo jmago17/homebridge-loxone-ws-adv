@@ -147,7 +147,7 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
     } else if (item.type == "TimedSwitch") {
         if (item.name.indexOf("Extractor") !== -1) {
             item.type = "Fan";
-        } else if(item.name.indexOf('BellSpeaker')){
+        } else if(item.name.indexOf("BellSpeaker") !== -1){
                item.type = "Speaker";
         } else {
             item.type = "TimedSwitch";
