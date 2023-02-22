@@ -22,7 +22,7 @@ module.exports = homebridge => {
         Utility.addSupportTo(ItemFactory.HumiditySensor, ItemFactory.AbstractItem);
         Utility.addSupportTo(ItemFactory.MotionSensor, ItemFactory.AbstractItem);
 	Utility.addSupportTo(ItemFactory.Fan, ItemFactory.AbstractItem);
-	Utility.addSupportTo(ItemFactory.Speaker, ItemFactory.AbstractItem);
+	Utility.addSupportTo(ItemFactory.speakerBell, ItemFactory.AbstractItem);
         Utility.addSupportTo(ItemFactory.ContactSensor, ItemFactory.AbstractItem);
         Utility.addSupportTo(ItemFactory.LightSensor, ItemFactory.AbstractItem);
         Utility.addSupportTo(ItemFactory.Dimmer, ItemFactory.AbstractItem);
