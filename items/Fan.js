@@ -18,11 +18,11 @@ Fan.prototype.initListener = function() {
 Fan.prototype.callBack = function(value) {
     //function that gets called by the registered ws listener
     if (value == -1) {
-        //console.log("Got new state for Timed Switch: On");
+        //console.log("Got new state for Timed Fan: On");
     } else if (value == 0) {
-        //console.log("Got new state for Timed Switch: Off");
+        //console.log("Got new state for Timed Fan: Off");
     } else if (value > 0) {
-        //console.log("Got new state for Timed Switch: Countdown " + value + "s");
+        //console.log("Got new state for Timed Fan: Countdown " + value + "s");
     }
     
     this.currentState = (value !== 0);
@@ -35,7 +35,7 @@ Fan.prototype.callBack = function(value) {
 };
 
 Fan.prototype.getOtherServices = function() {
-    const otherService = new this.homebridge.hap.Service.Switch();
+    const otherService = new this.homebridge.hap.Service.Fan();
 
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.On)
         .on('set', this.setItemState.bind(this))
