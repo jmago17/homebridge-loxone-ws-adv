@@ -60,10 +60,10 @@ Fan.prototype.setItemState = function(value, callback) {
     let command = 0;
     if (value == true) {
         this.log('perm on ***');
-        command = true;//-1; // perm on
+        command = 'On';//-1; // perm on
     } else {
         this.log('off ***');
-        command = false;//0; // off
+        command = 'Off';//0; // off
     }
 
     //this.log('setItemState value: ' + value);
