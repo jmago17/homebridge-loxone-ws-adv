@@ -553,10 +553,11 @@ IRCV2Item.prototype.setHeatingTemperature = function(Value, callback) {
    		 //console.log("date 2010 in seconds" + date2009.getTime())
        		 var datenow = new Date();
 		let timer = Math.round((Math.abs(datenow - date2009))/1000 + 6000);
-		var command = "override/3/"+ timer + "/" + this.heatingTargetTemp; 
+		var command = "override/3/"+ timer + "/" + Value; 
 		this.platform.ws.sendCommand(this.uuidAction, command);
        		 this.log(this.name + " Command " + command);
        		 callback();
+	
 	/*
 	if(this.economymode){
 		//var temperature = Value + this.EcoMaxTempOffset- this.heatingTargetTemp ;
