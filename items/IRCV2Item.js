@@ -66,6 +66,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
 		if(this.HeatingOn == 2){ 
 	  // Current heatiung off and cooling ON off
           //  read from current operatingmode value =2 for cooling
+			this.otherService
             .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
             .setValue(2);}
 	}
