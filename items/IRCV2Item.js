@@ -10,9 +10,11 @@ var IRCV2Item = function(widget, platform, homebridge) {
     this.uuidAction = widget.uuidAction;
     this.stateActual = widget.states.tempActual;
     this.stateOverride = widget.states.overrideEntries;
-    
-    if(this.uuidAction == '1a98f01a-00fa-ab68-ffff06d286d49b63') {this.stateMode = '10779045-01b8-1071-ffff8795bbcbc15c';}
-    
+    if(this.uuidAction == '1a98ec61-01b9-a928-ffff194a8a02e398') {this.stateMode = '1a3843ba-03d7-1ae3-ffff8795bbcbc15c';} //sala
+    if(this.uuidAction == '1a98f01a-00fa-ab68-ffff06d286d49b63') {this.stateMode = '10779045-01b8-1071-ffff8795bbcbc15c';} //pasillo
+    if(this.uuidAction == '1a9910d0-000c-25bf-ffff367d547800c2') {this.stateMode = '10779045-01b8-1068-ffff8795bbcbc15c';} //cocina
+    if(this.uuidAction == '1a98f297-035a-5bb5-ffff45931a9f799c') {this.stateMode = '18913a58-011f-e3d9-ffff8795bbcbc15c';} //dormitorio
+    if(this.uuidAction == '1a98f04a-039b-8bee-ffffdba0c75c31e4') {this.stateMode = '10779045-01b8-1065-ffff8795bbcbc15c';} //juegos
     //this.stateModeCocina = '10779045-01b8-1068-ffff8795bbcbc15c';
     this.stateTarget = widget.states.tempTarget;
     this.stateHeatingTemp = widget.states.comfortTemperature;
