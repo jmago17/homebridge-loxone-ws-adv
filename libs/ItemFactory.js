@@ -12,7 +12,6 @@ moduleexports.Dimmer = require('../items/DimmerItem.js');
 moduleexports.Jalousie = require('../items/BlindsItem.js');
 moduleexports.Pushbutton = require('../items/PushbuttonItem.js');
 moduleexports.Fan = require('../items/Fan.js');
-moduleexports.Speaker = require('../items/SpeakerItem.js');
 moduleexports.PresenceDetector = require('../items/occupancy.js');
 moduleexports.Colorpicker = require('../items/ColorpickerItem.js');
 moduleexports.Gate = require('../items/GateItem.js');
@@ -147,9 +146,7 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
     } else if (item.type == "TimedSwitch") {
         if (item.name.indexOf("Extractor") !== -1) {
             item.type = "Fan";
-        } else if(item.name.indexOf("BellSpeaker") !== -1){
-               item.type = "Speaker";
-        } else {
+       } else {
             item.type = "TimedSwitch";
     }
      
