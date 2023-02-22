@@ -121,7 +121,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
 			this.otherService
             .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
             .setValue(0);}
-	}}
+	}
 	
        
     
