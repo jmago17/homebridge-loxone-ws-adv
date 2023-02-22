@@ -10,7 +10,7 @@ var IRCV2Item = function(widget,platform,homebridge) {
     this.uuidAction = widget.uuidAction;
     this.stateActual = widget.states.tempActual;
     this.stateOverride = widget.states.overrideEntries;
-    this.stateMode = widget.states.operatingMode;
+    this.stateMode = widget.states.currentMode;
     this.stateTarget = widget.states.tempTarget;
     this.stateHeatingTemp = widget.states.comfortTemperature;
     this.stateCoolingTemp = widget.states.comfortTemperatureCool;
@@ -462,23 +462,17 @@ IRCV2Item.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
     }
     
     if(ValueHc == 1){
-        //Deaktivate Service
-        //var command = "service/0"; //Loxone expects a Value 0-4
-        //this.platform.ws.sendCommand(this.uuidAction, command);
-        
+              
         //Command for Mode
    
-        var command = "override/3/"+ timer +"/"+this.targetTemperature; 
+        var command = "override/3/"+ timer +"/"+ this.targetTemperature; 
         this.platform.ws.sendCommand(this.uuidAction, command);
         this.log(this.name + " Command " + command);
         callback();
     }
     
     if(ValueHc == 2){
-        //Deaktivate Service
-        //var command = "service/0"; //Loxone expects a Value 0-4
-        //this.platform.ws.sendCommand(this.uuidAction, command);
-        
+               
         //Command for Mode
         var command = "override/3/"+ timer +"/"+ this.targetTemperature; 
         this.platform.ws.sendCommand(this.uuidAction, command);
@@ -487,9 +481,6 @@ IRCV2Item.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
     }
     
     if(ValueHc == 3){
-        //Deaktivate Service
-        //var command = "service/0"; //Loxone expects a Value 0-4
-        //this.platform.ws.sendCommand(this.uuidAction, command);
         
         //Command for Mode
 	    this.ComfortTemperature = 
@@ -501,7 +492,7 @@ IRCV2Item.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
     
     if(ValueHc == 0){
         // Use Service to turn Valve off
-        var command = "override/2/"+ timer2 +"/"+ this.targetTemperature; 
+        var command = "override/2/"+ timer2; 
         this.platform.ws.sendCommand(this.uuidAction, command);
         this.log(this.name + " Command " + command);
         callback();
