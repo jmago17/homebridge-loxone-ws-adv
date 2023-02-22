@@ -10,7 +10,7 @@ var IRCV2Item = function(widget, platform, homebridge) {
     this.uuidAction = widget.uuidAction;
     this.stateActual = widget.states.tempActual;
     this.stateOverride = widget.states.overrideEntries;
-    this.stateMode = widget.states.openWindow;
+    this.stateMode = '1a99ffce-01d2-26ce-ffff8795bbcbc15c';
     this.stateTarget = widget.states.tempTarget;
     this.stateHeatingTemp = widget.states.comfortTemperature;
     this.stateCoolingTemp = widget.states.comfortTemperatureCool;
@@ -53,21 +53,23 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
 
 
         if (this.economymode) {
-            if (this.HeatingOn) {
-               /* if (this.currentTemperature > this.coolingTargetTemp + this.EcoMaxTempOffset && this.currentTemperature != undefined && this.coolingTargetTemp != undefined) {
-                    // Current Cooling
-                    //   console.log("Valve is cooling: " + this.name + " " + this.currentTemperature + " > " + this.targetTemperature);
-                    this.otherService
-                        .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
-                        .setValue(2);
-                }
-                if (this.currentTemperature < this.heatingTargetTemp - this.EcoMinTempOffset && this.currentTemperature != undefined && this.heatingTargetTemp != undefined) {
-                 */   // Current Heating
-                    //    console.log("Valve is heating: " + this.name + " " + this.currentTemperature + " < " + this.targetTemperature);
-                    this.otherService
-                        .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
-                        .setValue(1);
-               // }
+            if (this.HeatingOn == 1) {
+                /* if (this.currentTemperature > this.coolingTargetTemp + this.EcoMaxTempOffset && this.currentTemperature != undefined && this.coolingTargetTemp != undefined) {
+                   
+                 }
+                 if (this.currentTemperature < this.heatingTargetTemp - this.EcoMinTempOffset && this.currentTemperature != undefined && this.heatingTargetTemp != undefined) {
+                  */ // Current Heating
+                //    console.log("Valve is heating: " + this.name + " " + this.currentTemperature + " < " + this.targetTemperature);
+                this.otherService
+                    .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
+                    .setValue(1);
+                // }
+            } else if (this.HeatingOn == 2) {
+                // Current Cooling
+                //   console.log("Valve is cooling: " + this.name + " " + this.currentTemperature + " > " + this.targetTemperature);
+                this.otherService
+                    .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
+                    .setValue(2);
             } else {
                 // Current Heating and Cooling off
                 //  read from current operatingmode value =0 
@@ -76,21 +78,23 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
                     .setValue(0);
             }
         } else if (this.manualMode) {
-            if (this.HeatingOn) {
-                /*if (this.currentTemperature > this.targetTemperature && this.currentTemperature != undefined && this.targetTemperature != undefined) {
-                    // Current Cooling
-                    //   console.log("Valve is cooling: " + this.name + " " + this.currentTemperature + " > " + this.targetTemperature);
-                    this.otherService
-                        .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
-                        .setValue(2);
-                }
-                if (this.currentTemperature < this.targetTemperature && this.currentTemperature != undefined && this.targetTemperature != undefined) {
-                    // Current Heating
-                 */   //    console.log("Valve is heating: " + this.name + " " + this.currentTemperature + " < " + this.targetTemperature);
-                    this.otherService
-                        .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
-                        .setValue(1);
-              //  }
+            if (this.HeatingOn == 1) {
+                /* if (this.currentTemperature > this.coolingTargetTemp + this.EcoMaxTempOffset && this.currentTemperature != undefined && this.coolingTargetTemp != undefined) {
+                   
+                 }
+                 if (this.currentTemperature < this.heatingTargetTemp - this.EcoMinTempOffset && this.currentTemperature != undefined && this.heatingTargetTemp != undefined) {
+                  */ // Current Heating
+                //    console.log("Valve is heating: " + this.name + " " + this.currentTemperature + " < " + this.targetTemperature);
+                this.otherService
+                    .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
+                    .setValue(1);
+                // }
+            } else if (this.HeatingOn == 2) {
+                // Current Cooling
+                //   console.log("Valve is cooling: " + this.name + " " + this.currentTemperature + " > " + this.targetTemperature);
+                this.otherService
+                    .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
+                    .setValue(2);
             } else {
                 // Current Heating and Cooling off
                 //  read from current operatingmode value =0 
@@ -98,21 +102,24 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
                     .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
                     .setValue(0);
             }
-        } else if (this.HeatingOn) {
-          /*  if (this.currentTemperature > this.coolingTargetTemp && this.currentTemperature != undefined && this.coolingTargetTemp != undefined) {
-                // Current Cooling
-                //   console.log("Valve is cooling: " + this.name + " " + this.currentTemperature + " > " + this.targetTemperature);
-                this.otherService
-                    .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
-                    .setValue(2);
-            }
-            if (this.currentTemperature < this.heatingTargetTemp && this.currentTemperature != undefined && this.heatingTargetTemp != undefined) {
-                // Current Heating
-         */       //    console.log("Valve is heating: " + this.name + " " + this.currentTemperature + " < " + this.targetTemperature);
-                this.otherService
-                    .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
-                    .setValue(1);
-       //     }
+        } else
+        if (this.HeatingOn == 1) {
+            /* if (this.currentTemperature > this.coolingTargetTemp + this.EcoMaxTempOffset && this.currentTemperature != undefined && this.coolingTargetTemp != undefined) {
+               
+             }
+             if (this.currentTemperature < this.heatingTargetTemp - this.EcoMinTempOffset && this.currentTemperature != undefined && this.heatingTargetTemp != undefined) {
+              */ // Current Heating
+            //    console.log("Valve is heating: " + this.name + " " + this.currentTemperature + " < " + this.targetTemperature);
+            this.otherService
+                .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
+                .setValue(1);
+            // }
+        } else if (this.HeatingOn == 2) {
+            // Current Cooling
+            //   console.log("Valve is cooling: " + this.name + " " + this.currentTemperature + " > " + this.targetTemperature);
+            this.otherService
+                .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
+                .setValue(2);
         } else {
             // Current Heating and Cooling off
             //  read from current operatingmode value =0 
