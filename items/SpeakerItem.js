@@ -18,11 +18,11 @@ TimedSwitchItem.prototype.initListener = function() {
 TimedSwitchItem.prototype.callBack = function(value) {
     //function that gets called by the registered ws listener
     if (value == -1) {
-        //console.log("Got new state for Timed Switch: On");
+        console.log("Got new state for speaker: On");
     } else if (value == 0) {
-        //console.log("Got new state for Timed Switch: Off");
+        console.log("Got new state for speaker: Off");
     } else if (value > 0) {
-        //console.log("Got new state for Timed Switch: Countdown " + value + "s");
+        console.log("Got new state for speaker: Countdown " + value + "s");
     }
     
     this.currentState = (value !== 0);
