@@ -2,19 +2,27 @@
 
 var request = require("request");
 
-
 var IRCV2Item = function(widget, platform, homebridge) {
-
 
     this.platform = platform;
     this.uuidAction = widget.uuidAction;
     this.stateActual = widget.states.tempActual;
     this.stateOverride = widget.states.overrideEntries;
-    if(this.uuidAction == '1a98ec61-01b9-a928-ffff194a8a02e398') {this.stateMode = '1a3843ba-03d7-1ae3-ffff8795bbcbc15c';} //sala
-    if(this.uuidAction == '1a98f01a-00fa-ab68-ffff06d286d49b63') {this.stateMode = '10779045-01b8-1071-ffff8795bbcbc15c';} //pasillo
-    if(this.uuidAction == '1a9910d0-000c-25bf-ffff367d547800c2') {this.stateMode = '10779045-01b8-1068-ffff8795bbcbc15c';} //cocina
-    if(this.uuidAction == '1a98f297-035a-5bb5-ffff45931a9f799c') {this.stateMode = '18913a58-011f-e3d9-ffff8795bbcbc15c';} //dormitorio
-    if(this.uuidAction == '1a98f04a-039b-8bee-ffffdba0c75c31e4') {this.stateMode = '10779045-01b8-1065-ffff8795bbcbc15c';} //juegos
+    if (this.uuidAction == '1a98ec61-01b9-a928-ffff194a8a02e398') {
+        this.stateMode = '1a3843ba-03d7-1ae3-ffff8795bbcbc15c';
+    } //sala
+    if (this.uuidAction == '1a98f01a-00fa-ab68-ffff06d286d49b63') {
+        this.stateMode = '10779045-01b8-1071-ffff8795bbcbc15c';
+    } //pasillo
+    if (this.uuidAction == '1a9910d0-000c-25bf-ffff367d547800c2') {
+        this.stateMode = '10779045-01b8-1068-ffff8795bbcbc15c';
+    } //cocina
+    if (this.uuidAction == '1a98f297-035a-5bb5-ffff45931a9f799c') {
+        this.stateMode = '18913a58-011f-e3d9-ffff8795bbcbc15c';
+    } //dormitorio
+    if (this.uuidAction == '1a98f04a-039b-8bee-ffffdba0c75c31e4') {
+        this.stateMode = '10779045-01b8-1065-ffff8795bbcbc15c';
+    } //juegos
     //this.stateModeCocina = '10779045-01b8-1068-ffff8795bbcbc15c';
     this.stateTarget = widget.states.tempTarget;
     this.stateHeatingTemp = widget.states.comfortTemperature;
@@ -23,14 +31,12 @@ var IRCV2Item = function(widget, platform, homebridge) {
     this.stateEcoMaxTempOffset = widget.states.absentMaxOffset;
     this.stateActiveMode = widget.states.activeMode;
 
-    // this.targetOperatingState = widget.states.operatingMode;
-    this.ServiceValue = undefined;
-
     IRCV2Item.super_.call(this, widget, platform, homebridge);
 };
 
 // Register a listener to be notified of changes in this items value
 IRCV2Item.prototype.initListener = function() {
+
     this.platform.ws.registerListenerForUUID(this.stateActual, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateTarget, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateHeatingTemp, this.callBack.bind(this));
@@ -38,14 +44,9 @@ IRCV2Item.prototype.initListener = function() {
     this.platform.ws.registerListenerForUUID(this.stateEcoMinTempOffset, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateEcoMaxTempOffset, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateMode, this.callBack.bind(this));
-    //  this.platform.ws.registerListenerForUUID(this.stateCurrentMode, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateActiveMode, this.callBack.bind(this));
-    //this.platform.ws.registerListenerForUUID(this.operatingMode, this.callBack.bind(this));
-    //   this.platform.ws.registerListenerForUUID(this.targetOperatingState, this.callBack.bind(this));
-
 
 };
-
 
 IRCV2Item.prototype.callBack = function(value, uuid) {
     //function that gets called by the registered ws listener
@@ -59,19 +60,15 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
 
         if (this.economymode) {
             if (this.HeatingOn == 1) {
-                /* if (this.currentTemperature > this.coolingTargetTemp + this.EcoMaxTempOffset && this.currentTemperature != undefined && this.coolingTargetTemp != undefined) {
-                   
-                 }
-                 if (this.currentTemperature < this.heatingTargetTemp - this.EcoMinTempOffset && this.currentTemperature != undefined && this.heatingTargetTemp != undefined) {
-                  */ // Current Heating
-                  //  console.log("Valve is heating: " + this.name + " " + this.currentTemperature + " < " + this.targetTemperature);
+                // Current Heating
+                //  console.log("Valve is heating: " + this.name + " " + this.currentTemperature + " < " + this.targetTemperature);
                 this.otherService
                     .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
                     .setValue(1);
                 // }
             } else if (this.HeatingOn == 2) {
                 // Current Cooling
-                  // console.log("Valve is cooling: " + this.name + " " + this.currentTemperature + " > " + this.targetTemperature);
+                // console.log("Valve is cooling: " + this.name + " " + this.currentTemperature + " > " + this.targetTemperature);
                 this.otherService
                     .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
                     .setValue(2);
@@ -84,19 +81,15 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
             }
         } else if (this.manualMode) {
             if (this.HeatingOn == 1) {
-                /* if (this.currentTemperature > this.coolingTargetTemp + this.EcoMaxTempOffset && this.currentTemperature != undefined && this.coolingTargetTemp != undefined) {
-                   
-                 }
-                 if (this.currentTemperature < this.heatingTargetTemp - this.EcoMinTempOffset && this.currentTemperature != undefined && this.heatingTargetTemp != undefined) {
-                  */ // Current Heating
-                 //   console.log("Valve is heating: " + this.name + " " + this.currentTemperature + " < " + this.targetTemperature);
+                // Current Heating
+                //   console.log("Valve is heating: " + this.name + " " + this.currentTemperature + " < " + this.targetTemperature);
                 this.otherService
                     .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
                     .setValue(1);
                 // }
             } else if (this.HeatingOn == 2) {
                 // Current Cooling
-                  // console.log("Valve is cooling: " + this.name + " " + this.currentTemperature + " > " + this.targetTemperature);
+                // console.log("Valve is cooling: " + this.name + " " + this.currentTemperature + " > " + this.targetTemperature);
                 this.otherService
                     .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
                     .setValue(2);
@@ -109,19 +102,15 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
             }
         } else
         if (this.HeatingOn == 1) {
-            /* if (this.currentTemperature > this.coolingTargetTemp + this.EcoMaxTempOffset && this.currentTemperature != undefined && this.coolingTargetTemp != undefined) {
-               
-             }
-             if (this.currentTemperature < this.heatingTargetTemp - this.EcoMinTempOffset && this.currentTemperature != undefined && this.heatingTargetTemp != undefined) {
-              */ // Current Heating
-              //  console.log("Valve is heating: " + this.name + " " + this.currentTemperature + " < " + this.targetTemperature);
+            // Current Heating
+            //   console.log("Valve is heating: " +);
             this.otherService
                 .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
                 .setValue(1);
             // }
         } else if (this.HeatingOn == 2) {
             // Current Cooling
-            //   console.log("Valve is cooling: " + this.name + " " + this.currentTemperature + " > " + this.targetTemperature);
+            //   console.log("Valve is cooling: );
             this.otherService
                 .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
                 .setValue(2);
@@ -228,32 +217,31 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
 
     }
     if (this.stateTarget == uuid) {
-        if (this.economymode) {} else {
-            this.targetTemperature = value;
-            console.log("Got new state for Target Temp " + this.name + ": " + this.targetTemperature);
 
-            if (this.targetTemperature < "10") {
-                // min Value of Thermostat
-                this.targetTemperature = 10;
-            }
+        this.targetTemperature = value;
+        console.log("Got new state for Target Temp " + this.name + ": " + this.targetTemperature);
 
-            if (this.targetTemperature > "38") {
-                // max Value of Thermostat
-                this.targetTemperature = 38;
-            }
-
-            //also make sure this change is directly communicated to HomeKit
-            this.setFromLoxone = true;
-            //console.log("Loxone State tergetTemp (should be true): " + this.setFromLoxone);
-            this.otherService
-                .getCharacteristic(this.homebridge.hap.Characteristic.TargetTemperature)
-                .setValue(this.targetTemperature,
-                    function() {
-                        this.setFromLoxone = false;
-                    }.bind(this)
-                );
-            //console.log("Loxone State tergetTemp (should be false): " + this.setFromLoxone);
+        if (this.targetTemperature < "10") {
+            // min Value of Thermostat
+            this.targetTemperature = 10;
         }
+
+        if (this.targetTemperature > "38") {
+            // max Value of Thermostat
+            this.targetTemperature = 38;
+        }
+
+        //also make sure this change is directly communicated to HomeKit
+        this.setFromLoxone = true;
+        //console.log("Loxone State tergetTemp (should be true): " + this.setFromLoxone);
+        this.otherService
+            .getCharacteristic(this.homebridge.hap.Characteristic.TargetTemperature)
+            .setValue(this.targetTemperature,
+                function() {
+                    this.setFromLoxone = false;
+                }.bind(this)
+            );
+        //console.log("Loxone State tergetTemp (should be false): " + this.setFromLoxone);
     }
 
 
@@ -261,8 +249,6 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
 
         this.heatingTargetTemp = value;
         console.log("Got new state for Target Heating Temp (withOUT offset) " + this.name + ": " + value);
-
-
 
         if (this.heatingTargetTemperature < "10") {
             // min Value of Thermostat
@@ -322,7 +308,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
         this.otherService
             .getCharacteristic(this.homebridge.hap.Characteristic.CurrentTemperature)
             .setValue(this.currentTemperature);
-    
+
     }
 }
 
@@ -489,7 +475,6 @@ IRCV2Item.prototype.setTergetTemperature = function(Value, callback) {
         return;
     }
 
-
     if (this.targetHcState == undefined) {
         //happens at initial load
         callback();
@@ -501,8 +486,6 @@ IRCV2Item.prototype.setTergetTemperature = function(Value, callback) {
     callback();
 
 }
-
-
 
 IRCV2Item.prototype.setHeatingTemperature = function(Value, callback) {
     //sending new state (Value) to loxone
@@ -537,46 +520,19 @@ IRCV2Item.prototype.setHeatingTemperature = function(Value, callback) {
         callback();
         return;
     }
-   /* if (this.economymode) {
-        //var temperature = Value + this.EcoMaxTempOffset- this.heatingTargetTemp ;
-        var temperature = Value - this.heatingTargetTemp
-        this.heatingTargetTemp = temperature;
-        this.otherService
-            .getCharacteristic(this.homebridge.hap.Characteristic.HeatingThresholdTemperature)
-            .setValue(this.heatingTargetTemp, function() {
-                this.setFromLoxone = false;
-            }.bind(this));
-        //getting seconds since 2009
-        var date2009 = new Date("2009-01-01 00:00:00");
-        //console.log("date 2010 in seconds" + date2009.getTime())
 
-        var datenow = new Date();
-        var command = "setComfortModeTemp/" + temperature; //Loxone expects a Value between 10 and 38
-        this.platform.ws.sendCommand(this.uuidAction, command);
-        this.log(this.name + " Command " + command);
-        //console.log("date now in seconds" + datenow.getTime())
-        let timer = Math.round((Math.abs(datenow - date2009)) / 1000 + 6000);
-        var command = "override/1/" + timer; //+ "/" + this.targetTemperature; 
-        //this.platform.ws.sendCommand(this.uuidAction, command);
-        // this.log(this.name + " Command " + command);
-    } else {
-        var temperature = Value - this.heatingTargetTemp; // 
-        var command = "setComfortModeTemp/" + temperature; //Loxone expects a Value between 10 and 38
-        this.platform.ws.sendCommand(this.uuidAction, command);
-        this.log(this.name + " Command " + command);
-    }*/
     //getting seconds since 2009
-        var temperature = Value;
-        var date2009 = new Date("2009-01-01 00:00:00");
-        //console.log("date 2010 in seconds" + date2009.getTime())
+    var temperature = Value;
+    var date2009 = new Date("2009-01-01 00:00:00");
+    //console.log("date 2010 in seconds" + date2009.getTime())
 
-        var datenow = new Date();
-        //console.log("date now in seconds" + datenow.getTime())
-        let timer = Math.round((Math.abs(datenow - date2009)) / 1000 + 6000);
-        var command = "override/3/" + timer + "/" + temperature; 
-        this.platform.ws.sendCommand(this.uuidAction, command);
-         this.log(this.name + " Command " + command);
-    
+    var datenow = new Date();
+    //console.log("date now in seconds" + datenow.getTime())
+    let timer = Math.round((Math.abs(datenow - date2009)) / 1000 + 6000);
+    var command = "override/3/" + timer + "/" + temperature;
+    this.platform.ws.sendCommand(this.uuidAction, command);
+    this.log(this.name + " Command " + command);
+
     callback();
 
 }
@@ -626,7 +582,5 @@ IRCV2Item.prototype.setCoolingTemperature = function(Value, callback) {
     callback();
 
 }
-
-
 
 module.exports = IRCV2Item;
