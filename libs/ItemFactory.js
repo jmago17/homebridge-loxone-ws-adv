@@ -149,17 +149,13 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
             item.type = "Fan";
         } else {
             item.type = "TimedSwitch";
-        }
-     if (item.type === "Switch") {
-            if(item.name.indexOf('BellSpeaker')){
-               item.type = "speakerBell";}}
+    }else if(item.name.indexOf('BellSpeaker')){
+               item.type = "speakerBell";
          
     } else if (catList[item.cat] !== undefined && catList[item.cat].image === "00000000-0000-0002-2000000000000000.svg") {
         //this is the lightbulb image, which means that this is a lightning control
-       
-         else  if(item.name.indexOf('BellSpeaker')){
-               item.type = "speakerBell";}
-        
+        if (item.type === "Switch") {
+            item.type = "Lightbulb";
         }
     } else if (item.parentType === "LightController" || item.parentType === "LightControllerV2") {
         //this is a subcontrol of a lightcontroller
