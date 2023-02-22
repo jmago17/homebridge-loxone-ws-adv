@@ -77,6 +77,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
             .setValue(0);}
 	}
 		else if(this.manualMode){
+			if(this.HeatingOn){
 		if(this.currentTemperature > this.targetTemperature  && this.currentTemperature != undefined && this.targetTemperature != undefined){
             // Current Cooling
          //   console.log("Valve is cooling: " + this.name + " " + this.currentTemperature + " > " + this.targetTemperature);
