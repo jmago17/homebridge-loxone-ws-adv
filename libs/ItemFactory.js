@@ -12,7 +12,7 @@ moduleexports.Dimmer = require('../items/DimmerItem.js');
 moduleexports.Jalousie = require('../items/BlindsItem.js');
 moduleexports.Pushbutton = require('../items/PushbuttonItem.js');
 moduleexports.Fan = require('../items/Fan.js');
-moduleexports.speakerBell = require('../items/BellSpeaker.js');
+moduleexports.Speaker = require('../items/SpeakerItem.js');
 moduleexports.PresenceDetector = require('../items/occupancy.js');
 moduleexports.Colorpicker = require('../items/ColorpickerItem.js');
 moduleexports.Gate = require('../items/GateItem.js');
@@ -150,8 +150,8 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
         } else {
             item.type = "TimedSwitch";
     }}
-        if(item.name.indexOf('BellSpeaker')){
-               item.type = "speakerBell";
+      else if(item.name.indexOf('BellSpeaker')){
+               item.type = "Speaker";
          
     } else if (catList[item.cat] !== undefined && catList[item.cat].image === "00000000-0000-0002-2000000000000000.svg") {
         //this is the lightbulb image, which means that this is a lightning control
