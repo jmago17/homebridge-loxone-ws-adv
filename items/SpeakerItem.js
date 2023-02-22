@@ -1,65 +1,79 @@
 const request = require("request");
 
-const SpeakerItem = function(widget,platform,homebridge) {
+const TimedSwitchItem = function(widget,platform,homebridge) {
 
     this.platform = platform;
     this.uuidAction = widget.uuidAction; //to control a switch, use the uuidAction
-    this.stateUuid = widget.states.active; //a switch always has a state called active, which is the uuid which will receive the event to read
-    this.mute = undefined; //will be 0 or 1 for speaker
+    this.currentState = undefined; //will be 0 or 1 for Switch
 
-    SpeakerItem.super_.call(this, widget,platform,homebridge);
+    TimedSwitchItem.super_.call(this, widget,platform,homebridge);
 };
 
 // Register a listener to be notified of changes in this items value
-SpeakerItem.prototype.initListener = function() {
-    this.platform.ws.registerListenerForUUID(this.stateUuid, this.callBack.bind(this));
+TimedSwitchItem.prototype.initListener = function() {
+    //this.platform.ws.registerListenerForUUID(this.stateUuid, this.callBack.bind(this));
+    this.platform.ws.registerListenerForUUID(this.uuidAction, this.callBack.bind(this));
 };
 
-SpeakerItem.prototype.callBack = function(value) {
+TimedSwitchItem.prototype.callBack = function(value) {
     //function that gets called by the registered ws listener
-    //console.log("Got new state for switch: " + value);
-    this.currentState = value;
+    if (value == -1) {
+        //console.log("Got new state for Timed Switch: On");
+    } else if (value == 0) {
+        //console.log("Got new state for Timed Switch: Off");
+    } else if (value > 0) {
+        //console.log("Got new state for Timed Switch: Countdown " + value + "s");
+    }
+    
+    this.currentState = (value !== 0);
 
-    //also make sure this change is directly communicated to HomeKit
+    //console.log('set currentState to: ' + this.currentState)
+
     this.otherService
         .getCharacteristic(this.homebridge.hap.Characteristic.On)
-        .updateValue(this.currentState == '1');
+        .updateValue(this.currentState);
 };
 
-SpeakerItem.prototype.getOtherServices = function() {
+TimedSwitchItem.prototype.getOtherServices = function() {
     const otherService = new this.homebridge.hap.Service.Speaker();
 
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.Mute)
         .on('set', this.setItemState.bind(this))
         .on('get', this.getItemState.bind(this))
-        .updateValue(this.currentState == '1');
+        //.updateValue(this.currentState == '1');
 
     return otherService;
 };
 
-SpeakerItem.prototype.getItemState = function(callback) {
+TimedSwitchItem.prototype.getItemState = function(callback) {
     //returns true if currentState is 1
-    callback(undefined, this.currentState == '1');
+    callback(undefined, this.currentState);
 };
 
-SpeakerItem.prototype.onCommand = () => {
-    //function to set the command to be used for On
-    //for a switch, this is 'On', but subclasses can override this to eg Pulse
-    return 'On';
-};
-
-SpeakerItem.prototype.setItemState = function(value, callback) {
+TimedSwitchItem.prototype.setItemState = function(value, callback) {
 
     //sending new state to loxone
     //added some logic to prevent a loop when the change because of external event captured by callback
 
-    const self = this;
-	
-    const command = (value == '1') ? this.onCommand() : 'Off';
-    this.log(`[switch] iOS - send message to ${this.name}: ${command}`);
+
+
+    let command = 0;
+    if (value == true) {
+        //this.log('perm on ***');
+        command = 'On';//-1; // perm on
+    } else {
+        //this.log('off ***');
+        command = 'Off';//0; // off
+    }
+
+    //this.log('setItemState value: ' + value);
+    //this.log('setItemState command: ' + command);
+
+    this.log(`[timedswitch] iOS - send message to ${this.name}: ${command}`);
     this.platform.ws.sendCommand(this.uuidAction, command);
     callback();
 
 };
 
-module.exports = SpeakerItem;
+module.exports = TimedSwitchItem;
+
