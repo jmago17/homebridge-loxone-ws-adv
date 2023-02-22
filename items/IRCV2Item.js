@@ -49,8 +49,25 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
     console.log("Funtion value " + value + " " + uuid);
     
 	if(this.stateHeatingOn == uuid){
-       this.HeatintOn = value;
+       this.HeatingOn = value;
        console.log("Got new state for heating                        mode " + this.name + ": " + this.HeatingOn);
+		if(this.HeatingOn == 1){
+				  // Current Heating ON and Cooling off
+          //  read from current operatingmode value =1 for heating
+			this.otherService
+            .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
+            .setValue(1);}
+		if(this.HeatingOn == 0){
+			  // Current Heating and Cooling off
+          //  read from current operatingmode value =0 
+			this.otherService
+            .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
+            .setValue(0);}
+		if(this.HeatingOn == 2){ 
+	  // Current heatiung off and cooling ON off
+          //  read from current operatingmode value =2 for cooling
+            .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
+            .setValue(2);}
 	}
     
     if(this.stateActiveMode == uuid){
@@ -553,8 +570,8 @@ IRCV2Item.prototype.setHeatingTemperature = function(Value, callback) {
    		 //console.log("date 2010 in seconds" + date2009.getTime())
        		 var datenow = new Date();
 		let timer = Math.round((Math.abs(datenow - date2009))/1000 + 6000);
-		var command = "override/3/"+ timer + "/" + Value; 
-		this.platform.ws.sendCommand(this.uuidAction, command);
+	//	var command = "override/3/"+ timer + "/" + Value; 
+	//	this.platform.ws.sendCommand(this.uuidAction, command);
        		 this.log(this.name + " Command " + command);
        		 callback();
 	
