@@ -12,7 +12,6 @@ var IRCV2Item = function(widget,platform,homebridge) {
     this.stateOverride = widget.states.overrideEntries;
     //this.stateMode = widget.states.operatingMode;
     this.stateTarget = widget.states.tempTarget;
-    this.stateHeatingOn = widget.states.operatingMode;	
     this.stateHeatingTemp = widget.states.comfortTemperature;
     this.stateCoolingTemp = widget.states.comfortTemperatureCool;
     this.stateEcoMinTempOffset = widget.states.absentMinOffset;  
@@ -29,7 +28,6 @@ var IRCV2Item = function(widget,platform,homebridge) {
 IRCV2Item.prototype.initListener = function() {
     this.platform.ws.registerListenerForUUID(this.stateActual, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateTarget, this.callBack.bind(this));
-    this.platform.ws.registerListenerForUUID(this.stateHeatingOn, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateHeatingTemp, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateCoolingTemp, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateEcoMinTempOffset, this.callBack.bind(this));
@@ -47,29 +45,7 @@ IRCV2Item.prototype.initListener = function() {
 IRCV2Item.prototype.callBack = function(value, uuid) {
     //function that gets called by the registered ws listener
     console.log("Funtion value " + value + " " + uuid);
-    
-	if(this.stateHeatingOn == uuid){
-       this.HeatingOn = value;
-       console.log("Got new state for heating                        mode " + this.name + ": " + this.HeatingOn);
-		if(this.HeatingOn == 1){
-				  // Current Heating ON and Cooling off
-          //  read from current operatingmode value =1 for heating
-			this.otherService
-            .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
-            .setValue(1);}
-		if(this.HeatingOn == 0){
-			  // Current Heating and Cooling off
-          //  read from current operatingmode value =0 
-			this.otherService
-            .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
-            .setValue(0);}
-		if(this.HeatingOn == 2){ 
-	  // Current heatiung off and cooling ON off
-          //  read from current operatingmode value =2 for cooling
-			this.otherService
-            .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
-            .setValue(2);}
-	}
+       
     
     if(this.stateActiveMode == uuid){
        this.activeMode = value;
@@ -564,19 +540,6 @@ IRCV2Item.prototype.setHeatingTemperature = function(Value, callback) {
         callback();
         return;
     }
-	//to set a new temperature, a timer of 2 hours is started on manual mode at the given new temperature. When timer is finished, loxone will return to default
-	
-	  //getting seconds since 2009
-    		var date2009 = new Date("2009-01-01 00:00:00");
-   		 //console.log("date 2010 in seconds" + date2009.getTime())
-       		 var datenow = new Date();
-		let timer = Math.round((Math.abs(datenow - date2009))/1000 + 6000);
-	//	var command = "override/3/"+ timer + "/" + Value; 
-	//	this.platform.ws.sendCommand(this.uuidAction, command);
-       		 this.log(this.name + " Command " + command);
-       		 callback();
-	
-	/*
 	if(this.economymode){
 		//var temperature = Value + this.EcoMaxTempOffset- this.heatingTargetTemp ;
 		var temperature = Value - this.heatingTargetTemp
@@ -605,7 +568,7 @@ IRCV2Item.prototype.setHeatingTemperature = function(Value, callback) {
         this.platform.ws.sendCommand(this.uuidAction, command);
         this.log(this.name + " Command " + command);}
         callback();
-    */
+    
 }
 
 IRCV2Item.prototype.setCoolingTemperature = function(Value, callback) {
