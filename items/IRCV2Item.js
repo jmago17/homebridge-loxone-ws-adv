@@ -10,7 +10,7 @@ var IRCV2Item = function(widget,platform,homebridge) {
     this.uuidAction = widget.uuidAction;
     this.stateActual = widget.states.tempActual;
     this.stateOverride = widget.states.overrideEntries;
-    //this.stateMode = widget.states.operatingMode;
+    this.stateMode = widget.states.operatingMode;
     this.stateTarget = widget.states.tempTarget;
     this.stateHeatingTemp = widget.states.comfortTemperature;
     this.stateCoolingTemp = widget.states.comfortTemperatureCool;
@@ -45,6 +45,30 @@ IRCV2Item.prototype.initListener = function() {
 IRCV2Item.prototype.callBack = function(value, uuid) {
     //function that gets called by the registered ws listener
     console.log("Funtion value " + value + " " + uuid);
+    
+	
+	if(this.stateMode == uuid){
+       this.HeatingOn = value;
+       console.log("Got new state for heating                        mode " + this.name + ": " + this.HeatingOn);
+		if(this.HeatingOn == 1){
+				  // Current Heating ON and Cooling off
+          //  read from current operatingmode value =1 for heating
+			this.otherService
+            .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
+            .setValue(1);}
+		if(this.HeatingOn == 0){
+			  // Current Heating and Cooling off
+          //  read from current operatingmode value =0 
+			this.otherService
+            .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
+            .setValue(0);}
+		if(this.HeatingOn == 2){ 
+	  // Current heatiung off and cooling ON off
+          //  read from current operatingmode value =2 for cooling
+			this.otherService
+            .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
+            .setValue(2);}
+	}
        
     
     if(this.stateActiveMode == uuid){
@@ -238,7 +262,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
     this.otherService
     .getCharacteristic(this.homebridge.hap.Characteristic.CurrentTemperature)
     .setValue(this.currentTemperature);
-    if(this.economymode){   // take a look what the valve is doing
+   /* if(this.economymode){   // take a look what the valve is doing
         if(this.currentTemperature > this.coolingTargetTemp + this.EcoMaxTempOffset && this.currentTemperature != undefined && this.coolingTargetTemp != undefined){
             // Current Cooling
          //   console.log("Valve is cooling: " + this.name + " " + this.currentTemperature + " > " + this.targetTemperature);
@@ -313,7 +337,8 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
             .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
             .setValue(0);
         }
-    }}
+    }*/
+    }
     
      
     
