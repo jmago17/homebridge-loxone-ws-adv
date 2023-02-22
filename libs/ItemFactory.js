@@ -12,7 +12,7 @@ moduleexports.Lightbulb = require('../items/LightbulbItem.js');
 moduleexports.Dimmer = require('../items/DimmerItem.js');
 moduleexports.Jalousie = require('../items/BlindsItem.js');
 moduleexports.Pushbutton = require('../items/PushbuttonItem.js');
-// moduleexports.Fan = require('../items/Fan.js'); not currently in use. 
+moduleexports.Fan = require('../items/Fan.js'); not currently in use. 
 moduleexports.PresenceDetector = require('../items/occupancy.js');
 
 
