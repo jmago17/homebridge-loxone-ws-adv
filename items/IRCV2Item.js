@@ -98,7 +98,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
           //  read from current operatingmode value =0 
 			this.otherService
             .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
-            .setValue(0);}
+            .setValue(0);}}
 		     else if(this.HeatingOn){
 			if(this.currentTemperature > this.coolingTargetTemp  && this.currentTemperature != undefined && this.coolingTargetTemp != undefined){
             // Current Cooling
