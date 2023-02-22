@@ -50,12 +50,12 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
     
 	if(this.stateHeatingOn == uuid){
        this.HeatintOn = value;
-       console.log("Got new state for active mode " + this.name + ": " + this.HeatingOn);
+       console.log("Got new state for heating                        mode " + this.name + ": " + this.HeatingOn);
 	}
     
     if(this.stateActiveMode == uuid){
        this.activeMode = value;
-       console.log("Got new state for heating mode                                    " + this.name + ": " + this.activeMode);
+       console.log("Got new state for active mode " + this.name + ": " + this.activeMode);
     
      switch (value) {
 	     case 0:
