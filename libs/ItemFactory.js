@@ -154,7 +154,9 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
     } else if (catList[item.cat] !== undefined && catList[item.cat].image === "00000000-0000-0002-2000000000000000.svg") {
         //this is the lightbulb image, which means that this is a lightning control
         if (item.type === "Switch") {
-            item.type = "Lightbulb";
+            if(item.name.indexOf('BellSpeaker'){
+               item.type = "speakerBell";}
+           else { item.type = "Lightbulb";}
         }
     } else if (item.parentType === "LightController" || item.parentType === "LightControllerV2") {
         //this is a subcontrol of a lightcontroller
