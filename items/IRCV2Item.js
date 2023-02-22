@@ -97,7 +97,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
             .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
             .setValue(0);}
 	}}
-	}
+	
        
     
     if(this.stateActiveMode == uuid){
