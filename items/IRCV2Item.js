@@ -312,9 +312,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
             }.bind(this));
         //     console.log("Loxone State tergetTemp (should be false): " + this.setFromLoxone);
 
-
     }
-
 
     if (this.stateActual == uuid) {
         this.currentTemperature = value;
@@ -324,91 +322,9 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
         this.otherService
             .getCharacteristic(this.homebridge.hap.Characteristic.CurrentTemperature)
             .setValue(this.currentTemperature);
-
-
-        /* if(this.economymode){   // take a look what the valve is doing
-             if(this.currentTemperature > this.coolingTargetTemp + this.EcoMaxTempOffset && this.currentTemperature != undefined && this.coolingTargetTemp != undefined){
-                 // Current Cooling
-              //   console.log("Valve is cooling: " + this.name + " " + this.currentTemperature + " > " + this.targetTemperature);
-                 this.otherService
-                 .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
-                 .setValue(2);
-             }
-             
-             if(this.currentTemperature < this.heatingTargetTemp - this.EcoMinTempOffset && this.currentTemperature != undefined && this.heatingTargetTemp != undefined){
-                 // Current Heating
-             //    console.log("Valve is heating: " + this.name + " " + this.currentTemperature + " < " + this.targetTemperature);
-                 this.otherService
-                 .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
-                 .setValue(1);
-             }
-             
-             if(this.currentTemperature > this.heatingTargetTemp && this.currentTemperature < this.coolingTargetTemp && this.currentTemperature != undefined && this.coolingTargetTemp != undefined  && this.heatingTargetTemp != undefined){
-                 // Current Heating and Cooling off
-               //  console.log("Valve is off: " + this.name + " " + this.currentTemperature + " = " + this.targetTemperature);
-                 this.otherService
-                 .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
-                 .setValue(0);
-             }}
-            else if(this.manual){
-             // take a look what the valve is doing
-             if(this.currentTemperature > this.targetTemperature && this.currentTemperature != undefined && this.targetTemperature != undefined){
-                 // Current Cooling
-              //   console.log("Valve is cooling: " + this.name + " " + this.currentTemperature + " > " + this.targetTemperature);
-                 this.otherService
-                 .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
-                 .setValue(2);
-             }
-             
-             if(this.currentTemperature < this.targetTemperature && this.currentTemperature != undefined && this.targetTemperature != undefined){
-                 // Current Heating
-             //    console.log("Valve is heating: " + this.name + " " + this.currentTemperature + " < " + this.targetTemperature);
-                 this.otherService
-                 .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
-                 .setValue(1);
-             }
-             
-             if(this.currentTemperature == this.targetTemperature && this.currentTemperature != undefined && this.targetTemperature != undefined ){
-                 // Current Heating and Cooling off
-               //  console.log("Valve is off: " + this.name + " " + this.currentTemperature + " = " + this.targetTemperature);
-                 this.otherService
-                 .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
-                 .setValue(0);
-             }
-         }
-            else {
-             // take a look what the valve is doing
-             if(this.currentTemperature > this.coolingTargetTemp && this.currentTemperature != undefined && this.coolingTargetTemp != undefined){
-                 // Current Cooling
-              //   console.log("Valve is cooling: " + this.name + " " + this.currentTemperature + " > " + this.targetTemperature);
-                 this.otherService
-                 .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
-                 .setValue(2);
-             }
-             
-             if(this.currentTemperature < this.heatingTargetTemp && this.currentTemperature != undefined && this.heatingTargetTemp != undefined){
-                 // Current Heating
-             //    console.log("Valve is heating: " + this.name + " " + this.currentTemperature + " < " + this.targetTemperature);
-                 this.otherService
-                 .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
-                 .setValue(1);
-             }
-             
-             if(this.currentTemperature > this.heatingTargetTemp && this.currentTemperature < this.coolingTargetTemp && this.currentTemperature != undefined && this.coolingTargetTemp != undefined  && this.heatingTargetTemp != undefined){
-                 // Current Heating and Cooling off
-               //  console.log("Valve is off: " + this.name + " " + this.currentTemperature + " = " + this.targetTemperature);
-                 this.otherService
-                 .getCharacteristic(this.homebridge.hap.Characteristic.CurrentHeatingCoolingState)
-                 .setValue(0);
-             }
-         }*/
+    
     }
-
-
-
 }
-
-
 
 IRCV2Item.prototype.getOtherServices = function() {
     //setting variable to skip update for intial Value
@@ -465,7 +381,6 @@ IRCV2Item.prototype.getCoolingTemperature = function(callback) {
 IRCV2Item.prototype.getHeatingTemperature = function(callback) {
     callback(undefined, this.heatingTargetTemp);
 };
-
 
 
 IRCV2Item.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
@@ -622,7 +537,7 @@ IRCV2Item.prototype.setHeatingTemperature = function(Value, callback) {
         callback();
         return;
     }
-    if (this.economymode) {
+   /* if (this.economymode) {
         //var temperature = Value + this.EcoMaxTempOffset- this.heatingTargetTemp ;
         var temperature = Value - this.heatingTargetTemp
         this.heatingTargetTemp = temperature;
@@ -649,7 +564,19 @@ IRCV2Item.prototype.setHeatingTemperature = function(Value, callback) {
         var command = "setComfortModeTemp/" + temperature; //Loxone expects a Value between 10 and 38
         this.platform.ws.sendCommand(this.uuidAction, command);
         this.log(this.name + " Command " + command);
-    }
+    }*/
+    //getting seconds since 2009
+        var temperature = Value;
+        var date2009 = new Date("2009-01-01 00:00:00");
+        //console.log("date 2010 in seconds" + date2009.getTime())
+
+        var datenow = new Date();
+        //console.log("date now in seconds" + datenow.getTime())
+        let timer = Math.round((Math.abs(datenow - date2009)) / 1000 + 6000);
+        var command = "override/3/" + timer + "/" + temperature; 
+        //this.platform.ws.sendCommand(this.uuidAction, command);
+        // this.log(this.name + " Command " + command);
+    
     callback();
 
 }
