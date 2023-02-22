@@ -10,9 +10,9 @@ var IRCV2Item = function(widget, platform, homebridge) {
     this.uuidAction = widget.uuidAction;
     this.stateActual = widget.states.tempActual;
     this.stateOverride = widget.states.overrideEntries;
-    if(this.name.startsWith("Pasillo") ){ // this.stateMode = '1a99ffce-01d2-26ce-ffff8795bbcbc15c';
+    if(this.name.startsWith('Pasillo') ){ // this.stateMode = '1a99ffce-01d2-26ce-ffff8795bbcbc15c';
     }
-    if(this.name.startsWith("Cocina") ){  this.stateMode = '10779045-01b8-1068-ffff8795bbcbc15c';}
+    if(this.name.startsWith('Cocina') ){  this.stateMode = '10779045-01b8-1068-ffff8795bbcbc15c';}
     this.stateTarget = widget.states.tempTarget;
     this.stateHeatingTemp = widget.states.comfortTemperature;
     this.stateCoolingTemp = widget.states.comfortTemperatureCool;
