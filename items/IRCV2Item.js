@@ -549,7 +549,7 @@ IRCV2Item.prototype.setHeatingTemperature = function(Value, callback) {
 		let timer = Math.round((Math.abs(datenow - date2009))/1000 + 6000);
 		var command = "override/1/"+ timer ; //+ "/" + this.heatingTargetTemp; 
 		this.platform.ws.sendCommand(this.uuidAction, command);
-       		 this.log(this.name + " Command " + command);}
+       		 this.log(this.name + " Command " + command);
        		 callback();
 	/*
 	if(this.economymode){
