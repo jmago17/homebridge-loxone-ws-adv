@@ -6,16 +6,13 @@ moduleexports.LightControllerV2MoodSwitch = require('../items/LightControllerV2M
 moduleexports.TemperatureSensor = require('../items/TemperatureSensorItem.js');
 moduleexports.HumiditySensor = require('../items/HumiditySensorItem.js');
 moduleexports.Switch = require('../items/SwitchItem.js');
-
 moduleexports.TimedSwitch = require('../items/TimedSwitchItem.js');
 moduleexports.Lightbulb = require('../items/LightbulbItem.js');
 moduleexports.Dimmer = require('../items/DimmerItem.js');
 moduleexports.Jalousie = require('../items/BlindsItem.js');
 moduleexports.Pushbutton = require('../items/PushbuttonItem.js');
-moduleexports.Fan = require('../items/Fan.js'); not currently in use. 
+moduleexports.Fan = require('../items/Fan.js');
 moduleexports.PresenceDetector = require('../items/occupancy.js');
-
-
 moduleexports.Colorpicker = require('../items/ColorpickerItem.js');
 moduleexports.Gate = require('../items/GateItem.js');
 moduleexports.DoorBell = require('../items/DoorBellItem.js');
@@ -63,7 +60,7 @@ moduleexports.Factory.prototype.parseSitemap = function(jsonSitemap) {
             //process additional attributes
             this.itemList[key] = moduleexports.Factory.prototype.checkCustomAttrs(this, key, this.platform, this.catList);
 
-            if (!(this.itemList[key].type in moduleexports)){
+            if (!(this.itemList[key].type in moduleexports)) {
                 this.log(`Platform - The widget '${this.itemList[key].name}' of type ${this.itemList[key].type} is an item not handled.`);
                 continue;
             }
@@ -79,7 +76,7 @@ moduleexports.Factory.prototype.parseSitemap = function(jsonSitemap) {
                 // https://github.com/nfarina/homebridge/issues/509
                 this.log(`Platform - Accessory count limit (100) exceeded so skipping: '${this.itemList[key].name}' of type ${this.itemList[key].type} was skipped.`);
             } else {
-                
+
                 let keyToLookup = key;
                 if (keyToLookup.indexOf('/') > -1) {
                     keyToLookup = keyToLookup.split('/')[0];
@@ -88,36 +85,36 @@ moduleexports.Factory.prototype.parseSitemap = function(jsonSitemap) {
                 const control = this.itemList[keyToLookup];
 
                 let controlRoom = null;
-				
-				if (this.platform.rooms.length == 0) {
-					//Show all rooms
-					accessoryList.push(accessory);
-					
-				} else {
-					//Filter rooms
-					if (control.room) {
-						// The controls room is not defined if the room "Not used" is assigned via the Config
-						controlRoom = this.roomList[control.room].name;
 
-						//this.log(this.platform.rooms);
-						//this.log(controlRoom);
+                if (this.platform.rooms.length == 0) {
+                    //Show all rooms
+                    accessoryList.push(accessory);
 
-						if (this.platform.rooms.indexOf(controlRoom) >= 0) {
+                } else {
+                    //Filter rooms
+                    if (control.room) {
+                        // The controls room is not defined if the room "Not used" is assigned via the Config
+                        controlRoom = this.roomList[control.room].name;
 
-							if ((this.platform.moodSwitches == 'only') && (this.itemList[key].type !== 'LightControllerV2MoodSwitch')) {
-								this.log('Skipping as only moodswitched selected');
-							} else {
-								accessoryList.push(accessory);
-							}
-						} else {
-							this.log(`Platform - Skipping as room ${controlRoom} is not in the config.json rooms list.`);
-						}
+                        //this.log(this.platform.rooms);
+                        //this.log(controlRoom);
 
-					} else {
-						// cannot add this accessory as it does not have a room
-						this.log('Platform - Skipping as could not determine which room the accessory is in.');
-					}
-				}
+                        if (this.platform.rooms.indexOf(controlRoom) >= 0) {
+
+                            if ((this.platform.moodSwitches == 'only') && (this.itemList[key].type !== 'LightControllerV2MoodSwitch')) {
+                                this.log('Skipping as only moodswitched selected');
+                            } else {
+                                accessoryList.push(accessory);
+                            }
+                        } else {
+                            this.log(`Platform - Skipping as room ${controlRoom} is not in the config.json rooms list.`);
+                        }
+
+                    } else {
+                        // cannot add this accessory as it does not have a room
+                        this.log('Platform - Skipping as could not determine which room the accessory is in.');
+                    }
+                }
             }
 
         }
@@ -135,30 +132,33 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
 
     if (item.name.startsWith('Temperat')) {
         item.type = "TemperatureSensor";
-	    
-	} if (item.name.includes('Steckdose')) {
-         item.type = "Outlet";    
+
+    }
+    if (item.name.includes('Steckdose')) {
+        item.type = "Outlet";
 
     } else if (item.name.indexOf("Humidity") !== -1) {
         item.type = "HumiditySensor";
-    } else if(item.type=="IRoomController"){
-        item.type="TemperatureItem";
-    } else if(item.type=="IRoomControllerV2"){
-       item.type="IRoomControllerV2";
+    } else if (item.type == "IRoomController") {
+        item.type = "TemperatureItem";
+    } else if (item.type == "IRoomControllerV2") {
+        item.type = "IRoomControllerV2";
     } else if (item.type == "TimedSwitch") {
-           if (item.name.indexOf("Extractor") !== -1) {
-          //  item.type = "Fan"; Fan type not in use
-	  //} else { 
-		   item.type = "TimedSwitch";}
+        if (item.name.indexOf("Extractor") !== -1) {
+            item.type = "Fan";
+            Fan type not in use
+        } else {
+            item.type = "TimedSwitch";
+        }
 
     } else if (catList[item.cat] !== undefined && catList[item.cat].image === "00000000-0000-0002-2000000000000000.svg") {
         //this is the lightbulb image, which means that this is a lightning control
-        if(item.type === "Switch") {
+        if (item.type === "Switch") {
             item.type = "Lightbulb";
         }
     } else if (item.parentType === "LightController" || item.parentType === "LightControllerV2") {
         //this is a subcontrol of a lightcontroller
-        if(item.type === "Switch") {
+        if (item.type === "Switch") {
             item.type = "Lightbulb";
         } else if (item.type === "ColorPickerV2") { // Handle the new ColorPickerV2 which replaces the colorPicker in the new LightControllerV2
             item.type = "Colorpicker";
@@ -178,28 +178,24 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
 
         } else if (item.name.indexOf("Door Contact") !== -1) {
             item.type = "ContactSensor";
-	} else if (item.name.indexOf("Sync") !== -1) {
+        } else if (item.name.indexOf("Sync") !== -1) {
             item.type = "ContactSensor";
         } else if (item.defaultIcon == '00000000-0000-0004-2000000000000000') {
             item.type = "Outlet";
-	}
-	    
-	    
+        }
+
+
 
     }
 
-	
-	if (item.type == "OccupancySensor") {
-		item.type = "PresenceDetector";
+
+    if (item.type == "OccupancySensor") {
+        item.type = "PresenceDetector";
     }
-	
-	
-	
-	
-	
-	
-	
-		
+
+
+
+
     if (item.type == "InfoOnlyAnalog") {
 
         if (item.name.indexOf("Door Contact") !== -1) {
@@ -215,15 +211,15 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
             item.type = 'TemperatureSensor';
         }
     }
-	if(item.type=="AudioZone"){
-        item.type="MusicSwitch";
-        
+    if (item.type == "AudioZone") {
+        item.type = "MusicSwitch";
+
     }
     if (item.type === "EIBDimmer") {
         item.type = "Dimmer"
     }
 
-    if(item.name.indexOf("Loxone") !== -1) {
+    if (item.name.indexOf("Loxone") !== -1) {
         //this is a Loxone status or temperature, I don't need these in Siri
         item.skip = true;
     }
