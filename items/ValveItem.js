@@ -47,7 +47,7 @@ ValveItem.prototype.getOtherServices = function () {
 
 ValveItem.prototype.setItemState = function (value, callback) {
     this.log(`[${this.item}] ${this.name} ${this.uuidAction} - send message to ${this.name}:` + value);
-    if (this.name == 'Programa Termo'){
+    if (this.name == "Programa Termo"){
         if (value == 1){ 
          this.log(`[${this.item}] ${this.name}  - send message to ${this.name}:` + value);
          const command = 'startOverride/7200';
