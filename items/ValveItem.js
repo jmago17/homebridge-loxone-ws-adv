@@ -8,6 +8,7 @@ const ValveItem = function(widget, platform, homebridge) {
         this.stateOverride = widget.states.override;
     } else {
         this.stateUuid = widget.states.active; //a switch always has a state called active, which is the uuid which will receive the event to read
+        this.stateOverride = undefined;
     }
     this.currentState = undefined; //will be 0 or 1 for Switch
     this.autoTimer = undefined;
@@ -18,9 +19,8 @@ const ValveItem = function(widget, platform, homebridge) {
 // Register a listener to be notified of changes in this items value
 ValveItem.prototype.initListener = function() {
     this.platform.ws.registerListenerForUUID(this.stateUuid, this.callBack.bind(this));
-    if (this.uuidAction == '1a9bc5a7-008b-05ef-ffff8795bbcbc15c') {
-        this.platform.ws.registerListenerForUUID(this.stateOverride, this.callBack.bind(this));
-    }
+    this.platform.ws.registerListenerForUUID(this.stateOverride, this.callBack.bind(this));
+    
 };
 
 ValveItem.prototype.callBack = function(value, uuid) {
