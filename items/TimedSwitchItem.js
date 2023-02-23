@@ -60,7 +60,7 @@ TimedSwitchItem.prototype.setItemState = function(value, callback) {
     let command = 0;
     if (value == true) {
         //this.log('perm on ***');
-        command = 'On';//-1; // perm on
+        command = 'Pulse';//-1; // perm on
     } else {
         //this.log('off ***');
         command = 'Off';//0; // off
