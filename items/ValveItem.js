@@ -23,7 +23,7 @@ ValveItem.prototype.initListener = function() {
     }
 };
 
-ValveItem.prototype.callBack = function(value) {
+ValveItem.prototype.callBack = function(value, uuid) {
     console.log("Funtion value " + value + " " + uuid);
     if (this.stateUuid == uuid) {
         this.currentState = value;
