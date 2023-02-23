@@ -40,6 +40,8 @@ module.exports = homebridge => {
             //Add childs of switch
             Utility.addSupportTo(ItemFactory.Lightbulb, ItemFactory.Switch);
             Utility.addSupportTo(ItemFactory.Pushbutton, ItemFactory.Switch);
+	    Utility.addSupportTo(ItemFactory.Lock, ItemFactory.AbstractItem);
+            Utility.addSupportTo(ItemFactory.Valve, ItemFactory.AbstractItem);
 	   
     homebridge.registerPlatform("homebridge-loxoneWs", "LoxoneWs", LoxPlatform);
 };
