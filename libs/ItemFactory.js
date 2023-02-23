@@ -148,6 +148,8 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
     } else if (item.type == "TimedSwitch") {
         if (item.name.indexOf("Extractor") !== -1) {
             item.type = "Fan";
+        } else if(item.name == "CalderaSwitch"){
+            item.type = "Valve";
         } else {
             item.type = "TimedSwitch";
         }
@@ -189,10 +191,7 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
            } else { item.type = "Gate";
            }
     }
-    if (item.type === "Daytimer") {
-        if(item.name == "Programa Termo"){
-            item.type = "Valve";}
-    }
+   
     if (item.type == "InfoOnlyDigital") {
         if (item.name.indexOf("Timbre") !== -1) {
             item.type = "DoorBell";
