@@ -12,7 +12,7 @@ const ValveItem = function(widget, platform, homebridge) {
     }
     this.currentState = undefined; //will be 0 or 1 for Switch
     this.autoTimer = undefined;
-    this.override == 0;
+    this.override = 0;
     ValveItem.super_.call(this, widget, platform, homebridge);
 };
 
