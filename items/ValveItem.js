@@ -46,14 +46,15 @@ ValveItem.prototype.getOtherServices = function () {
 };
 
 ValveItem.prototype.setItemState = function (value, callback) {
-    this.log(`[${this.item}] ${this.name} ${this.uuidAction} - send message to ${this.name}:` + value);
+    let command = "command";
+    this.log(`[${this.item}] ${this.name} ${this.uuidAction} - send message to ${this.name}:` + value + command);
     if (this.name == "Programa Termo"){
         if (value == 1){ 
-         this.log(`[${this.item}] ${this.name}  - send message to ${this.name}:` + value);
-         const command = 'startOverride/7200';
-        } else { const command = "stopOverride";}
+         this.log(`[${this.item}] ${this.name}  - send message to ${this.name}:` + value + command);
+         command = 'startOverride/7200';
+        } else { command = "stopOverride";}
     } else {
-        const command = (value == 1) ? 'On' : 'Off';
+        command = (value == 1) ? 'On' : 'Off';
     }
     this.log(`[${this.item}] - send message to ${this.name}: ${command}`);
     this.platform.ws.sendCommand(this.uuidAction, command);
