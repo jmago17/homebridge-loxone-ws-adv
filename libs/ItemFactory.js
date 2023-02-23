@@ -174,7 +174,7 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
         //
         
     
-    } else if (item.parentType === "LightController" || item.parentType === "LightControllerV2") {
+    } if (item.parentType === "LightController" || item.parentType === "LightControllerV2") {
         //this is a subcontrol of a lightcontroller
         if (item.type === "Switch") {
             item.type = "Lightbulb";
