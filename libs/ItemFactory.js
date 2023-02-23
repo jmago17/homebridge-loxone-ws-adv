@@ -182,14 +182,16 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
             item.type = "Colorpicker";
         }
     }
-
+ 
     if (item.type === "Gate") {
         if(item.name.indexOf("Puerta")!== -1){
            item.type = "Lock";
            } else { item.type = "Gate";
            }
     }
-
+   if (item.type === "Daytimer") {
+        if(item.name == "Programa Termo"){
+            item.type = "Valve";}
     if (item.type == "InfoOnlyDigital") {
         if (item.name.indexOf("Timbre") !== -1) {
             item.type = "DoorBell";
