@@ -160,7 +160,7 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
             }
         }      
 
-        if (item.name.indexOf('Puerta'))) {
+        if (item.name.indexOf('Puerta')) {
             item.type = "Lock"; 
         }
 
