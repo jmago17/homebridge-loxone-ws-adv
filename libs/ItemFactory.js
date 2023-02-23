@@ -189,9 +189,10 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
            } else { item.type = "Gate";
            }
     }
-   if (item.type === "Daytimer") {
+    if (item.type === "Daytimer") {
         if(item.name == "Programa Termo"){
             item.type = "Valve";}
+    }
     if (item.type == "InfoOnlyDigital") {
         if (item.name.indexOf("Timbre") !== -1) {
             item.type = "DoorBell";
