@@ -12,6 +12,7 @@ moduleexports.Dimmer = require('../items/DimmerItem.js');
 moduleexports.Jalousie = require('../items/BlindsItem.js');
 moduleexports.Pushbutton = require('../items/PushbuttonItem.js');
 moduleexports.Fan = require('../items/Fan.js');
+moduleexports.Lock = require('../items/LockItem.js');
 moduleexports.PresenceDetector = require('../items/occupancy.js');
 moduleexports.Colorpicker = require('../items/ColorpickerItem.js');
 moduleexports.Gate = require('../items/GateItem.js');
@@ -147,16 +148,32 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
     } else if (item.type == "TimedSwitch") {
         if (item.name.indexOf("Extractor") !== -1) {
             item.type = "Fan";
-       } else {
+        } else {
             item.type = "TimedSwitch";
-    }
-     
-         
-    } else if (catList[item.cat] !== undefined && catList[item.cat].image === "00000000-0000-0002-2000000000000000.svg") {
-        //this is the lightbulb image, which means that this is a lightning control
-        if (item.type === "Switch") {
-            item.type = "Lightbulb";
         }
+    } else if(item.type === "Switch") {
+        if(catList[item.cat] !== undefined){
+            if (catList[item.cat].image === "00000000-0000-0002-2000000000000000.svg") {
+                item.type = "Lightbulb";
+            } else if (catList[item.cat].image === "00000000-0000-002d-2000000000000000.svg") {
+                item.type = "Outlet";
+            }
+        }      
+
+        if (item.name.indexOf('Puerta'))) {
+            item.type = "Lock"; 
+        }
+
+        if (item.name.includes(alias('Valve'))) {
+            item.type = "Valve";
+        }
+
+    
+    
+        
+        //
+        
+    
     } else if (item.parentType === "LightController" || item.parentType === "LightControllerV2") {
         //this is a subcontrol of a lightcontroller
         if (item.type === "Switch") {
