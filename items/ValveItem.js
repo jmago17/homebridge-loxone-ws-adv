@@ -33,8 +33,8 @@ ValveItem.prototype.getOtherServices = function () {
     
     this.item = 'Valve';
     
-    otherService.getCharacteristic(Characteristic.ValveType).updateValue(0);
-    // 0 = GENERIC VALVE
+    otherService.getCharacteristic(Characteristic.ValveType).updateValue(2);
+      // 0 = GENERIC VALVE
       // 1 = IRRIGATION
       // 2 = SHOWER HEAD
       // 3 = WATER FAUCET
@@ -46,7 +46,11 @@ ValveItem.prototype.getOtherServices = function () {
 };
 
 ValveItem.prototype.setItemState = function (value, callback) {
-    const command = (value == '1') ? 'On' : 'Off';
+    if (this.uuidAction == '16412643-0387-e5b1-ffff5696e285f4cd'){
+        const command = (value == '1') ? 'startOverride/7200' : 'stopOverride';
+    } else {
+        const command = (value == '1') ? 'On' : 'Off';
+    }
     this.log(`[${this.item}] - send message to ${this.name}: ${command}`);
     this.platform.ws.sendCommand(this.uuidAction, command);
     callback();
