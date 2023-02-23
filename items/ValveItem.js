@@ -62,7 +62,7 @@ ValveItem.prototype.setItemState = function(value, callback) {
         } else if (this.override == 0) {
             var now = new Date();
             var tomorrow = new Date();
-            tomorrow.setDate(datenow.getDate() + 1)
+            tomorrow.setDate(now.getDate() + 1)
             tomorrow.setHours(0, 0);
             let timer = Math.round((Math.abs(tomorrow - now)) / 1000);
             command = 'startOverride/0/timer';
