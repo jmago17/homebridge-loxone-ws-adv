@@ -67,8 +67,7 @@ ValveItem.prototype.setItemState = function(value, callback) {
             let timer = Math.round((Math.abs(tomorrow - now)) / 1000);
             command = 'startOverride/0/timer';
         } else {
-            command = "stopOverride";
-            this.override == 0;
+            command = "stopOverride";     
         }
     } else {
         command = (value == 1) ? 'On' : 'Off';
