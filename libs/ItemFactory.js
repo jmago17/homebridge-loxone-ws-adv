@@ -184,10 +184,9 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
     }
  
     if (item.type === "Gate") {
-        if(item.name.indexOf("Puerta")!== -1){
-           item.type = "Lock";
-           } else { item.type = "Gate";
-           }
+        
+            item.type = "Gate";
+           
     }
     if (item.type === "Daytimer") {
         if(item.name == "Programa Horario Termo"){
