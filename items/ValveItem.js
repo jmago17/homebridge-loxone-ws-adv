@@ -3,7 +3,9 @@ const ValveItem = function (widget, platform, homebridge) {
     
     this.platform = platform;
     this.uuidAction = widget.uuidAction; //to control a switch, use the uuidAction
-    if (this.uuidAction == '1a9bbf36-016d-daf5-ffff8795bbcbc15c'){    }
+    if (this.uuidAction == '1a9bc5a7-008b-05ef-ffff8795bbcbc15c'){
+     this.stateUuid = widget.states.value;
+     this.stateUuid = widget.states.override;}
     else {
         this.stateUuid = widget.states.active; //a switch always has a state called active, which is the uuid which will receive the event to read
     }
@@ -20,28 +22,11 @@ ValveItem.prototype.initListener = function () {
 
 ValveItem.prototype.callBack = function (value) {
     //console.log("Got new state for sprinkler: " + value);
- if (this.uuidAction == '1a9bbf36-016d-daf5-ffff8795bbcbc15c'){ 
- if (value == -1) {
-        //console.log("Got new state for Timed Switch: On");
-    } else if (value == 0) {
-        //console.log("Got new state for Timed Switch: Off");
-    } else if (value > 0) {
-        //console.log("Got new state for Timed Switch: Countdown " + value + "s");
-    }
-    
-    this.currentState = (value !== 0);
 
-    //console.log('set currentState to: ' + this.currentState)
-
-    this.otherService
-        .getCharacteristic(this.homebridge.hap.Characteristic.On)
-        .updateValue(this.currentState);
- } else {
     this.currentState = value;
 
     this.otherService.getCharacteristic(Characteristic.Active).updateValue(this.currentState == '1');
     this.otherService.getCharacteristic(Characteristic.InUse).updateValue(this.currentState == '1');
-    }
 };
 
 ValveItem.prototype.getOtherServices = function () {
@@ -63,10 +48,18 @@ ValveItem.prototype.getOtherServices = function () {
 
 ValveItem.prototype.setItemState = function (value, callback) {
     let command = "command";
-    if (this.uuidAction == '1a9bbf36-016d-daf5-ffff8795bbcbc15c'){ 
+    this.log(`[${this.item}] ${this.name} ${this.uuidAction} - send message to ${this.name}:` + value + command);
+    if (this.uuidAction == '1a9bc5a7-008b-05ef-ffff8795bbcbc15c'){
         if (value == 1){ 
-         command = 'Pulse';
-        } else { command = "Off";}
+         command = 'startOverride/1/7200';
+        } else { if (this.override == 0){
+            var now = new Date();
+            var tomorrow = new Date();
+            tomorrow.setDate(datenow.getDate() + 1)
+            tomorrow.setHours(0, 0);
+            let timer = Math.round((Math.abs(tomorrow - now)) / 1000);
+            command = 'startOverride/0/timer';
+        }else {command = "stopOverride";}
     } else {
         command = (value == 1) ? 'On' : 'Off';
     }
@@ -76,4 +69,3 @@ ValveItem.prototype.setItemState = function (value, callback) {
 };
 
 module.exports = ValveItem;
-
