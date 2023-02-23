@@ -46,7 +46,7 @@ ValveItem.prototype.getOtherServices = function () {
 };
 
 ValveItem.prototype.setItemState = function (value, callback) {
-    if (this.uuidAction == '16412643-0387-e5b1-ffff5696e285f4cd'){
+    if (this.name == 'Programa Termo'){
         const command = (value == '1') ? 'startOverride/7200' : 'stopOverride';
     } else {
         const command = (value == '1') ? 'On' : 'Off';
