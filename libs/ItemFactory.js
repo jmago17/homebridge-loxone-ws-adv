@@ -164,7 +164,7 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
             item.type = "Lock"; 
         }
 
-        if (item.name.includes(alias('Valve'))) {
+        if (item.name.indexOf('Valve')) {
             item.type = "Valve";
         }
 
