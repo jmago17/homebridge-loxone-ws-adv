@@ -49,9 +49,9 @@ ValveItem.prototype.setItemState = function (value, callback) {
     this.log(`[${this.item}] - send message to ${this.name}:` + value);
     if (this.name == 'Programa Termo'){
          this.log(`[${this.item}] - send message to ${this.name}:` + value);
-        const command = (value == '1') ? 'startOverride/7200' : 'stopOverride';
+         const command = (value == 1) ? 'startOverride/7200' : 'stopOverride';
     } else {
-        const command = (value == '1') ? 'On' : 'Off';
+        const command = (value == 1) ? 'On' : 'Off';
     }
     this.log(`[${this.item}] - send message to ${this.name}: ${command}`);
     this.platform.ws.sendCommand(this.uuidAction, command);
