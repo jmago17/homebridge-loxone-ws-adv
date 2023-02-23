@@ -20,6 +20,7 @@ moduleexports.MotionSensor = require('../items/MotionSensorItem.js');
 moduleexports.ContactSensor = require('../items/ContactSensorItem.js');
 moduleexports.LightSensor = require('../items/LightSensorItem.js');
 moduleexports.TemperatureItem = require('../items/TemperatureItem.js');
+moduleexports.Valve = require('../items/ValveItem.js');
 moduleexports.Alarm = require('../items/Alarm.js');
 moduleexports.TemperatureItemActual = require('../items/TemperatureItem.js');
 moduleexports.IRoomControllerV2 = require('../items/IRCV2Item.js');
