@@ -68,5 +68,5 @@ ValveItem.prototype.setItemState = function(value, callback) {
         this.log(`[${this.item}] - send message to ${this.name}: ${command}`);
         this.platform.ws.sendCommand(this.uuidAction, command);
         callback();;
-
-        module.exports = ValveItem;
+}
+module.exports = ValveItem;
