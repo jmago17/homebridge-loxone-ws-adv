@@ -3,7 +3,11 @@ const ValveItem = function (widget, platform, homebridge) {
     
     this.platform = platform;
     this.uuidAction = widget.uuidAction; //to control a switch, use the uuidAction
-    this.stateUuid = widget.states.active; //a switch always has a state called active, which is the uuid which will receive the event to read
+    if (this.uuidAction == '16412643-0387-e5b1-ffff5696e285f4cd'){
+     this.stateUuid = widget.states.value; }
+    else {
+        this.stateUuid = widget.states.active; //a switch always has a state called active, which is the uuid which will receive the event to read
+    }
     this.currentState = undefined; //will be 0 or 1 for Switch
     this.autoTimer = undefined;
 
@@ -30,6 +34,10 @@ ValveItem.prototype.getOtherServices = function () {
     this.item = 'Valve';
     
     otherService.getCharacteristic(Characteristic.ValveType).updateValue(0);
+    // 0 = GENERIC VALVE
+      // 1 = IRRIGATION
+      // 2 = SHOWER HEAD
+      // 3 = WATER FAUCET
     
     otherService.getCharacteristic(Characteristic.Active)
     .on('set', this.setItemState.bind(this))
