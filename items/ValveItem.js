@@ -55,7 +55,7 @@ ValveItem.prototype.getOtherServices = function() {
 
 ValveItem.prototype.setItemState = function(value, callback) {
     let command = "command";
-    this.log(`[${this.item}] ${this.name} ${this.uuidAction} - send message to ${this.name}:` + value + command);
+    this.log(`[${this.item}] ${this.name} ${this.uuidAction} - send message to ${this.name}:` + value + command + "override" + this.override);
     if (this.uuidAction == '1a9bc5a7-008b-05ef-ffff8795bbcbc15c') {
         if (value == 0) {
             command = 'startOverride/1/7200';
