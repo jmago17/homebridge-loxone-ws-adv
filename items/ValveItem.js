@@ -68,6 +68,7 @@ ValveItem.prototype.setItemState = function(value, callback) {
             command = 'startOverride/0/timer';
         } else {
             command = "stopOverride";
+            this.override == 0;
         }
     } else {
         command = (value == 1) ? 'On' : 'Off';
