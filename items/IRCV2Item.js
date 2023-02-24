@@ -14,6 +14,9 @@ var IRCV2Item = function(widget, platform, homebridge) {
     if (this.uuidAction == '1a98f01a-00fa-ab68-ffff06d286d49b63') {
         this.stateMode = '10779045-01b8-1071-ffff8795bbcbc15c';
     } //pasillo
+    if (this.uuidAction == '1a9cc7db-01ae-6ed7-ffffbc48df195af8') {
+        this.stateMode = '10779045-01b8-1071-ffff8795bbcbc15c';
+    } //pasillo 2
     if (this.uuidAction == '1a9910d0-000c-25bf-ffff367d547800c2') {
         this.stateMode = '10779045-01b8-1068-ffff8795bbcbc15c';
     } //cocina
