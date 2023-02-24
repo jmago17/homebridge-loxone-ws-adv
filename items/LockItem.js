@@ -10,12 +10,12 @@ const LockItem = function(widget,platform,homebridge) {
 };
 
 // Register a listener to be notified of changes in this items value
-LockSwitchItem.prototype.initListener = function() {
+LockItem.prototype.initListener = function() {
     //this.platform.ws.registerListenerForUUID(this.stateUuid, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.uuidAction, this.callBack.bind(this));
 };
 
-LockSwitchItem.prototype.callBack = function(value) {
+LockItem.prototype.callBack = function(value) {
     //function that gets called by the registered ws listener
     if (value == -1) {
         //console.log("Got new state for Timed Switch: On");
@@ -34,7 +34,7 @@ LockSwitchItem.prototype.callBack = function(value) {
         .updateValue(this.currentState);
 };
 
-LockSwitchItem.prototype.getOtherServices = function() {
+LockItem.prototype.getOtherServices = function() {
     const otherService = new this.homebridge.hap.Service.LockMechanism();
 
     otherService.getCharacteristic(this.homebridge.hap.LockCurrentState.SECURED)
@@ -48,12 +48,12 @@ LockSwitchItem.prototype.getOtherServices = function() {
     return otherService;
 };
 
-LockSwitchItem.prototype.getItemState = function(callback) {
+LockItem.prototype.getItemState = function(callback) {
     //returns true if currentState is 1
     callback(undefined, this.currentState);
 };
 
-LockSwitchItem.prototype.setItemState = function(value, callback) {
+LockItem.prototype.setItemState = function(value, callback) {
 
     //sending new state to loxone
     //added some logic to prevent a loop when the change because of external event captured by callback
