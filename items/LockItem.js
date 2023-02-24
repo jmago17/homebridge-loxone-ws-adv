@@ -32,7 +32,7 @@ LockItem.prototype.callBack = function(value) {
 
    this.otherService.getCharacteristic(Characteristic.LockCurrentState).updateValue(this.currentState);
    if (value == 0){
-    this.otherService.setCharacteristic(Characteristic.LockTargetState, Characteristic.LockTargetState.SECURED)
+   // this.otherService.setCharacteristic(Characteristic.LockTargetState, Characteristic.LockTargetState.SECURED)
    }
 };
 
