@@ -10,9 +10,6 @@ const LockItem = function (widget, platform, homebridge) {
     this.currentdoorstate = homebridge.hap.Characteristic.CurrentDoorState.SECURED;
     this.targetdoorstate = homebridge.hap.Characteristic.CurrentDoorState.SECURED;
     
-    this.autoLock = platform.autoLock;
-    this.autoLockDelay = platform.autoLockDelay;
-
     LockItem.super_.call(this, widget, platform, homebridge);
 };
 
