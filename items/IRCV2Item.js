@@ -314,7 +314,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
 
 IRCV2Item.prototype.getOtherServices = function() {
     //setting variable to skip update for intial Value
-    this.setInitialState = true;
+    this.setInitialState = false;
 
     var otherService = new this.homebridge.hap.Service.Thermostat();
 
