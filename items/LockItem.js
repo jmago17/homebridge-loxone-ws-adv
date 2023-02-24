@@ -1,6 +1,4 @@
 const LockItem = function (widget, platform, homebridge) {
-    Characteristic = homebridge.hap.Characteristic;
-
     this.platform = platform;
     this.uuidAction = widget.uuidAction; //to control a switch, use the uuidAction
     this.stateUuid = widget.states.active; //a switch always has a state called active, which is the uuid which will receive the event to read
@@ -13,6 +11,7 @@ const LockItem = function (widget, platform, homebridge) {
 LockItem.prototype.initListener = function () {
     this.platform.ws.registerListenerForUUID(this.currentState, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateUuid, this.callBack.bind(this));
+    console.log("Got new state for lock: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx ");
 };
 
 LockItem.prototype.callBack = function (value, uuid) {
