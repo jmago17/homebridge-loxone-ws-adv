@@ -30,7 +30,7 @@ LockItem.prototype.callBack = function(value) {
     //console.log('set currentState to: ' + this.currentState)
 
     this.otherService
-        .getCharacteristic(this.homebridge.hap.Characteristic.SECURED)
+        .getCharacteristic(this.homebridge.hap.Characteristic.LockCurrentState.SECURED)
         .updateValue(this.currentState);
 };
 
