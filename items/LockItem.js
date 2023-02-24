@@ -5,7 +5,11 @@ const LockItem = function(widget,platform,homebridge) {
     this.platform = platform;
     this.uuidAction = widget.uuidAction; //to control a switch, use the uuidAction
     this.currentState = undefined; //will be 0 or 1 for Switch
+    this.autoTimer = undefined;
 
+    this.autoLock = true;
+    this.autoLockDelay = 3;
+    this.setFromLoxone = undefined;
     LockItem.super_.call(this, widget,platform,homebridge);
 };
 
@@ -33,6 +37,7 @@ LockItem.prototype.callBack = function(value) {
    this.otherService.getCharacteristic(Characteristic.LockCurrentState).updateValue(this.currentState);
    if (value == 0){
    // this.otherService.setCharacteristic(Characteristic.LockTargetState, Characteristic.LockTargetState.SECURED)
+    this.setFromLoxone = true;
    }
 };
 
@@ -58,7 +63,7 @@ LockItem.prototype.setItemState = function(value, callback) {
     //added some logic to prevent a loop when the change because of external event captured by callback
 
 
-
+    if(!this.setFromLoxone ){
     let command = 0;
     if (value == true) {
         //this.log('perm on ***');
@@ -75,7 +80,8 @@ LockItem.prototype.setItemState = function(value, callback) {
     this.log(`[timedswitch] iOS - send message to ${this.name}: ${command}`);
     this.platform.ws.sendCommand(this.uuidAction, command);
     callback();
-
+    this.setFromLoxone = false;
+    }
 };
 
 module.exports = LockItem;
