@@ -391,24 +391,13 @@ IRCV2Item.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
 //    console.log("TemperatureItem setTargetHcState : " + ValueHc);
 
 
-    if (this.setInitialState) {
-        this.setInitialState = true;
-  //      console.log("setManualCoolingTemperature initial state = true");
-        callback();
-        return;
-    }
+   
 
     if (this.setFromLoxone) {
     //    console.log("setTergetHcState setFromLoxone");
         callback();
         return;
-    }
-
-    if (ValueHc == undefined) {
-        //happens at initial load
-        callback();
-        return;
-    }
+    
 
     if (ValueHc == 1) {
 
@@ -456,12 +445,7 @@ IRCV2Item.prototype.setTergetTemperature = function(Value, callback) {
 
 //    console.log("TemperatureItem setTergetTemperature: " + this.heatingTargetTemp);
  //   console.log("TemperatureItem setTergetTemperature: " + Value);
-    if (this.setInitialState) {
-        this.setInitialState = false;
-        console.log("setManualCoolingTemperature initial state = true");
-        callback();
-        return;
-    }
+   
 
     if (this.setFromLoxone) {
   //      console.log("setHeatingTemperature setFromLoxone");
@@ -469,17 +453,9 @@ IRCV2Item.prototype.setTergetTemperature = function(Value, callback) {
         return;
     }
 
-    if (Value == undefined) {
-        //happens at initial load
-        callback();
-        return;
-    }
+   
 
-    if (this.targetHcState == undefined) {
-        //happens at initial load
-        callback();
-        return;
-    }
+    
     var command = "setManualTemperature/" + Value; //Loxone expects a Value between 10 and 38
     this.platform.ws.sendCommand(this.uuidAction, command);
   //  this.log(this.name + " Command " + command);
@@ -495,28 +471,10 @@ IRCV2Item.prototype.setHeatingTemperature = function(Value, callback) {
 
  //   console.log("TemperatureItem setHeatingTemperature: " + this.heatingTargetTemp);
  //   console.log("TemperatureItem setHeatingTemperature: " + Value);
-    if (this.setInitialState) {
-        this.setInitialState = false;
- //       console.log("setManualCoolingTemperature initial state = true");
-        callback();
-        return;
-    }
+   
 
     if (this.setFromLoxone) {
  //       console.log("setHeatingTemperature setFromLoxone");
-        callback();
-        return;
-    }
-
-    if (Value == undefined) {
-        //happens at initial load
-        callback();
-        return;
-    }
-
-
-    if (this.targetHcState == undefined) {
-        //happens at initial load
         callback();
         return;
     }
@@ -545,32 +503,14 @@ IRCV2Item.prototype.setCoolingTemperature = function(Value, callback) {
 
 //    console.log("TemperatureItem setManualCoolingTemperature: " + this.coolingTargetTemp);
 
-    if (this.setInitialState) {
-        this.setInitialState = false;
-//        console.log("setManualCoolingTemperature initial state = true");
-        callback();
-        return;
-    }
-
+   
     if (this.setFromLoxone) {
   //      console.log("setManualCoolingTemperature setFromLoxone");
         callback();
         return;
     }
 
-    if (Value == undefined) {
-        //happens at initial load
-        callback();
-        return;
-    }
-
-
-    if (this.targetHcState == undefined) {
-        //happens at initial load
-        callback();
-        return;
-    }
-
+   
     if (this.economymode) {
         var temperature = Value - this.EcoMinTempOffset;
     } else {
