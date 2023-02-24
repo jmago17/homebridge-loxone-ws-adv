@@ -29,7 +29,8 @@ LockItem.prototype.callBack = function(value) {
 
     //console.log('set currentState to: ' + this.currentState)
 
-   this.otherService.getCharacteristic(Characteristic.LockCurrentState).updateValue(this.currentState == '1');
+   this.otherService.getCharacteristic(Characteristic.LockCurrentState).updateValue(this.currentState);
+    
     
 };
 
