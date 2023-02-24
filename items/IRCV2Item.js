@@ -392,7 +392,7 @@ IRCV2Item.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
 
 
     if (this.setInitialState) {
-        this.setInitialState = false;
+        this.setInitialState = true;
   //      console.log("setManualCoolingTemperature initial state = true");
         callback();
         return;
