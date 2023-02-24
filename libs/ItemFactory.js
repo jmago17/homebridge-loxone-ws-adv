@@ -148,8 +148,7 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
     } else if (item.type == "TimedSwitch") {
         if (item.name.indexOf("Extractor") !== -1) {
             item.type = "Fan";
-        }
-        if (item.name.indexOf('Puerta') !== -1) {
+        }else if (item.name.indexOf('Puerta') !== -1) {
             item.type = "Lock";
         } else {
             item.type = "TimedSwitch";
