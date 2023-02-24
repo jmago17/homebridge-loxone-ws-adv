@@ -16,21 +16,24 @@ LockItem.prototype.initListener = function() {
 };
 
 LockItem.prototype.callBack = function(value) {
-    //function that gets called by the registered ws listener
-    console.log("Funtion value " + value + " " );
-    
-      if (value == 0) {
-        console.log("Got new state for door: off / closed");
-          this.currentState = 1;
-    } else {
-        console.log("opened");
-          this.currentState = 0;
-   
+  //function that gets called by the registered ws listener
+    if (value == -1) {
+        //console.log("Got new state for Timed Fan: On");
+    } else if (value == 0) {
+        //console.log("Got new state for Timed Fan: Off");
+    } else if (value > 0) {
+        //console.log("Got new state for Timed Fan: Countdown " + value + "s");
     }
+    
+    this.currentState = (value !== 0);
 
     //console.log('set currentState to: ' + this.currentState)
 
-   this.otherService.getCharacteristic(Characteristic.LockCurrentState).updateValue(this.currentState);
+    this.otherService
+        .getCharacteristic(this.homebridge.hap.Characteristic.LockCurrentState)
+        .updateValue(this.currentState);
+    
+ 
     
     
 };
