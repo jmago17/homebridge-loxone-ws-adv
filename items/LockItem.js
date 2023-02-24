@@ -22,11 +22,10 @@ LockItem.prototype.callBack = function(value) {
       if (value == 0) {
         console.log("Got new state for door: off / closed");
           this.currentState = 1;
+          this.otherService.setCharacteristic(Characteristic.LockTargetState, Characteristic.LockTargetState.SECURED)
     } else {
         console.log("opened");
-          this.currentState = 0;
-        this.otherService.setCharacteristic(Characteristic.LockTargetState, Characteristic.LockTargetState.SECURED)
-   
+          this.currentState = 0;   
     }
 
     //console.log('set currentState to: ' + this.currentState)
