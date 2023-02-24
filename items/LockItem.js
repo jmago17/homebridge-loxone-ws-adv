@@ -21,10 +21,10 @@ LockItem.prototype.callBack = function(value) {
     
       if (value == 0) {
         console.log("Got new state for door: off / closed");
-          this.currentState = (value !== 1);
+          this.currentState = 1;
     } else {
         console.log("opened");
-          this.currentState = (value !== 0);
+          this.currentState = 0;
    
     }
 
