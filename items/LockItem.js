@@ -59,10 +59,10 @@ LockItem.prototype.setItemState = function(value, callback) {
     let command = 0;
     if (value == true) {
         //this.log('perm on ***');
-        command = 'Pulse';//-1; // perm on
+        command = 'Off';//-1; // perm on
     } else {
         //this.log('off ***');
-        command = 'Off';//0; // off
+        command = 'Pulse';//0; // off
     }
 
     //this.log('setItemState value: ' + value);
