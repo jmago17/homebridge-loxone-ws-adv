@@ -18,8 +18,8 @@ const LockItem = function (widget, platform, homebridge) {
 
 // Register a listener to be notified of changes in this items value
 LockItem.prototype.initListener = function () {
-    this.platform.ws.registerListenerForUUID(this.currentState, this.callBackPosition.bind(this));
-    this.platform.ws.registerListenerForUUID(this.stateUuid, this.callBackActive.bind(this));
+    this.platform.ws.registerListenerForUUID(this.currentState, this.callBack.bind(this));
+    this.platform.ws.registerListenerForUUID(this.stateUuid, this.callBack.bind(this));
 };
 
 LockItem.prototype.callBack = function (value, uuid) {
