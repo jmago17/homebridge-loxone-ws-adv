@@ -50,7 +50,7 @@ IRCV2Item.prototype.initListener = function() {
 
 IRCV2Item.prototype.callBack = function(value, uuid) {
     //function that gets called by the registered ws listener
-   // console.log("Funtion value " + value + " " + uuid);
+    // console.log("Funtion value " + value + " " + uuid);
 
 
     if (this.stateMode == uuid) {
@@ -127,7 +127,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
 
     if (this.stateActiveMode == uuid) {
         this.activeMode = value;
-   //     console.log("Got new state for active mode " + this.name + ": " + this.activeMode);
+        //     console.log("Got new state for active mode " + this.name + ": " + this.activeMode);
 
         switch (value) {
             case 0:
@@ -204,14 +204,14 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
 
     if (this.stateEcoMinTempOffset == uuid) {
         this.EcoMinTempOffset = value;
-     //   console.log("Got new state for EcoMinTempOffset " + this.name + ": " + this.EcoMinTempOffset);
+        //   console.log("Got new state for EcoMinTempOffset " + this.name + ": " + this.EcoMinTempOffset);
 
         //also make sure this change is directly communicated to HomeKit
 
     }
     if (this.stateEcoMaxTempOffset == uuid) {
         this.EcoMaxTempOffset = value;
-      //  console.log("Got new state for EcoMaxTempOffset " + this.name + ": " + this.EcoMaxTempOffset);
+        //  console.log("Got new state for EcoMaxTempOffset " + this.name + ": " + this.EcoMaxTempOffset);
 
         //also make sure this change is directly communicated to HomeKit
 
@@ -219,7 +219,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
     if (this.stateTarget == uuid) {
 
         this.targetTemperature = value;
-      //  console.log("Got new state for Target Temp " + this.name + ": " + this.targetTemperature);
+        //  console.log("Got new state for Target Temp " + this.name + ": " + this.targetTemperature);
 
         if (this.targetTemperature < "10") {
             // min Value of Thermostat
@@ -248,7 +248,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
     if (this.stateHeatingTemp == uuid) {
 
         this.heatingTargetTemp = value;
-     //   console.log("Got new state for Target Heating Temp (withOUT offset) " + this.name + ": " + value);
+        //   console.log("Got new state for Target Heating Temp (withOUT offset) " + this.name + ": " + value);
 
         if (this.heatingTargetTemperature < "10") {
             // min Value of Thermostat
@@ -276,7 +276,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
 
         this.coolingTargetTemp = value;
 
-      //  console.log("Got new state for Target Cooling Temp " + this.name + ": " + value);
+        //  console.log("Got new state for Target Cooling Temp " + this.name + ": " + value);
 
         if (this.coolingTargetTemp < "10") {
             // min Value of Thermostat
@@ -302,7 +302,7 @@ IRCV2Item.prototype.callBack = function(value, uuid) {
 
     if (this.stateActual == uuid) {
         this.currentTemperature = value;
-     //   console.log("Got new state  " + this.name + ": " + this.currentTemperature);
+        //   console.log("Got new state  " + this.name + ": " + this.currentTemperature);
 
         //also make sure this change is directly communicated to HomeKit
         this.otherService
@@ -371,6 +371,7 @@ IRCV2Item.prototype.getHeatingTemperature = function(callback) {
 
 IRCV2Item.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
 
+
     //sending new state (ValueHc) to loxone
     //added some logic to prevent a loop when the change because of external event captured by callback
 
@@ -388,52 +389,53 @@ IRCV2Item.prototype.setTargetHeatingCoolingState = function(ValueHc, callback) {
     let timer2 = Math.round((Math.abs(datetomorrow - date2009)) / 1000);
     var self = this;
 
-//    console.log("TemperatureItem setTargetHcState : " + ValueHc);
+    //    console.log("TemperatureItem setTargetHcState : " + ValueHc);
 
 
-   
+
 
     if (this.setFromLoxone) {
-    //    console.log("setTergetHcState setFromLoxone");
+        //    console.log("setTergetHcState setFromLoxone");
         callback();
         return;
-    
 
-    if (ValueHc == 1) {
 
-        //Command for Mode
+        if (ValueHc == 1) {
 
-        var command = "override/3/" + timer + "/" + this.targetTemperature;
-        this.platform.ws.sendCommand(this.uuidAction, command);
-        this.log(this.name + " Command " + command);
-        callback();
-    }
+            //Command for Mode
 
-    if (ValueHc == 2) {
+            var command = "override/3/" + timer + "/" + this.targetTemperature;
+            this.platform.ws.sendCommand(this.uuidAction, command);
+            this.log(this.name + " Command " + command);
+            callback();
+        }
 
-        //Command for Mode
-        var command = "override/3/" + timer + "/" + this.targetTemperature;
-        this.platform.ws.sendCommand(this.uuidAction, command);
-        this.log(this.name + " Command valueHc =2 " + command);
-        callback();
-    }
+        if (ValueHc == 2) {
 
-    if (ValueHc == 3) {
+            //Command for Mode
+            var command = "override/3/" + timer + "/" + this.targetTemperature;
+            this.platform.ws.sendCommand(this.uuidAction, command);
+            this.log(this.name + " Command valueHc =2 " + command);
+            callback();
+        }
 
-        //Command for Mode
-        this.ComfortTemperature =
-            command = "stopOverride"; //Loxone expects a Value 0-6
-        this.platform.ws.sendCommand(this.uuidAction, command);
-        this.log(this.name + " Command " + command);
-        callback();
-    }
+        if (ValueHc == 3) {
 
-    if (ValueHc == 0) {
-        // Use Service to turn Valve off
-        var command = "override/2/" + timer2;
-        this.platform.ws.sendCommand(this.uuidAction, command);
-        this.log(this.name + " Command " + command);
-        callback();
+            //Command for Mode
+            this.ComfortTemperature =
+                command = "stopOverride"; //Loxone expects a Value 0-6
+            this.platform.ws.sendCommand(this.uuidAction, command);
+            this.log(this.name + " Command " + command);
+            callback();
+        }
+
+        if (ValueHc == 0) {
+            // Use Service to turn Valve off
+            var command = "override/2/" + timer2;
+            this.platform.ws.sendCommand(this.uuidAction, command);
+            this.log(this.name + " Command " + command);
+            callback();
+        }
     }
 }
 
@@ -443,22 +445,22 @@ IRCV2Item.prototype.setTergetTemperature = function(Value, callback) {
 
     var self = this;
 
-//    console.log("TemperatureItem setTergetTemperature: " + this.heatingTargetTemp);
- //   console.log("TemperatureItem setTergetTemperature: " + Value);
-   
+    //    console.log("TemperatureItem setTergetTemperature: " + this.heatingTargetTemp);
+    //   console.log("TemperatureItem setTergetTemperature: " + Value);
+
 
     if (this.setFromLoxone) {
-  //      console.log("setHeatingTemperature setFromLoxone");
+        //      console.log("setHeatingTemperature setFromLoxone");
         callback();
         return;
     }
 
-   
 
-    
+
+
     var command = "setManualTemperature/" + Value; //Loxone expects a Value between 10 and 38
     this.platform.ws.sendCommand(this.uuidAction, command);
-  //  this.log(this.name + " Command " + command);
+    //  this.log(this.name + " Command " + command);
     callback();
 
 }
@@ -469,12 +471,12 @@ IRCV2Item.prototype.setHeatingTemperature = function(Value, callback) {
 
     var self = this;
 
- //   console.log("TemperatureItem setHeatingTemperature: " + this.heatingTargetTemp);
- //   console.log("TemperatureItem setHeatingTemperature: " + Value);
-   
+    //   console.log("TemperatureItem setHeatingTemperature: " + this.heatingTargetTemp);
+    //   console.log("TemperatureItem setHeatingTemperature: " + Value);
+
 
     if (this.setFromLoxone) {
- //       console.log("setHeatingTemperature setFromLoxone");
+        //       console.log("setHeatingTemperature setFromLoxone");
         callback();
         return;
     }
@@ -501,16 +503,16 @@ IRCV2Item.prototype.setCoolingTemperature = function(Value, callback) {
 
     var self = this;
 
-//    console.log("TemperatureItem setManualCoolingTemperature: " + this.coolingTargetTemp);
+    //    console.log("TemperatureItem setManualCoolingTemperature: " + this.coolingTargetTemp);
 
-   
+
     if (this.setFromLoxone) {
-  //      console.log("setManualCoolingTemperature setFromLoxone");
+        //      console.log("setManualCoolingTemperature setFromLoxone");
         callback();
         return;
     }
 
-   
+
     if (this.economymode) {
         var temperature = Value - this.EcoMinTempOffset;
     } else {
