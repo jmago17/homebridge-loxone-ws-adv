@@ -5,11 +5,7 @@ const LockItem = function (widget, platform, homebridge) {
     this.uuidAction = widget.uuidAction; //to control a switch, use the uuidAction
     this.stateUuid = widget.states.active; //a switch always has a state called active, which is the uuid which will receive the event to read
     this.currentState = widget.states.position; //will be 0 or 1 for Switch
-    
-      
-    this.currentdoorstate = 0;
-    this.targetdoorstate = 0;
-    
+       
     LockItem.super_.call(this, widget, platform, homebridge);
 };
 
