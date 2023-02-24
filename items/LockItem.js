@@ -12,27 +12,31 @@ const LockItem = function (widget, platform, homebridge) {
 LockItem.prototype.initListener = function () {
     this.platform.ws.registerListenerForUUID(this.currentState, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateUuid, this.callBack.bind(this));
+     console.log('listeners lock item');
 };
 
 LockItem.prototype.callBack = function (value, uuid) {
     console.log("Got new state for lock: " + value + " " + uuid);
     
     if ( this.currentState = uuid){
+         console.log("Got new state for lock: " + value + " " + uuid);
         let new_doorstate = value;
         if (value == 1) {
             new_doorstate = this.otherService.getCharacteristic(Characteristic.LockTargetState).setValue('1');
-            //console.log('OPENING');
+            console.log('OPENed');
         } else { new_doorstate = this.otherService.getCharacteristic(Characteristic.LockTargetState).setValue('0');
-             
+             console.log('closed');
                }    
     }
         
     if ( this.stateUuid = uuid){  
          let new_targetdoorstate = value;
          if (value == 1 || value == 0) {
+              console.log('unlocked');
              new_targetdoorstate = this.otherService.getCharacteristic(Characteristic.LockCurrentState).setValue('0');
          } else { 
             new_targetdoorstate = this.otherService.getCharacteristic(Characteristic.LockCurrentState).setValue('1');
+             console.log('locked');
          }
     }
    this.setFromLoxone = true;  
