@@ -36,7 +36,7 @@ LockItem.prototype.callBack = function(value) {
 
    this.otherService.getCharacteristic(Characteristic.LockCurrentState).updateValue(this.currentState);
    if (value == 0){
-   // this.otherService.setCharacteristic(Characteristic.LockTargetState, Characteristic.LockTargetState.SECURED)
+   this.otherService.setCharacteristic(Characteristic.LockTargetState, Characteristic.LockTargetState.SECURED)
     this.setFromLoxone = true;
    }
 };
@@ -44,7 +44,7 @@ LockItem.prototype.callBack = function(value) {
 LockItem.prototype.getOtherServices = function() {
     const otherService = new this.homebridge.hap.Service.LockMechanism();
 
-   otherService.setCharacteristic(Characteristic.LockCurrentState, Characteristic.LockCurrentState.SECURED);
+    otherService.setCharacteristic(Characteristic.LockCurrentState, Characteristic.LockCurrentState.SECURED);
     otherService.setCharacteristic(Characteristic.LockTargetState, Characteristic.LockTargetState.SECURED);
 
     otherService.getCharacteristic(Characteristic.LockTargetState)
