@@ -7,8 +7,8 @@ const LockItem = function (widget, platform, homebridge) {
     this.currentState = widget.states.position; //will be 0 or 1 for Switch
     
       
-    this.currentdoorstate = homebridge.hap.Characteristic.CurrentDoorState.SECURED;
-    this.targetdoorstate = homebridge.hap.Characteristic.CurrentDoorState.SECURED;
+    this.currentdoorstate = 0;
+    this.targetdoorstate = 0;
     
     LockItem.super_.call(this, widget, platform, homebridge);
 };
@@ -23,7 +23,7 @@ LockItem.prototype.callBack = function (value, uuid) {
     console.log("Got new state for lock: " + value + " " + uuid);
     
     if ( this.currentState = uuid){
-        let new_doorstate = this.currentdoorstate;
+        let new_doorstate = value;
         if (value == 1) {
             new_doorstate = this.otherService.getCharacteristic(Characteristic.LockTargetState).setValue('1');
             //console.log('OPENING');
@@ -33,7 +33,7 @@ LockItem.prototype.callBack = function (value, uuid) {
     }
         
     if ( this.stateUuid = uuid){  
-         let new_targetdoorstate = this.targetdoorstate;
+         let new_targetdoorstate = value;
          if (value == 1 || value == 0) {
              new_targetdoorstate = this.otherService.getCharacteristic(Characteristic.LockCurrentState).setValue('0');
          } else { 
