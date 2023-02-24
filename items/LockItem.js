@@ -5,7 +5,7 @@ const LockItem = function (widget, platform, homebridge) {
     this.currentState = widget.states.position; //will be 0 or 1 for Switch
        
     LockItem.super_.call(this, widget, platform, homebridge);
-    var this.setFromLoxone = true;
+    var setFromLoxone = true;
 };
 
 // Register a listener to be notified of changes in this items value
@@ -17,14 +17,14 @@ LockItem.prototype.initListener = function () {
 
 LockItem.prototype.callBack = function (value, uuid) {
     console.log("Got new state for lock: " + value + " " + uuid);
-    
+    this.setFromLoxone = true;
     if ( this.currentState = uuid){
          console.log("Got new state for lock: " + value + " " + uuid);
         let new_doorstate = value;
         if (value == 1) {
-            new_doorstate = this.otherService.getCharacteristic(Characteristic.LockTargetState).setValue('1');
+            this.otherService.getCharacteristic(Characteristic.LockTargetState).setValue('1');
             console.log('OPENed');
-        } else { new_doorstate = this.otherService.getCharacteristic(Characteristic.LockTargetState).setValue('0');
+        } else { this.otherService.getCharacteristic(Characteristic.LockTargetState).setValue('0');
              console.log('closed');
                }    
     }
@@ -33,13 +33,13 @@ LockItem.prototype.callBack = function (value, uuid) {
          let new_targetdoorstate = value;
          if (value == 1 || value == 0) {
               console.log('unlocked');
-             new_targetdoorstate = this.otherService.getCharacteristic(Characteristic.LockCurrentState).setValue('0');
+              this.otherService.getCharacteristic(Characteristic.LockCurrentState).setValue('0');
          } else { 
-            new_targetdoorstate = this.otherService.getCharacteristic(Characteristic.LockCurrentState).setValue('1');
+            this.otherService.getCharacteristic(Characteristic.LockCurrentState).setValue('1');
              console.log('locked');
          }
     }
-   this.setFromLoxone = true;  
+   setFromLoxone = false;  
     
 };
 
@@ -58,13 +58,13 @@ LockItem.prototype.getOtherServices = function () {
 
 
 LockItem.prototype.setItemState = function (value, callback) {
-    if(!this.setFromLoxone) {
+    if(!setFromLoxone) {
     const command = (value != '1') ? 'open' : 'close';
     this.log(`[Lock] - send message to ${this.name}: ${command}`);
     this.platform.ws.sendCommand(this.uuidAction, command);
     callback();
     }
-    this.setFromLoxone = false;
+    setFromLoxone = false;
 };
 
 module.exports = LockItem;
