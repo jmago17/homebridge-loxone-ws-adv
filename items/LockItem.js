@@ -17,7 +17,7 @@ LockItem.prototype.initListener = function() {
 
 LockItem.prototype.callBack = function(value) {
     //function that gets called by the registered ws listener
-    console.log("Funtion value " + value + " " + uuid);
+    console.log("Funtion value " + value + " " );
     
       if (value == 0) {
         console.log("Got new state for door: off / closed");
