@@ -5,7 +5,7 @@ const LockItem = function (widget, platform, homebridge) {
     this.currentState = widget.states.position; //will be 0 or 1 for Switch
        
     LockItem.super_.call(this, widget, platform, homebridge);
-    this.setFromLoxone = false;
+    var this.setFromLoxone = true;
 };
 
 // Register a listener to be notified of changes in this items value
