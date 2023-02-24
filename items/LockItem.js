@@ -37,13 +37,11 @@ LockItem.prototype.callBack = function(value) {
 LockItem.prototype.getOtherServices = function() {
     const otherService = new this.homebridge.hap.Service.LockMechanism();
 
-    otherService.getCharacteristic(this.homebridge.hap.LockCurrentState.SECURED)
-        .on('get', this.getItemState.bind(this))
-        //.updateValue(this.currentState == '1');
-    otherService.getCharacteristic(this.homebridge.hap.LockTargetState.SECURED)
+   otherService.setCharacteristic(Characteristic.LockCurrentState, Characteristic.LockCurrentState.SECURED);
+    otherService.setCharacteristic(Characteristic.LockTargetState, Characteristic.LockTargetState.SECURED);
+
+    otherService.getCharacteristic(Characteristic.LockTargetState)
         .on('set', this.setItemState.bind(this))
-        .on('get', this.getItemState.bind(this))
-        //.updateValue(this.currentState == '1');
     return otherService;
 };
 
