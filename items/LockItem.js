@@ -17,21 +17,20 @@ LockItem.prototype.initListener = function() {
 
 LockItem.prototype.callBack = function(value) {
     //function that gets called by the registered ws listener
-    if (value == -1) {
-        //console.log("Got new state for Timed Switch: On");
-    } else if (value == 0) {
-        //console.log("Got new state for Timed Switch: Off");
-    } else if (value > 0) {
-        //console.log("Got new state for Timed Switch: Countdown " + value + "s");
-    }
     
-    this.currentState = (value !== 0);
+    
+      if (value == 0) {
+        console.log("Got new state for door: off / closed");
+          this.currentState = 1;
+    } else {
+          this.currentState = 0;
+   
+    
 
     //console.log('set currentState to: ' + this.currentState)
 
-    this.otherService
-        .getCharacteristic(this.homebridge.hap.Characteristic.LockCurrentState.SECURED)
-        .updateValue(this.currentState);
+   this.otherService.getCharacteristic(Characteristic.LockCurrentState).updateValue(this.currentState == '1');
+    
 };
 
 LockItem.prototype.getOtherServices = function() {
