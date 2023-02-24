@@ -148,34 +148,35 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
     } else if (item.type == "TimedSwitch") {
         if (item.name.indexOf("Extractor") !== -1) {
             item.type = "Fan";
-        } 
-           if (item.name.indexOf('Puerta') !== -1) {
-            item.type = "Lock"; 
+        }
+        if (item.name.indexOf('Puerta') !== -1) {
+            item.type = "Lock";
         } else {
             item.type = "TimedSwitch";
         }
-    } else if(item.type === "Switch") {
-        if(catList[item.cat] !== undefined){
+    } else if (item.type === "Switch") {
+        if (catList[item.cat] !== undefined) {
             if (catList[item.cat].image === "00000000-0000-0002-2000000000000000.svg") {
                 item.type = "Lightbulb";
             } else if (catList[item.cat].image === "00000000-0000-002d-2000000000000000.svg") {
                 item.type = "Outlet";
             }
-        }      
-     
-       
+        }
+
+
 
         if (item.name.indexOf('Valve') !== -1) {
             item.type = "Valve";
         }
 
-    
-    
-        
+
+
+
         //
-        
-    
-    } if (item.parentType === "LightController" || item.parentType === "LightControllerV2") {
+
+
+    }
+    if (item.parentType === "LightController" || item.parentType === "LightControllerV2") {
         //this is a subcontrol of a lightcontroller
         if (item.type === "Switch") {
             item.type = "Lightbulb";
@@ -183,16 +184,17 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
             item.type = "Colorpicker";
         }
     }
- 
+
     if (item.type === "Gate") {
-        
-            item.type = "Gate";
-        }
-           
+
+        item.type = "Gate";
     }
+
+
     if (item.type === "Daytimer") {
-        if(item.name == "Programa Horario Termo"){
-            item.type = "Valve";}
+        if (item.name == "Programa Horario Termo") {
+            item.type = "Valve";
+        }
     }
     if (item.type == "InfoOnlyDigital") {
         if (item.name.indexOf("Timbre") !== -1) {
