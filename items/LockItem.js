@@ -4,9 +4,12 @@ const LockItem = function (widget, platform, homebridge) {
     this.platform = platform;
     this.uuidAction = widget.uuidAction; //to control a switch, use the uuidAction
     this.stateUuid = widget.states.active; //a switch always has a state called active, which is the uuid which will receive the event to read
-    this.currentState = undefined; //will be 0 or 1 for Switch
-    this.autoTimer = undefined;
-
+    this.currentState = widget.states.position; //will be 0 or 1 for Switch
+    
+      
+    this.currentdoorstate = homebridge.hap.Characteristic.CurrentDoorState.SECURED;
+    this.targetdoorstate = homebridge.hap.Characteristic.CurrentDoorState.SECURED;
+    
     this.autoLock = platform.autoLock;
     this.autoLockDelay = platform.autoLockDelay;
 
@@ -15,24 +18,33 @@ const LockItem = function (widget, platform, homebridge) {
 
 // Register a listener to be notified of changes in this items value
 LockItem.prototype.initListener = function () {
-    this.platform.ws.registerListenerForUUID(this.stateUuid, this.callBack.bind(this));
+    this.platform.ws.registerListenerForUUID(this.currentState, this.callBackPosition.bind(this));
+    this.platform.ws.registerListenerForUUID(this.stateUuid, this.callBackActive.bind(this));
 };
 
-LockItem.prototype.callBack = function (value) {
-    //console.log("Got new state for lock: " + value);
-
-    this.currentState = !value;
-
-    this.otherService.getCharacteristic(Characteristic.LockCurrentState).updateValue(this.currentState == '1');
-
-    if (this.autoLock) {
-        if (this.currentState == 0) {
-            this.autoLockFunction()
-        } else {
-            clearTimeout(this.autoTimer);
-            this.log(`[Lock] Cancelled autolock`);
-        }
+LockItem.prototype.callBack = function (value, uuid) {
+    console.log("Got new state for lock: " + value + " " + uuid);
+    
+    if ( this.currentState = uuid){
+        let new_doorstate = this.currentdoorstate;
+        if (value == 1) {
+            new_doorstate = this.otherService.getCharacteristic(Characteristic.LockTargetState).setValue('1');
+            //console.log('OPENING');
+        } else { new_doorstate = this.otherService.getCharacteristic(Characteristic.LockTargetState).setValue('0');
+             
+               }    
     }
+        
+    if ( this.stateUuid = uuid){  
+         let new_targetdoorstate = this.targetdoorstate;
+         if (value == 1 || value == 0) {
+             new_targetdoorstate = this.otherService.getCharacteristic(Characteristic.LockCurrentState).setValue('0');
+         } else { 
+            new_targetdoorstate = this.otherService.getCharacteristic(Characteristic.LockCurrentState).setValue('1');
+         }
+    }
+     
+    
 };
 
 LockItem.prototype.getOtherServices = function () {
@@ -47,16 +59,10 @@ LockItem.prototype.getOtherServices = function () {
     return otherService;
 };
 
-LockItem.prototype.autoLockFunction = function () {
-    this.log(`[Lock] Waiting ${this.autoLockDelay} seconds for autolock`);
 
-    this.autoTimer = setTimeout(() => {
-        this.otherService.setCharacteristic(Characteristic.LockTargetState, Characteristic.LockTargetState.SECURED)
-    }, this.autoLockDelay * 1000)
-};
 
 LockItem.prototype.setItemState = function (value, callback) {
-    const command = (value != '1') ? 'On' : 'Off';
+    const command = (value != '1') ? 'open' : 'close';
     this.log(`[Lock] - send message to ${this.name}: ${command}`);
     this.platform.ws.sendCommand(this.uuidAction, command);
     callback();
