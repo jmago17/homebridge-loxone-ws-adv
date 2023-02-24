@@ -25,7 +25,7 @@ LockItem.prototype.callBack = function(value) {
     } else {
           this.currentState = 0;
    
-    
+    }
 
     //console.log('set currentState to: ' + this.currentState)
 
