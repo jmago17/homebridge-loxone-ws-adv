@@ -81,7 +81,7 @@ LockItem.prototype.setItemState = function(value, callback) {
     this.platform.ws.sendCommand(this.uuidAction, command);
     callback();
     this.setFromLoxone = false;
-    }
+    } else { this.setFromLoxone = false;}
 };
 
 module.exports = LockItem;
