@@ -38,7 +38,6 @@ LockItem.prototype.getOtherServices = function() {
     const otherService = new this.homebridge.hap.Service.LockMechanism();
 
     otherService.getCharacteristic(this.homebridge.hap.LockCurrentState.SECURED)
-        .on('set', this.setItemState.bind(this))
         .on('get', this.getItemState.bind(this))
         //.updateValue(this.currentState == '1');
     otherService.getCharacteristic(this.homebridge.hap.LockTargetState.SECURED)
