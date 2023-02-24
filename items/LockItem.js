@@ -5,13 +5,13 @@ const LockItem = function (widget, platform, homebridge) {
     this.currentState = widget.states.position; //will be 0 or 1 for Switch
        
     LockItem.super_.call(this, widget, platform, homebridge);
+    this.setFromLoxone = undefined;
 };
 
 // Register a listener to be notified of changes in this items value
 LockItem.prototype.initListener = function () {
     this.platform.ws.registerListenerForUUID(this.currentState, this.callBack.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateUuid, this.callBack.bind(this));
-    console.log("Got new state for lock: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx ");
 };
 
 LockItem.prototype.callBack = function (value, uuid) {
@@ -35,7 +35,7 @@ LockItem.prototype.callBack = function (value, uuid) {
             new_targetdoorstate = this.otherService.getCharacteristic(Characteristic.LockCurrentState).setValue('1');
          }
     }
-     
+   this.setFromLoxone = true;  
     
 };
 
@@ -54,10 +54,12 @@ LockItem.prototype.getOtherServices = function () {
 
 
 LockItem.prototype.setItemState = function (value, callback) {
+    if(!this.setFromLoxone) {
     const command = (value != '1') ? 'open' : 'close';
     this.log(`[Lock] - send message to ${this.name}: ${command}`);
     this.platform.ws.sendCommand(this.uuidAction, command);
     callback();
+    }
 };
 
 module.exports = LockItem;
