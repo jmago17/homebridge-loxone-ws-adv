@@ -15,9 +15,9 @@ DimmerItem.prototype.initListener = function() {
     this.platform.ws.registerListenerForUUID(this.stateUuid, this.callBack.bind(this));
 };
 
-DimmerItem.prototype.callBack = function(value) {
+DimmerItem.prototype.callBack = function(value, uuid) {
     //function that gets called by the registered ws listener
-    console.log("Got new state for dimmer " + value);
+    console.log("Got new state for dimmer " + value + ", uuid: " + uuid);
     this.currentState = value;
 
     //also make sure this change is directly communicated to HomeKit
