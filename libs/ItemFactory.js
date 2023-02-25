@@ -148,7 +148,7 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
     } else if (item.type == "TimedSwitch") {
         if (item.name.indexOf("Extractor") !== -1) {
             item.type = "Fan";
-        }else if (item.name.indexOf('Puerta') !== -1) {
+        } else if (item.name.indexOf('Puerta') !== -1) {
             item.type = "Lock";
         } else {
             item.type = "TimedSwitch";
@@ -179,8 +179,12 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
         //this is a subcontrol of a lightcontroller
         if (item.type === "Switch") {
             item.type = "Lightbulb";
-        } else if (item.type === "ColorPickerV2") { // Handle the new ColorPickerV2 which replaces the colorPicker in the new LightControllerV2
-            item.type = "Colorpicker";
+        } else if (item.type === "ColorPickerV2") {
+            if (item.name == "LED Sala") {
+                item.type = "Dimmer";
+            } else { // Handle the new ColorPickerV2 which replaces the colorPicker in the new LightControllerV2
+                item.type = "Colorpicker";
+            }
         }
     }
 
@@ -337,4 +341,3 @@ moduleexports.Factory.prototype.traverseSitemap = (jsonSitmap, factory) => {
         }
     }
 };
-
