@@ -19,9 +19,9 @@ ColorItem.prototype.initListener = function() {
     this.platform.ws.registerListenerForUUID(this.stateUuid, this.callBack.bind(this));
 };
 
-ColorItem.prototype.callBack = function(value) {
+ColorItem.prototype.callBack = function(value, uuid) {
     //function that gets called by the registered ws listener
-    //console.log("Got new state for color " + value);
+    //console.log("Got new state for color " + value + ", uuid: " + uuid);
 
     //incoming value is a HSV string that needs to be parsed
     let m;
