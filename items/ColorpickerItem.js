@@ -141,7 +141,7 @@ ColorItem.prototype.setItemBrightnessState = function(value, callback) {
 ColorItem.prototype.setColorState = function(callback) {
     //compose hsv string
     const command = `hsv(${this.hue},${this.saturation},${this.brightness})`;
-    this.log(`[color] iOS - send message to ${this.name}: ${command}`);
+    this.log(`[color] iOS - send message to ${this.name}: ${command} uuid: ${this.uuid}`);
     this.platform.ws.sendCommand(this.uuidAction, command);
     callback();
 };
