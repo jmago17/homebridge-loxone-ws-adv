@@ -180,11 +180,11 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
         if (item.type === "Switch") {
             item.type = "Lightbulb";
         } else if (item.type === "ColorPickerV2") {
-            if (item.name.indexOf("LED Sala") !== -1 ) {
-                item.type = "Dimmer";
-            } else { // Handle the new ColorPickerV2 which replaces the colorPicker in the new LightControllerV2
+           // if (item.name.indexOf("LED Sala") !== -1 ) {
+           //     item.type = "Dimmer";
+           // } else { // Handle the new ColorPickerV2 which replaces the colorPicker in the new LightControllerV2
                 item.type = "Colorpicker";
-            }
+            //}
         }
     }
 
