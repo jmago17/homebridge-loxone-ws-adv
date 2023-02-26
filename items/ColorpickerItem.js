@@ -68,6 +68,9 @@ ColorItem.prototype.callBack = function(value, uuid) {
         .updateValue(this.saturation);
      this.otherService
         .getCharacteristic(this.homebridge.hap.Characteristic.ValueActiveTransitionCount)
+        
+    this.otherService
+        .getCharacteristic(this.homebridge.hap.Characteristic.ValueActiveTransitionControl)
         .updateValue(this.saturation);
 
 };
