@@ -17,7 +17,7 @@ DimmerItem.prototype.initListener = function() {
 
 DimmerItem.prototype.callBack = function(value, uuid) {
     //function that gets called by the registered ws listener
-    console.log("Got new state for dimmer " + value + ", uuid: " + uuid);
+    //console.log("Got new state for dimmer " + value + ", uuid: " + uuid);
     this.currentState = value;
 
     //also make sure this change is directly communicated to HomeKit
@@ -80,7 +80,7 @@ DimmerItem.prototype.setItemPowerState = function(value, callback) {
     const self = this;
 
 
-    this.log(`[dimmer] iOS - send on/off message to ${this.name}: ${value}`);
+    // this.log(`[dimmer] iOS - send on/off message to ${this.name}: ${value}`);
     const command = (value == '1') ? 'On' : 'Off';
     if (typeof this.platform.ws != 'undefined') {
       this.platform.ws.sendCommand(this.uuidAction, command);
