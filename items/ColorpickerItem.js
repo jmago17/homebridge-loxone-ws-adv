@@ -10,6 +10,8 @@ const ColorItem = function(widget,platform,homebridge) {
     this.saturation = 0;
     this.brightness = 0;
     this.power = false;
+    this.adaptiveCount = 0;
+    this.adaptiveControl = 0;
 
     ColorItem.super_.call(this, widget,platform,homebridge);
 };
@@ -68,10 +70,10 @@ ColorItem.prototype.callBack = function(value, uuid) {
         .updateValue(this.saturation);
      this.otherService
         .getCharacteristic(this.homebridge.hap.Characteristic.ValueActiveTransitionCount)
-        
+        .updateValue(this.adaptiveCount);
     this.otherService
         .getCharacteristic(this.homebridge.hap.Characteristic.ValueActiveTransitionControl)
-        .updateValue(this.saturation);
+        .updateValue(this.adaptiveControl);
 
 };
 
@@ -94,10 +96,14 @@ ColorItem.prototype.getOtherServices = function() {
         .on('get', this.getItemHueState.bind(this))
         .updateValue(this.hue);
 
-    otherService.getCharacteristic(this.homebridge.hap.Characteristic.Saturation)
-        .on('set', this.setItemSaturationState.bind(this))
-        .on('get', this.getItemSaturationState.bind(this))
-        .updateValue(this.saturation);
+    otherService.getCharacteristic(this.homebridge.hap.Characteristic.ValueActiveTransitionCount)
+        .on('get', this.getItemValueActiveTransitionCountState.bind(this))
+        .updateValue(this.adaptiveCount);
+    
+     otherService.getCharacteristic(this.homebridge.hap.Characteristic.ValueActiveTransitionControl)
+        .on('set', this.setItemValueActiveTransitionControlState.bind(this))
+        .on('get', this.getItemValueActiveTransitionControlState.bind(this))
+        .updateValue(this.adaptiveControl);
 
     return otherService;
 };
@@ -112,6 +118,14 @@ ColorItem.prototype.getItemHueState = function(callback) {
     callback(undefined, this.hue);
 };
 ColorItem.prototype.getItemSaturationState = function(callback) {
+    callback(undefined, this.saturation);
+};
+
+ColorItem.prototype.getItemValueActiveTransitionCountState = function(callback) {
+    callback(undefined, this.saturation);
+};
+
+ColorItem.prototype.getItemValueActiveTransitionControl = function(callback) {
     callback(undefined, this.saturation);
 };
 
@@ -142,6 +156,14 @@ ColorItem.prototype.setItemBrightnessState = function(value, callback) {
     this.brightness = parseInt(value);
     this.power = this.brightness > 0;
     this.setColorState(callback);
+};
+
+ColorItem.prototype.setColorState = function(callback) {
+    //compose hsv string
+    const command = `hsv(${this.hue},${this.saturation},${this.brightness})`;
+    this.log(`[color] iOS - send message to ${this.name}: ${command} uuid: ${this.uuid}`);
+    this.platform.ws.sendCommand(this.uuidAction, command);
+    callback();
 };
 
 ColorItem.prototype.setColorState = function(callback) {
