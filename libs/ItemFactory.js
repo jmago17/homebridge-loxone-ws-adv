@@ -179,6 +179,7 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
         //this is a subcontrol of a lightcontroller
         if (item.type === "Switch") {
             item.type = "Lightbulb";
+        } else if (item.name.indexOf("Hidden ") !== -1) { //hidden items named after hidden
         } else if (item.type === "ColorPickerV2") {
             if (item.name == ("LED Sala of Salón iluminación 2")) {
 
