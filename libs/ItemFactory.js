@@ -179,7 +179,7 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
         //this is a subcontrol of a lightcontroller
         if (item.type === "Switch") {
             item.type = "Lightbulb";
-        
+
         } else if (item.type === "ColorPickerV2") {
             if (item.name == ("LED Sala of Salón iluminación 2")) {
 
@@ -247,9 +247,9 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
 
     }
     if (item.type === "EIBDimmer") {
-          item.type = "Dimmer";
-        }
+        item.type = "Dimmer";
     }
+
 
     if (item.name.indexOf("Loxone") !== -1) {
         //this is a Loxone status or temperature, I don't need these in Siri
@@ -262,7 +262,9 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
     }
 
     item.manufacturer = "Loxone";
-    if (item.name.indexOf("Hidden ") !== -1) { item.skip = true;}//hidden items named after hidden
+    if (item.name.indexOf("Hidden ") !== -1) {
+        item.skip = true;
+    } //hidden items named after hidden
     return item;
 };
 
