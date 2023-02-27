@@ -246,7 +246,7 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
 
     }
     if (item.type === "EIBDimmer") {
-        if(item.name.indexOf("Hidden ") ! ==-1){ //hidden items named after hidden
+        if(item.name.indexOf("Hidden ") !== -1){ //hidden items named after hidden
     } else { item.type = "Dimmer"
     }
 
