@@ -132,142 +132,140 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
     //this function will make accesories more precise based on other attributes
     //eg, all InfoOnlyAnalog items which start with the name 'Temperat' are considered temperature sensors
 
-    if (item.name.indexOf("Hidden ") !== -1) {} //hidden items named after hidden
-    else {
-        if (item.name.startsWith('Temperat')) {
-            item.type = "TemperatureSensor";
+    if (item.name.startsWith('Temperat')) {
+        item.type = "TemperatureSensor";
 
+    }
+    if (item.name.includes('Steckdose')) {
+        item.type = "Outlet";
+
+    } else if (item.name.indexOf("Humidity") !== -1) {
+        item.type = "HumiditySensor";
+    } else if (item.type == "IRoomController") {
+        item.type = "TemperatureItem";
+    } else if (item.type == "IRoomControllerV2") {
+        item.type = "IRoomControllerV2";
+    } else if (item.type == "TimedSwitch") {
+        if (item.name.indexOf("Extractor") !== -1) {
+            item.type = "Fan";
+        } else if (item.name.indexOf('Puerta') !== -1) {
+            item.type = "Lock";
+        } else {
+            item.type = "TimedSwitch";
         }
-        if (item.name.includes('Steckdose')) {
-            item.type = "Outlet";
-
-        } else if (item.name.indexOf("Humidity") !== -1) {
-            item.type = "HumiditySensor";
-        } else if (item.type == "IRoomController") {
-            item.type = "TemperatureItem";
-        } else if (item.type == "IRoomControllerV2") {
-            item.type = "IRoomControllerV2";
-        } else if (item.type == "TimedSwitch") {
-            if (item.name.indexOf("Extractor") !== -1) {
-                item.type = "Fan";
-            } else if (item.name.indexOf('Puerta') !== -1) {
-                item.type = "Lock";
-            } else {
-                item.type = "TimedSwitch";
-            }
-        } else if (item.type === "Switch") {
-            if (catList[item.cat] !== undefined) {
-                if (catList[item.cat].image === "00000000-0000-0002-2000000000000000.svg") {
-                    item.type = "Lightbulb";
-                } else if (catList[item.cat].image === "00000000-0000-002d-2000000000000000.svg") {
-                    item.type = "Outlet";
-                }
-            }
-
-
-
-            if (item.name.indexOf('Valve') !== -1) {
-                item.type = "Valve";
-            }
-
-
-
-
-            //
-
-
-        }
-        if (item.parentType === "LightController" || item.parentType === "LightControllerV2") {
-            //this is a subcontrol of a lightcontroller
-            if (item.type === "Switch") {
+    } else if (item.type === "Switch") {
+        if (catList[item.cat] !== undefined) {
+            if (catList[item.cat].image === "00000000-0000-0002-2000000000000000.svg") {
                 item.type = "Lightbulb";
-            } else if (item.name.indexOf("Hidden ") !== -1) { //hidden items named after hidden
-            } else if (item.type === "ColorPickerV2") {
-                if (item.name == ("LED Sala of Salón iluminación 2")) {
-
-                } else { // Handle the new ColorPickerV2 which replaces the colorPicker in the new LightControllerV2
-                    item.type = "Colorpicker";
-                }
-            }
-        }
-
-        if (item.type === "Gate") {
-
-            item.type = "Gate";
-        }
-
-
-        if (item.type === "Daytimer") {
-            if (item.name == "Programa Horario Termo") {
-                item.type = "Valve";
-            }
-        }
-        if (item.type == "InfoOnlyDigital") {
-            if (item.name.indexOf("Timbre") !== -1) {
-                item.type = "DoorBell";
-
-            } else if ((item.name.indexOf("Motion") !== -1) || (item.name.indexOf("Presence") !== -1)) {
-                item.type = "MotionSensor";
-
-            } else if (item.name.indexOf("Door Contact") !== -1) {
-                item.type = "ContactSensor";
-            } else if (item.name.indexOf("Sync") !== -1) {
-                item.type = "ContactSensor";
-            } else if (item.defaultIcon == '00000000-0000-0004-2000000000000000') {
+            } else if (catList[item.cat].image === "00000000-0000-002d-2000000000000000.svg") {
                 item.type = "Outlet";
             }
-
-
-
-        }
-
-
-        if (item.type == "OccupancySensor") {
-            item.type = "PresenceDetector";
         }
 
 
 
+        if (item.name.indexOf('Valve') !== -1) {
+            item.type = "Valve";
+        }
 
-        if (item.type == "InfoOnlyAnalog") {
 
-            if (item.name.indexOf("Door Contact") !== -1) {
-                item.type = "ContactSensor";
 
-            } else if (((item.name.indexOf("Motion") !== -1) || (item.name.indexOf("Presence") !== -1)) && (item.name.indexOf("Brightness") == -1)) {
-                item.type = "MotionSensor";
 
-            } else if ((item.name.indexOf("Brightness") !== -1) || (item.name.indexOf("Light Level") !== -1)) {
-                item.type = 'LightSensor';
+        //
 
-            } else if (item.name.indexOf("Temperature") !== -1) {
-                item.type = 'TemperatureSensor';
+
+    }
+    if (item.parentType === "LightController" || item.parentType === "LightControllerV2") {
+        //this is a subcontrol of a lightcontroller
+        if (item.type === "Switch") {
+            item.type = "Lightbulb";
+        } else if (item.name.indexOf("Hidden ") !== -1) { //hidden items named after hidden
+        } else if (item.type === "ColorPickerV2") {
+            if (item.name == ("LED Sala of Salón iluminación 2")) {
+
+            } else { // Handle the new ColorPickerV2 which replaces the colorPicker in the new LightControllerV2
+                item.type = "Colorpicker";
             }
         }
-        if (item.type == "AudioZone") {
-            item.type = "MusicSwitch";
-
-        }
-        if (item.type === "EIBDimmer") {
-
-            item.type = "Dimmer"
-
-        }
-
-        if (item.name.indexOf("Loxone") !== -1) {
-            //this is a Loxone status or temperature, I don't need these in Siri
-            item.skip = true;
-        }
-
-        if ((item.uuidAction.indexOf("/masterValue") !== -1) || (item.uuidAction.indexOf("/masterColor") !== -1)) {
-            // the 'Overall Brightness' and 'Overall Color' features of the new Loxone LightController2 don't really have a context in Homekit, skip them
-            item.skip = true;
-        }
-
-        item.manufacturer = "Loxone";
-
-        return item;
     }
+
+    if (item.type === "Gate") {
+
+        item.type = "Gate";
+    }
+
+
+    if (item.type === "Daytimer") {
+        if (item.name == "Programa Horario Termo") {
+            item.type = "Valve";
+        }
+    }
+    if (item.type == "InfoOnlyDigital") {
+        if (item.name.indexOf("Timbre") !== -1) {
+            item.type = "DoorBell";
+
+        } else if ((item.name.indexOf("Motion") !== -1) || (item.name.indexOf("Presence") !== -1)) {
+            item.type = "MotionSensor";
+
+        } else if (item.name.indexOf("Door Contact") !== -1) {
+            item.type = "ContactSensor";
+        } else if (item.name.indexOf("Sync") !== -1) {
+            item.type = "ContactSensor";
+        } else if (item.defaultIcon == '00000000-0000-0004-2000000000000000') {
+            item.type = "Outlet";
+        }
+
+
+
+    }
+
+
+    if (item.type == "OccupancySensor") {
+        item.type = "PresenceDetector";
+    }
+
+
+
+
+    if (item.type == "InfoOnlyAnalog") {
+
+        if (item.name.indexOf("Door Contact") !== -1) {
+            item.type = "ContactSensor";
+
+        } else if (((item.name.indexOf("Motion") !== -1) || (item.name.indexOf("Presence") !== -1)) && (item.name.indexOf("Brightness") == -1)) {
+            item.type = "MotionSensor";
+
+        } else if ((item.name.indexOf("Brightness") !== -1) || (item.name.indexOf("Light Level") !== -1)) {
+            item.type = 'LightSensor';
+
+        } else if (item.name.indexOf("Temperature") !== -1) {
+            item.type = 'TemperatureSensor';
+        }
+    }
+    if (item.type == "AudioZone") {
+        item.type = "MusicSwitch";
+
+    }
+    if (item.type === "EIBDimmer") {
+        if (item.name.indexOf("Hidden ") !== -1) { //hidden items named after hidden
+        } else {
+            item.type = "Dimmer"
+        }
+    }
+
+    if (item.name.indexOf("Loxone") !== -1) {
+        //this is a Loxone status or temperature, I don't need these in Siri
+        item.skip = true;
+    }
+
+    if ((item.uuidAction.indexOf("/masterValue") !== -1) || (item.uuidAction.indexOf("/masterColor") !== -1)) {
+        // the 'Overall Brightness' and 'Overall Color' features of the new Loxone LightController2 don't really have a context in Homekit, skip them
+        item.skip = true;
+    }
+
+    item.manufacturer = "Loxone";
+
+    return item;
 };
 
 
