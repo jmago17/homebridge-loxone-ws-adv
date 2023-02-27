@@ -180,11 +180,11 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
         if (item.type === "Switch") {
             item.type = "Lightbulb";
         } else if (item.type === "ColorPickerV2") {
-           if (item.name == ("LED Sala of Salón iluminación 2") ) {
-               
+            if (item.name == ("LED Sala of Salón iluminación 2")) {
+
             } else { // Handle the new ColorPickerV2 which replaces the colorPicker in the new LightControllerV2
                 item.type = "Colorpicker";
-           }
+            }
         }
     }
 
@@ -246,8 +246,10 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
 
     }
     if (item.type === "EIBDimmer") {
-        if(item.name.indexOf("Hidden ") !== -1){ //hidden items named after hidden
-    } else { item.type = "Dimmer"
+        if (item.name.indexOf("Hidden ") !== -1) { //hidden items named after hidden
+        } else {
+            item.type = "Dimmer"
+        }
     }
 
     if (item.name.indexOf("Loxone") !== -1) {
