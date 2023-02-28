@@ -111,7 +111,7 @@ ColorItem.prototype.getOtherServices = function() {
         });   
    
     
-      this.adaptiveLightingController = new this.homebridge.hap.AdaptiveLightingController(this.otherService, );
+      this.adaptiveLightingController = new this.homebridge.hap.AdaptiveLightingController(otherService, );
       this.otherService.configureController(this.adaptiveLightingController);
     
     
