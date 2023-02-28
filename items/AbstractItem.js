@@ -25,6 +25,7 @@ const AbstractItem = function(widget,platform,homebridge) {
 AbstractItem.prototype.getServices = function() {
     this.informationService = this.getInformationServices();
     this.otherService = this.getOtherServices();
+    this.otherController = this.getOtherControllers();	
     this.initListener();
     return [this.informationService, this.otherService];
 };
