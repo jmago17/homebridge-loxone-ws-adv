@@ -119,7 +119,7 @@ ColorItem.prototype.getOtherServices = function() {
     //    .on("get", this.getOtherControllers.bind(this));
     console.log("getotherservices");
 
-    this.adaptiveLightingController = new this.homebridge.hap.AdaptiveLightingController(value)
+    this.adaptiveLightingController = new this.homebridge.hap.AdaptiveLightingController(otherService)
     return [otherService, this.adaptiveLightingController];
 };
 
