@@ -145,7 +145,7 @@ ColorItem.prototype.getItemSaturationState = function(callback) {
 };
 
 ColorItem.prototype.getColorTemperature = function(callback) {
-    callback(undefined, this.saturation);
+    callback(undefined, this.ColorTemperature);
 };
 
 
@@ -191,11 +191,17 @@ ColorItem.prototype.setItemSaturationState = function(value, callback) {
 ColorItem.prototype.setItemBrightnessState = function(value, callback) {
     this.brightness = parseInt(value);
     this.power = this.brightness > 0;
-    this.setColorTemperature(callback);
+    this.setColorTemperatureTemp(callback);
 };
 
-ColorItem.prototype.setColorTemperature = function(callback) {
+ColorItem.prototype.setColorTemperature = function(value, callback) {
     //compose hsv string
+    this.colorTemperature= parseInt(value);
+    this.power = this.brightness > 0;
+    this.setColorTemperatureTemp(callback);
+};
+
+ColorItem.prototype.setColorStateTemp = function(callback) {  
     const command = `temp(${this.colorTemperature},${this.brightness})`; //  temp({brightness},{temperature})
     this.log(`[color] iOS - send message to ${this.name}: ${command} uuid: ${this.uuid}`);
     this.platform.ws.sendCommand(this.uuidAction, command);
