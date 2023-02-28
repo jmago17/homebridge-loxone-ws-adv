@@ -110,12 +110,15 @@ ColorItem.prototype.getOtherServices = function() {
             maxValue: this.colorTemperature.maxValue
         });
 
-    otherService.getCharacteristic(this.homebridge.hap.Characteristic.AdaptiveLightingController)
-        .on('set', this.setItemSaturationState.bind(this))
-        .on('get', this.getItemSaturationState.bind(this))
-        .updateValue(this.saturation);
+     
     return otherService;
 };
+
+ColorItem.prototype.getOtherControllers = function() {
+this.adaptiveLightingController = new api.hap.AdaptiveLightingController(this.homebridge);
+    return [this.adaptiveLightingController];
+}
+
 
 ColorItem.prototype.getItemPowerState = function(callback) {
     callback(undefined, this.power);
