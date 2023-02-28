@@ -25,13 +25,14 @@ const AbstractItem = function(widget,platform,homebridge) {
 AbstractItem.prototype.getServices = function() {
     this.informationService = this.getInformationServices();
     this.otherService = this.getOtherServices();
-	console.log(" befoooooooooooooorrrrreeeeeeeeeee.  if ");
-    if(this.otherService.testCharacteristic(this.homebridge.hap.Characteristic.ColorTemperature)){ 
-    this.otherController = this.getOtherControllers(this.otherService);
-	    return [this.informationService, this.otherService, this.otherController];
-	     console.log("abstract if");//
-    } else { return [this.informationService, this.otherService];
-	   console.log("abstract else");}
+//	console.log(" befoooooooooooooorrrrreeeeeeeeeee.  if ");
+//    if(this.otherService.testCharacteristic(this.homebridge.hap.Characteristic.ColorTemperature)){ 
+ //   this.otherController = this.getOtherControllers(this.otherService);
+//	    return [this.informationService, this.otherService, this.otherController];
+//	     console.log("abstract if");//
+   // } else { 
+	    return [this.informationService, this.otherService];
+//	   console.log("abstract else");}
 	console.log("if passssssssssssssssssseeeeeeeedddddd");
     this.initListener();
     
@@ -42,9 +43,9 @@ AbstractItem.prototype.getOtherServices = () => {
     return null;
 };
 
-//AbstractItem.prototype.getOtherControllers = () => {
-//    return null;
-//};
+AbstractItem.prototype.getOtherControllers = () => {
+    return null;
+};
 
 AbstractItem.prototype.getInformationServices = function() {
     const informationService = new this.homebridge.hap.Service.AccessoryInformation();
