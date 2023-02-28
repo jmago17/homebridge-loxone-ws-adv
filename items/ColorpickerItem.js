@@ -66,12 +66,8 @@ ColorItem.prototype.callBack = function(value, uuid) {
     this.otherService
         .getCharacteristic(this.homebridge.hap.Characteristic.Brightness)
         .updateValue(this.brightness);
-    this.otherService
-        .getCharacteristic(this.homebridge.hap.Characteristic.Hue)
-        .updateValue(this.hue);
-    this.otherService
-        .getCharacteristic(this.homebridge.hap.Characteristic.Saturation)
-        .updateValue(this.saturation);
+    
+    
     this.otherService
         .getCharacteristic(this.homebridge.hap.Characteristic.ColorTemperature)
         .updateValue(this.colorTemperature);
@@ -92,15 +88,9 @@ ColorItem.prototype.getOtherServices = function() {
         .on('get', this.getItemBrightnessState.bind(this))
         .updateValue(this.brightness);
 
-    otherService.getCharacteristic(this.homebridge.hap.Characteristic.Hue)
-        .on('set', this.setItemHueState.bind(this))
-        .on('get', this.getItemHueState.bind(this))
-        .updateValue(this.hue);
+    
 
-    otherService.getCharacteristic(this.homebridge.hap.Characteristic.Saturation)
-        .on('set', this.setItemSaturationState.bind(this))
-        .on('get', this.getItemSaturationState.bind(this))
-        .updateValue(this.saturation);
+    
 
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.ColorTemperature)
         .on("get", this.getColorTemperature.bind(this))
@@ -121,14 +111,7 @@ ColorItem.prototype.getOtherServices = function() {
     return otherService;
 };
 
-ColorItem.prototype.getOtherControllers = function(value) {
-    console.log("getothercontrollers function       111111");
-    this.adaptiveLightingController = new this.homebridge.hap.AdaptiveLightingController(value);
-    console.log("getothercontrollers function.       2222222");
-    return this.adaptiveLightingController;
-   // callback(undefined, this.adaptiveLightingController);
-    console.log("getothercontrollers function.      3333333");
-}
+
 
 
 ColorItem.prototype.getItemPowerState = function(callback) {
@@ -137,12 +120,7 @@ ColorItem.prototype.getItemPowerState = function(callback) {
 ColorItem.prototype.getItemBrightnessState = function(callback) {
     callback(undefined, this.brightness);
 };
-ColorItem.prototype.getItemHueState = function(callback) {
-    callback(undefined, this.hue);
-};
-ColorItem.prototype.getItemSaturationState = function(callback) {
-    callback(undefined, this.saturation);
-};
+
 
 ColorItem.prototype.getColorTemperature = function(callback) {
     callback(undefined, this.saturation);
@@ -163,7 +141,7 @@ ColorItem.prototype.setItemPowerState = function(value, callback) {
 
         this.brightness = 0;
 
-        this.setColorState(callback);
+        this.setColorTemperature(callback);
 
     } else {
 
@@ -173,20 +151,14 @@ ColorItem.prototype.setItemPowerState = function(value, callback) {
 
 };
 
-ColorItem.prototype.setItemHueState = function(value, callback) {
-    this.hue = parseInt(value);
-    this.setColorState(callback);
-};
+
 
 ColorItem.prototype.setItemAdaptiveLightingControllerState = function(value, callback) {
     this.adaptive = value;
     this.setColorState(callback);
 };
 
-ColorItem.prototype.setItemSaturationState = function(value, callback) {
-    this.saturation = parseInt(value);
-    this.setColorState(callback);
-};
+
 
 ColorItem.prototype.setItemBrightnessState = function(value, callback) {
     this.brightness = parseInt(value);
