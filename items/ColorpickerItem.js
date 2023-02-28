@@ -110,7 +110,7 @@ ColorItem.prototype.getOtherServices = function() {
             maxValue: this.colorTemperature.maxValue
         });
 
-    this.adaptiveLightingController = new api.hap.AdaptiveLightingController(this.homebridge); 
+    this.adaptiveLightingController = new this.homebridge.hap.AdaptiveLightingController(this.homebridge); 
     return otherService;
 };
 
