@@ -1,22 +1,22 @@
 const request = require("request");
 
-const ColorItem = function(widget,platform,homebridge) {
+const ColorItem = function(widget, platform, homebridge) {
 
     this.platform = platform;
     this.uuidAction = widget.uuidAction; //to control a colorpicker, use the uuidAction
     this.stateUuid = widget.states.color; //a colorpicker always has a state called color, which is the uuid which will receive the event to read
 
-    
+
     this.colorTemperature = 0;
     this.hue = 0;
     this.saturation = 0;
     this.brightness = 0;
     this.power = false;
-    
+
     this.colorTemperature.minValue = 50; // HAP default values
     this.colorTemperature.maxValue = 400;
 
-    ColorItem.super_.call(this, widget,platform,homebridge);
+    ColorItem.super_.call(this, widget, platform, homebridge);
 };
 
 // Register a listener to be notified of changes in this items value
@@ -101,14 +101,14 @@ ColorItem.prototype.getOtherServices = function() {
         .on('set', this.setItemSaturationState.bind(this))
         .on('get', this.getItemSaturationState.bind(this))
         .updateValue(this.saturation);
-    
+
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.ColorTemperature)
-            .on("get", this.getColorTemperature.bind(this))
-            .on("set", this.setColorTemperature.bind(this))
-            .setProps({
-                minValue: this.colorTemperature.minValue,
-                maxValue: this.colorTemperature.maxValue
-            });
+        .on("get", this.getColorTemperature.bind(this))
+        .on("set", this.setColorTemperature.bind(this))
+        .setProps({
+            minValue: this.colorTemperature.minValue,
+            maxValue: this.colorTemperature.maxValue
+        });
 
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.AdaptiveLightingController)
         .on('set', this.setItemSaturationState.bind(this))
@@ -136,13 +136,13 @@ ColorItem.prototype.getColorTemperature = function(callback) {
 
 
 ColorItem.prototype.setColorTemperature = function(value, callback) {
-   //compose hsv string
+    //compose hsv string
     const command = `temp(${this.colorTemperature},${this.brightness})`; //  temp({brightness},{temperature})
     this.log(`[color] iOS - send message to ${this.name}: ${command} uuid: ${this.uuid}`);
     this.platform.ws.sendCommand(this.uuidAction, command);
     callback();
-};   
-    
+};
+
 
 ColorItem.prototype.setItemPowerState = function(value, callback) {
     //sending new power state to loxone
