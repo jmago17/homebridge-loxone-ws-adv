@@ -181,11 +181,11 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
             item.type = "Lightbulb";
 
         } else if (item.type === "ColorPickerV2") {
-            if (item.name == ("LED Sala of Salón iluminación 2")) {
+            
 
-            } else { // Handle the new ColorPickerV2 which replaces the colorPicker in the new LightControllerV2
+             // Handle the new ColorPickerV2 which replaces the colorPicker in the new LightControllerV2
                 item.type = "Colorpicker";
-            }
+            
         }
     }
 
