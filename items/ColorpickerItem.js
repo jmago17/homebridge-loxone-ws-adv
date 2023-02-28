@@ -123,11 +123,12 @@ ColorItem.prototype.getOtherServices = function() {
     return otherService;
 };
 
-ColorItem.prototype.getOtherControllers = function(value) {
+ColorItem.prototype.getOtherControllers = function(callback) {
     console.log("getothercontrollers function       111111");
     this.adaptiveLightingController = new this.homebridge.hap.AdaptiveLightingController(value);
     console.log("getothercontrollers function.       2222222");
-    return [this.adaptiveLightingController];
+    //return this.adaptiveLightingController;
+    callback(undefined, this.adaptiveLightingController);
     console.log("getothercontrollers function.      3333333");
 }
 
