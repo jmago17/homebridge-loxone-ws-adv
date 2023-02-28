@@ -142,7 +142,7 @@ ColorItem.prototype.getColorTemperature = function(callback) {
 };
 
 ColorItem.prototype.getItemAdaptiveLightingControllerState = function(callback) {
-    callback(undefined, this.adaptive);
+    return [this.adaptiveLightingController];
 };
 
 
