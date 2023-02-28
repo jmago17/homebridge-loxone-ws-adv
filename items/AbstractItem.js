@@ -26,7 +26,11 @@ AbstractItem.prototype.getServices = function() {
     this.informationService = this.getInformationServices();
     this.otherService = this.getOtherServices();
     this.initListener();
+    if (this.otherService.testCharacteristic(Characteristic.ColorTemperature) && this.otherService.testCharacteristic(Characteristic.Brightness))  {
+            this.adaptiveLightingController = new api.hap.AdaptiveLightingController(newService);
+        }
     return [this.informationService, this.otherService];
+	
 };
 
 AbstractItem.prototype.getOtherServices = () => {
@@ -43,5 +47,13 @@ AbstractItem.prototype.getInformationServices = function() {
         .setCharacteristic(this.homebridge.hap.Characteristic.Name, this.name);
     return informationService;
 };
+
+getControllers: function() {
+        if (!this.adaptiveLightingController) {
+            return [];
+        } else {
+            return [this.adaptiveLightingController];
+        }
+    };
 
 module.exports = AbstractItem;
