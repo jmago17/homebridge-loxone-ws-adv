@@ -27,12 +27,13 @@ AbstractItem.prototype.getServices = function() {
     this.otherService = this.getOtherServices();	
     this.initListener();
 	 console.log("just passed initListener");
-	//if(this.otherService.adaptiveLightingController){ 
-    this.otherController = this.getOtherControllers(this.otherService); //	} 
-//	else { this.otherController = undefined;}
+    if(this.otherService.adaptiveLightingController){ 
+    this.otherController = this.getOtherControllers(this.otherService);
+	    return [this.informationService, this.otherService, this.otherController];//
+    } else { return [this.informationService, this.otherService];}
 	console.log("just passed this.othercontroller");
-    return [this.informationService, this.otherService, this.otherController];
-//	return [this.informationService, this.otherService];
+    
+//	
 };
 
 AbstractItem.prototype.getOtherServices = () => {
