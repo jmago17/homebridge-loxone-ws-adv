@@ -81,7 +81,7 @@ ColorItem.prototype.callBack = function(value, uuid) {
 ColorItem.prototype.getOtherServices = function() {
 
     const otherService = new this.homebridge.hap.Service.Lightbulb();
-  console.log("getotherservices");
+    console.log("getotherservices");
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.On)
         .on('set', this.setItemPowerState.bind(this))
         .on('get', this.getItemPowerState.bind(this))
@@ -108,25 +108,27 @@ ColorItem.prototype.getOtherServices = function() {
         .setProps({
             minValue: this.colorTemperature.minValue,
             maxValue: this.colorTemperature.maxValue
-        });   
-   
-    
-     // this.adaptiveLightingController = new this.homebridge.hap.AdaptiveLightingController(otherService, );
-   //   otherService.getCharacteristic(this.homebridge.hap.Characteristic.configureController(this.adaptiveLightingController));
-    
-    
-   // otherService.getCharacteristic(this.homebridge.hap.AdaptiveLightingController)
+        });
+
+
+    // this.adaptiveLightingController = new this.homebridge.hap.AdaptiveLightingController(otherService, );
+    //   otherService.getCharacteristic(this.homebridge.hap.Characteristic.configureController(this.adaptiveLightingController));
+
+
+    // otherService.getCharacteristic(this.homebridge.hap.AdaptiveLightingController)
     //    .on("get", this.getOtherControllers.bind(this));
-     console.log("getotherservices");
-    
-     
+    console.log("getotherservices");
+
+
     return otherService;
 };
 
 ColorItem.prototype.getOtherControllers = function(value) {
-     console.log("getothercontrollers function");
+    console.log("getothercontrollers function       111111");
     this.adaptiveLightingController = new this.homebridge.hap.AdaptiveLightingController(value);
+    console.log("getothercontrollers function.       2222222");
     return [this.adaptiveLightingController];
+    console.log("getothercontrollers function.      3333333");
 }
 
 
