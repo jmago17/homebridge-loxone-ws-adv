@@ -164,20 +164,19 @@ ColorItem.prototype.setItemAdaptiveLightingControllerState = function(value, cal
 ColorItem.prototype.setItemBrightnessState = function(value, callback) {
     this.brightness = parseInt(value);
     this.power = this.brightness > 0;
-    this.setColorTemperature(callback);
+    this.setColorState(callback);
 };
 
-ColorItem.prototype.setColorTemperature = function(callback) {
+ColorItem.prototype.setColorTemperature = function(value, callback){
     //compose hsv string
-    const command = `temp(${this.colorTemperature},${this.brightness})`; //  temp({brightness},{temperature})
-    this.log(`[color] iOS - send message to ${this.name}: ${command} uuid: ${this.uuid}`);
-    this.platform.ws.sendCommand(this.uuidAction, command);
-    callback();
+    this.colorTemperature = parseInt(value);
+    this.power = this.brightness > 0;
+    this.setColorState(callback);
 };
 
 ColorItem.prototype.setColorState = function(callback) {
     //compose hsv string
-    const command = `hsv(${this.hue},${this.saturation},${this.brightness})`; //hsv({hue},{saturation},{value})
+    const command = `temp(${this.colorTemperature},${this.brightness})`;  temp({brightness},{temperature})
     this.log(`[color] iOS - send message to ${this.name}: ${command} uuid: ${this.uuid}`);
     this.platform.ws.sendCommand(this.uuidAction, command);
     callback();
