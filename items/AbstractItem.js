@@ -29,6 +29,7 @@ AbstractItem.prototype.getServices = function() {
 	 console.log("just passed initListener");
 
     this.otherController = this.getOtherControllers();	
+	console.log("just passed this.othercontroller");
     return [this.informationService, this.otherService, this.otherController];
 };
 
