@@ -6,10 +6,15 @@ const ColorItem = function(widget,platform,homebridge) {
     this.uuidAction = widget.uuidAction; //to control a colorpicker, use the uuidAction
     this.stateUuid = widget.states.color; //a colorpicker always has a state called color, which is the uuid which will receive the event to read
 
+    
+    this.colorTemperature = 0;
     this.hue = 0;
     this.saturation = 0;
     this.brightness = 0;
     this.power = false;
+    
+    this.colorTemperature.minValue = 50; // HAP default values
+    this.colorTemperature.maxValue = 400;
 
     ColorItem.super_.call(this, widget,platform,homebridge);
 };
@@ -49,6 +54,7 @@ ColorItem.prototype.callBack = function(value, uuid) {
 
         // could also be a colour temp update in the form: temp(100,4542)
         this.brightness = parseInt(params[0]);
+        this.colorTemperature = parseInt(params[1]);
         this.power = this.brightness > 0;
 
     }
@@ -66,6 +72,9 @@ ColorItem.prototype.callBack = function(value, uuid) {
     this.otherService
         .getCharacteristic(this.homebridge.hap.Characteristic.Saturation)
         .updateValue(this.saturation);
+    this.otherService
+        .getCharacteristic(this.homebridge.hap.Characteristic.ColorTemperature)
+        .updateValue(this.colorTemperature);
 
 };
 
@@ -92,7 +101,19 @@ ColorItem.prototype.getOtherServices = function() {
         .on('set', this.setItemSaturationState.bind(this))
         .on('get', this.getItemSaturationState.bind(this))
         .updateValue(this.saturation);
+    
+    otherService.getCharacteristic(this.homebridge.hap.Characteristic.ColorTemperature)
+            .on("get", this.getColorTemperature.bind(this))
+            .on("set", this.setColorTemperature.bind(this))
+            .setProps({
+                minValue: this.colorTemperature.minValue,
+                maxValue: this.colorTemperature.maxValue
+            });
 
+    otherService.getCharacteristic(this.homebridge.hap.Characteristic.AdaptiveLightingController)
+        .on('set', this.setItemSaturationState.bind(this))
+        .on('get', this.getItemSaturationState.bind(this))
+        .updateValue(this.saturation);
     return otherService;
 };
 
@@ -109,16 +130,19 @@ ColorItem.prototype.getItemSaturationState = function(callback) {
     callback(undefined, this.saturation);
 };
 
-ColorItem.prototype.setItemPowerState = function(value, callback) {
+ColorItem.prototype.getColorTemperature = function(callback) {
+    callback(undefined, this.saturation);
+};
 
-    //sending new power state to loxone
-    if (!value) {
-        //loxone does not understand 'on' or 'off', we interpret Homekit 'off' as setting brightness to 0
-        this.brightness = 0;
-        this.setColorState(callback);
-    } else {
-        callback();
-    }
+
+ColorItem.prototype.setColorTemperature = function(value, callback) {
+    
+    
+    
+
+ColorItem.prototype.setItemPowerState = function(value, callback) {
+    const colorTemperatureMired = value;
+    this.setColorTemperature(callback);  
 
 };
 
