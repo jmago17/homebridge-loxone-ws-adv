@@ -6,7 +6,7 @@ const ColorItem = function(widget, platform, homebridge) {
     this.uuidAction = widget.uuidAction; //to control a colorpicker, use the uuidAction
     this.stateUuid = widget.states.color; //a colorpicker always has a state called color, which is the uuid which will receive the event to read
 
-
+    this.adaptive = 0;
     this.colorTemperature = 0;
     this.hue = 0;
     this.saturation = 0;
@@ -108,9 +108,13 @@ ColorItem.prototype.getOtherServices = function() {
         .setProps({
             minValue: this.colorTemperature.minValue,
             maxValue: this.colorTemperature.maxValue
-        });
+        })
+        .updateValue(this.colorTemperature);
 
-    otherService.setCharacteristic(this.homebridge.hap.Characteristic.AdaptiveLightingController, Characteristic.AdaptiveLightingController.AUTOMATIC)
+    otherService.setCharacteristic(this.homebridge.hap.Characteristic.AdaptiveLightingController)
+        .on('set', this.setItemAdaptiveLightingControllerState.bind(this))
+        .on('get', this.getItemAdaptiveLightingControllerState.bind(this))
+        .updateValue(this.adaptive);
     return otherService;
 };
 
@@ -135,6 +139,10 @@ ColorItem.prototype.getItemSaturationState = function(callback) {
 
 ColorItem.prototype.getColorTemperature = function(callback) {
     callback(undefined, this.saturation);
+};
+
+ColorItem.prototype.getItemAdaptiveLightingControllerState = function(callback) {
+    callback(undefined, this.adaptive);
 };
 
 
@@ -171,6 +179,11 @@ ColorItem.prototype.setItemHueState = function(value, callback) {
     this.setColorState(callback);
 };
 
+ColorItem.prototype.setItemAdaptiveLightingControllerState = function(value, callback) {
+    this.adaptive = value;
+    this.setColorState(callback);
+};
+
 ColorItem.prototype.setItemSaturationState = function(value, callback) {
     this.saturation = parseInt(value);
     this.setColorState(callback);
@@ -179,7 +192,7 @@ ColorItem.prototype.setItemSaturationState = function(value, callback) {
 ColorItem.prototype.setItemBrightnessState = function(value, callback) {
     this.brightness = parseInt(value);
     this.power = this.brightness > 0;
-    this.setColorState(callback);
+    this.setColorTemperature(callback);
 };
 
 ColorItem.prototype.setColorState = function(callback) {
