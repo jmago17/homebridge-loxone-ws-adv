@@ -24,16 +24,14 @@ const AbstractItem = function(widget,platform,homebridge) {
 
 AbstractItem.prototype.getServices = function() {
     this.informationService = this.getInformationServices();
-    this.otherService = this.getOtherServices();	
-    this.initListener();
-	 console.log("just passed initListener");
-    if(this.otherService.ColorTemperature){ 
+    this.otherService = this.getOtherServices();	   
+    if(this.otherService.testCharacteristic(ColorTemperature)){ 
     this.otherController = this.getOtherControllers(this.otherService);
 	    return [this.informationService, this.otherService, this.otherController];
 	     console.log("abstract if");//
     } else { return [this.informationService, this.otherService];
 	   console.log("abstract else");}
-	
+    this.initListener();
     
 //	
 };
@@ -44,7 +42,7 @@ AbstractItem.prototype.getOtherServices = () => {
 
 //AbstractItem.prototype.getOtherControllers = () => {
 //    return null;
-// };
+//};
 
 AbstractItem.prototype.getInformationServices = function() {
     const informationService = new this.homebridge.hap.Service.AccessoryInformation();
