@@ -109,20 +109,15 @@ ColorItem.prototype.getOtherServices = function() {
             minValue: this.colorTemperature.minValue,
             maxValue: this.colorTemperature.maxValue
         })
-        .updateValue(this.colorTemperature);
-
-    
-          
-    
-    
+        .updateValue(this.colorTemperature);   
+        
     return otherService;
 };
 
-
 ColorItem.prototype.getOtherControllers = function() {
-    const otherControllers = new this.homebridge.hap.Controller.Lightbulb();
+    const otherControllers = new this.homebridge.hap.Service.Lightbulb();
     this.adaptiveLightingController = new this.homebridge.hap.AdaptiveLightingController(otherService);
-    return otherControllers;
+    return this.adaptiveLightingController;
 }
 
 
