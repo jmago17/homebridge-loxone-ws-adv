@@ -81,7 +81,7 @@ ColorItem.prototype.callBack = function(value, uuid) {
 ColorItem.prototype.getOtherServices = function() {
 
     const otherService = new this.homebridge.hap.Service.Lightbulb();
-
+  console.log("getotherservices");
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.On)
         .on('set', this.setItemPowerState.bind(this))
         .on('get', this.getItemPowerState.bind(this))
@@ -113,13 +113,14 @@ ColorItem.prototype.getOtherServices = function() {
    
     otherService.getCharacteristic(this.homebridge.hap.AdaptiveLightingController)
     // return [otherService, this.adaptiveLightingController]
+    
         .on("get", this.getOtherControllers.bind(this));
     return otherService;
 };
 
 ColorItem.prototype.getOtherControllers = function(callback) {
     this.adaptiveLightingController = new this.homebridge.hap.AdaptiveLightingController(value);
-    callback(undefined, this.adaptiveLightingController);
+   return [this.adaptiveLightingController]
 }
 
 
@@ -140,9 +141,7 @@ ColorItem.prototype.getColorTemperature = function(callback) {
     callback(undefined, this.saturation);
 };
 
-ColorItem.prototype.getItemAdaptiveLightingControllerState = function(callback) {
-    return [this.adaptiveLightingController];
-};
+
 
 
 ColorItem.prototype.setColorTemperature = function(value, callback) {
