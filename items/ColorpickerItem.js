@@ -145,8 +145,21 @@ ColorItem.prototype.setColorTemperature = function(value, callback) {
     
 
 ColorItem.prototype.setItemPowerState = function(value, callback) {
-    const colorTemperatureMired = value;
-    this.setColorTemperature(callback);  
+    //sending new power state to loxone
+
+    if (!value) {
+
+        //loxone does not understand 'on' or 'off', we interpret Homekit 'off' as setting brightness to 0
+
+        this.brightness = 0;
+
+        this.setColorState(callback);
+
+    } else {
+
+        callback();
+
+    }
 
 };
 
