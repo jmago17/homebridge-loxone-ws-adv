@@ -37,9 +37,9 @@ console.log("before                if");
              console.log("INSIDE.                                                       if");
 	    this.adaptiveLightingController = new this.homebridge.hap.AdaptiveLightingController(newService);
 	    return this.adaptiveLightingController;
-    }
+    } else {return null;}
     console.log("after                if");
-    else {return null;}
+   
 };
 
 AbstractItem.prototype.getInformationServices = function() {
