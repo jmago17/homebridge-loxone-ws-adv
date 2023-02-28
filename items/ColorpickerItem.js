@@ -1,18 +1,22 @@
 const request = require("request");
 
-const ColorItem = function(widget,platform,homebridge) {
+const ColorItem = function(widget, platform, homebridge) {
 
     this.platform = platform;
     this.uuidAction = widget.uuidAction; //to control a colorpicker, use the uuidAction
     this.stateUuid = widget.states.color; //a colorpicker always has a state called color, which is the uuid which will receive the event to read
 
+    this.adaptive = 0;
+    this.colorTemperature = 0;
     this.hue = 0;
     this.saturation = 0;
     this.brightness = 0;
     this.power = false;
-    this.ColorTemperature = 0;
 
-    ColorItem.super_.call(this, widget,platform,homebridge);
+    this.colorTemperature.minValue = 50; // HAP default values
+    this.colorTemperature.maxValue = 400;
+
+    ColorItem.super_.call(this, widget, platform, homebridge);
 };
 
 // Register a listener to be notified of changes in this items value
@@ -50,6 +54,7 @@ ColorItem.prototype.callBack = function(value, uuid) {
 
         // could also be a colour temp update in the form: temp(100,4542)
         this.brightness = parseInt(params[0]);
+        this.colorTemperature = parseInt(params[1]);
         this.power = this.brightness > 0;
 
     }
@@ -69,14 +74,14 @@ ColorItem.prototype.callBack = function(value, uuid) {
         .updateValue(this.saturation);
     this.otherService
         .getCharacteristic(this.homebridge.hap.Characteristic.ColorTemperature)
-        .updateValue(this.ColorTemperature);
+        .updateValue(this.colorTemperature);
 
 };
 
 ColorItem.prototype.getOtherServices = function() {
 
     const otherService = new this.homebridge.hap.Service.Lightbulb();
-
+    console.log("getotherservices");
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.On)
         .on('set', this.setItemPowerState.bind(this))
         .on('get', this.getItemPowerState.bind(this))
@@ -96,24 +101,38 @@ ColorItem.prototype.getOtherServices = function() {
         .on('set', this.setItemSaturationState.bind(this))
         .on('get', this.getItemSaturationState.bind(this))
         .updateValue(this.saturation);
-    
+
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.ColorTemperature)
-            .on("get", this.getColorTemperature.bind(this))
-            .on("set", this.setColorTemperature.bind(this))
-            .setProps({
-                minValue: this.colorTemperature.minValue,
-                maxValue: this.colorTemperature.maxValue
-            });
-    
+        .on("get", this.getColorTemperature.bind(this))
+        .on("set", this.setColorTemperature.bind(this))
+        .setProps({
+            minValue: this.colorTemperature.minValue,
+            maxValue: this.colorTemperature.maxValue
+        });
+
+
+    // this.adaptiveLightingController = new this.homebridge.hap.AdaptiveLightingController(otherService, );
+    //   otherService.getCharacteristic(this.homebridge.hap.Characteristic.configureController(this.adaptiveLightingController));
+
+
+    // otherService.getCharacteristic(this.homebridge.hap.AdaptiveLightingController)
+    //    .on("get", this.getOtherControllers.bind(this));
+   
     return otherService;
 };
 
+ColorItem.prototype.getOtherControllers = function(value) {
+    console.log("getothercontrollers function       111111");
+    this.adaptiveLightingController = new this.homebridge.hap.AdaptiveLightingController(value);
+    console.log("getothercontrollers function.       2222222");
+    return this.adaptiveLightingController;
+   // callback(undefined, this.adaptiveLightingController);
+    console.log("getothercontrollers function.      3333333");
+}
+
+
 ColorItem.prototype.getItemPowerState = function(callback) {
     callback(undefined, this.power);
-    
-};
-ColorItem.prototype.getColorTemperature = function(callback) {
-    callback(undefined, this.ColorTemperature);
 };
 ColorItem.prototype.getItemBrightnessState = function(callback) {
     callback(undefined, this.brightness);
@@ -125,21 +144,48 @@ ColorItem.prototype.getItemSaturationState = function(callback) {
     callback(undefined, this.saturation);
 };
 
-ColorItem.prototype.setItemPowerState = function(value, callback) {
+ColorItem.prototype.getColorTemperature = function(callback) {
+    callback(undefined, this.saturation);
+};
 
+
+
+
+ColorItem.prototype.setColorTemperature = function(value, callback) {
+    //compose hsv string
+    const command = `temp(${this.colorTemperature},${this.brightness})`; //  temp({brightness},{temperature})
+    this.log(`[color] iOS - send message to ${this.name}: ${command} uuid: ${this.uuid}`);
+    this.platform.ws.sendCommand(this.uuidAction, command);
+    callback();
+};
+
+
+ColorItem.prototype.setItemPowerState = function(value, callback) {
     //sending new power state to loxone
+
     if (!value) {
+
         //loxone does not understand 'on' or 'off', we interpret Homekit 'off' as setting brightness to 0
+
         this.brightness = 0;
+
         this.setColorState(callback);
+
     } else {
+
         callback();
+
     }
 
 };
 
 ColorItem.prototype.setItemHueState = function(value, callback) {
     this.hue = parseInt(value);
+    this.setColorState(callback);
+};
+
+ColorItem.prototype.setItemAdaptiveLightingControllerState = function(value, callback) {
+    this.adaptive = value;
     this.setColorState(callback);
 };
 
@@ -151,20 +197,12 @@ ColorItem.prototype.setItemSaturationState = function(value, callback) {
 ColorItem.prototype.setItemBrightnessState = function(value, callback) {
     this.brightness = parseInt(value);
     this.power = this.brightness > 0;
-    this.setColorState(callback);
-};
-
-ColorItem.prototype.setColorTemperature = function(callback) {
-    //compose hsv string
-    const command = `hsv(${this.hue},${this.saturation},${this.brightness})`;
-    this.log(`[color] iOS - send message to ${this.name}: ${command} uuid: ${this.uuid}`);
-    this.platform.ws.sendCommand(this.uuidAction, command);
-    callback();
+    this.setColorTemperature(callback);
 };
 
 ColorItem.prototype.setColorState = function(callback) {
     //compose hsv string
-    const command = `hsv(${this.hue},${this.saturation},${this.brightness})`;
+    const command = `hsv(${this.hue},${this.saturation},${this.brightness})`; //hsv({hue},{saturation},{value})
     this.log(`[color] iOS - send message to ${this.name}: ${command} uuid: ${this.uuid}`);
     this.platform.ws.sendCommand(this.uuidAction, command);
     callback();
