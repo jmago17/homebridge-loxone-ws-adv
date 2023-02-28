@@ -25,20 +25,21 @@ const AbstractItem = function(widget,platform,homebridge) {
 AbstractItem.prototype.getServices = function() {
     this.informationService = this.getInformationServices();
     this.otherService = this.getOtherServices();
-    console.log("before                if");
-    if (this.otherService.testCharacteristic(Characteristic.ColorTemperature) && this.otherService.testCharacteristic(Characteristic.Brightness))  {
-             console.log("INSIDE.                                                       if");
-	    this.adaptiveLightingController = new this.homebridge.hap.AdaptiveLightingController(newService);
-    }
-    console.log("after                if");
+    
     this.initListener();	
     return [this.informationService, this.otherService];
 	
 };
 
 AbstractItem.prototype.getOtherServices = () => {
-
-    return null;
+console.log("before                if");
+    if (this.otherService.testCharacteristic(Characteristic.ColorTemperature) && this.otherService.testCharacteristic(Characteristic.Brightness))  {
+             console.log("INSIDE.                                                       if");
+	    this.adaptiveLightingController = new this.homebridge.hap.AdaptiveLightingController(newService);
+	    return this.adaptiveLightingController;
+    }
+    console.log("after                if");
+    else {return null;}
 };
 
 AbstractItem.prototype.getInformationServices = function() {
