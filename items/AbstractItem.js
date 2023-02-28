@@ -27,8 +27,8 @@ AbstractItem.prototype.getServices = function() {
     this.otherService = this.getOtherServices();	
     this.initListener();
 	 console.log("just passed initListener");
-
-    this.otherController = this.getOtherControllers(this.otherService);	
+	if(this.otherService.testCharasteristic(Characteristic.ColorTemperature) && this.otherService.testCharasteristic(Characteristic.Brightness)){ 
+    this.otherController = this.getOtherControllers(this.otherService);	}
 	console.log("just passed this.othercontroller");
     return [this.informationService, this.otherService];
 };
