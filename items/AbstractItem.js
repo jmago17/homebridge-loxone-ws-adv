@@ -33,6 +33,10 @@ AbstractItem.prototype.getOtherServices = () => {
     return null;
 };
 
+AbstractItem.prototype.getOtherControllers = () => {
+    return null;
+};
+
 AbstractItem.prototype.getInformationServices = function() {
     const informationService = new this.homebridge.hap.Service.AccessoryInformation();
 
