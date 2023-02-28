@@ -25,7 +25,7 @@ const AbstractItem = function(widget,platform,homebridge) {
 AbstractItem.prototype.getServices = function() {
     this.informationService = this.getInformationServices();
     this.otherService = this.getOtherServices();	   
-    if(this.otherService.testCharacteristic(ColorTemperature)){ 
+    if(this.otherService.testCharacteristic(this.homebridge.hap.Characteristic.ColorTemperature)){ 
     this.otherController = this.getOtherControllers(this.otherService);
 	    return [this.informationService, this.otherService, this.otherController];
 	     console.log("abstract if");//
