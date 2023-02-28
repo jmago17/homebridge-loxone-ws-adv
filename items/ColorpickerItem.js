@@ -124,7 +124,7 @@ ColorItem.prototype.getItemBrightnessState = function(callback) {
 
 
 ColorItem.prototype.getColorTemperature = function(callback) {
-    callback(undefined, this.saturation);
+    callback(undefined, this.ColorTemperature);
 };
 
 
