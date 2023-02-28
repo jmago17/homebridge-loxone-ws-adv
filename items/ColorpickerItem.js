@@ -111,15 +111,16 @@ ColorItem.prototype.getOtherServices = function() {
         })
         .updateValue(this.colorTemperature);   
    
-    otherService.getCharacteristic(this.homebridge.hap.AdaptiveLightingController(otherService));
-    // return [otherService, this.adaptiveLightingController];
+    otherService.getCharacteristic(this.homebridge.hap.AdaptiveLightingController)
+    // return [otherService, this.adaptiveLightingController]
+        .on("get", this.getOtherControllers.bind(this));
     return otherService;
 };
 
-//ColorItem.prototype.getOtherControllers = function() {
-        
-//    return this.adaptiveLightingController;
-//}
+ColorItem.prototype.getOtherControllers = function(callback) {
+    this.adaptiveLightingController = new this.homebridge.hap.AdaptiveLightingController(value);
+    callback(undefined, this.adaptiveLightingController);
+}
 
 
 ColorItem.prototype.getItemPowerState = function(callback) {
