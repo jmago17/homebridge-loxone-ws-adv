@@ -25,10 +25,12 @@ const AbstractItem = function(widget,platform,homebridge) {
 AbstractItem.prototype.getServices = function() {
     this.informationService = this.getInformationServices();
     this.otherService = this.getOtherServices();
-    this.initListener();
+    console.log("before                if);
     if (this.otherService.testCharacteristic(Characteristic.ColorTemperature) && this.otherService.testCharacteristic(Characteristic.Brightness))  {
-            this.adaptiveLightingController = new api.hap.AdaptiveLightingController(newService);
+            this.adaptiveLightingController = new this.homebridge.hap.AdaptiveLightingController(newService);
         }
+    console.log("after                if);
+    this.initListener();	
     return [this.informationService, this.otherService];
 	
 };
