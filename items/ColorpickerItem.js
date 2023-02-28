@@ -111,7 +111,7 @@ ColorItem.prototype.getOtherServices = function() {
         })
         .updateValue(this.colorTemperature);   
     otherService.getCharacteristic(this.homebridge.hap.AdaptiveLightingController)
-        .on("get", this.getAdaptiveLightingController.bind(this));
+        .on("set", this.getAdaptiveLightingController.bind(this));
     
     return otherService;
 };
