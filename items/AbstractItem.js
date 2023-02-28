@@ -27,11 +27,13 @@ AbstractItem.prototype.getServices = function() {
     this.otherService = this.getOtherServices();	
     this.initListener();
 	 console.log("just passed initListener");
-    if(this.otherService.adaptiveLightingController){ 
+    if(this.otherService.ColorTemperature){ 
     this.otherController = this.getOtherControllers(this.otherService);
-	    return [this.informationService, this.otherService, this.otherController];//
-    } else { return [this.informationService, this.otherService];}
-	console.log("just passed this.othercontroller");
+	    return [this.informationService, this.otherService, this.otherController];
+	     console.log("abstract if");//
+    } else { return [this.informationService, this.otherService];
+	   console.log("abstract else");}
+	
     
 //	
 };
