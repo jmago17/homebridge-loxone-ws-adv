@@ -110,6 +110,11 @@ ColorItem.prototype.getOtherServices = function() {
             maxValue: this.colorTemperature.maxValue
         });   
    
+    
+      this.adaptiveLightingController = new this.homebridge.hap.AdaptiveLightingController(this.otherService, );
+      this.otherService.configureController(this.adaptiveLightingController);
+    
+    
    // otherService.getCharacteristic(this.homebridge.hap.AdaptiveLightingController)
     //    .on("get", this.getOtherControllers.bind(this));
      console.log("getotherservices");
