@@ -112,13 +112,13 @@ ColorItem.prototype.getOtherServices = function() {
         .updateValue(this.colorTemperature);   
    
     this.adaptiveLightingController = new this.homebridge.hap.AdaptiveLightingController(otherService);
-    return otherService;
+    return [otherService, this.adaptiveLightingController];
 };
 
-ColorItem.prototype.getOtherControllers = function() {
+//ColorItem.prototype.getOtherControllers = function() {
         
-    return this.adaptiveLightingController;
-}
+//    return this.adaptiveLightingController;
+//}
 
 
 ColorItem.prototype.getItemPowerState = function(callback) {
