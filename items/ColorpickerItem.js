@@ -118,8 +118,10 @@ ColorItem.prototype.getOtherServices = function() {
 };
 
 ColorItem.prototype.getOtherControllers = function(callback) {
+     console.log("getotherservices");
     this.adaptiveLightingController = new this.homebridge.hap.AdaptiveLightingController(otherService);
    callback(undefined, this.adaptiveLightingController);
+     console.log("getotherservices");
 }
 
 
