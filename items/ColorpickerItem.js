@@ -119,16 +119,16 @@ ColorItem.prototype.getOtherServices = function() {
     //    .on("get", this.getOtherControllers.bind(this));
     console.log("getotherservices");
 
-
-    return otherService;
+    this.adaptiveLightingController = new this.homebridge.hap.AdaptiveLightingController(value)
+    return [otherService, this.adaptiveLightingController];
 };
 
-ColorItem.prototype.getOtherControllers = function(value, callback) {
+ColorItem.prototype.getOtherControllers = function(value) {
     console.log("getothercontrollers function       111111");
     this.adaptiveLightingController = new this.homebridge.hap.AdaptiveLightingController(value);
     console.log("getothercontrollers function.       2222222");
-    //return this.adaptiveLightingController;
-    callback(undefined, this.adaptiveLightingController);
+    return this.adaptiveLightingController;
+   // callback(undefined, this.adaptiveLightingController);
     console.log("getothercontrollers function.      3333333");
 }
 
