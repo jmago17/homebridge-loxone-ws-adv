@@ -14,7 +14,7 @@ const AbstractItem = function(widget,platform,homebridge) {
     //other variables used by child classes
     this.setFromLoxone = false;
     
-	 console.log("Generating new homebridge accessory '" + this.name + "' with UUID: " + this.UUID + " from accessory with ID: " + widget.uuidAction);
+	// console.log("Generating new homebridge accessory '" + this.name + "' with UUID: " + this.UUID + " from accessory with ID: " + widget.uuidAction);
 
     //Add as ACCESSORY (parent class)
     //AbstractItem.super_.call(this, this.name, this.UUID);
@@ -25,25 +25,11 @@ const AbstractItem = function(widget,platform,homebridge) {
 AbstractItem.prototype.getServices = function() {
     this.informationService = this.getInformationServices();
     this.otherService = this.getOtherServices();
-//	console.log(" befoooooooooooooorrrrreeeeeeeeeee.  if ");
-//    if(this.otherService.testCharacteristic(this.homebridge.hap.Characteristic.ColorTemperature)){ 
- //   this.otherController = this.getOtherControllers(this.otherService);
-//	    return [this.informationService, this.otherService, this.otherController];
-//	     console.log("abstract if");//
-   // } else { 
-	    return [this.informationService, this.otherService];
-//	   console.log("abstract else");}
-	console.log("if passssssssssssssssssseeeeeeeedddddd");
     this.initListener();
-    
-//	
+    return [this.informationService, this.otherService];
 };
 
 AbstractItem.prototype.getOtherServices = () => {
-    return null;
-};
-
-AbstractItem.prototype.getOtherControllers = () => {
     return null;
 };
 
