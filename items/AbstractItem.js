@@ -27,10 +27,12 @@ AbstractItem.prototype.getServices = function() {
     this.otherService = this.getOtherServices();	
     this.initListener();
 	 console.log("just passed initListener");
-	if(this.otherService.testCharasteristic(Characteristic.ColorTemperature) && this.otherService.testCharasteristic(Characteristic.Brightness)){ 
-    this.otherController = this.getOtherControllers(this.otherService);	}
+	//if(this.otherService.testCharasteristic(Characteristic.ColorTemperature) && this.otherService.testCharasteristic(Characteristic.Brightness)){ 
+    // this.otherController = this.getOtherControllers(this.otherService);	} 
+//	else { this.otherController = undefined;}
 	console.log("just passed this.othercontroller");
-    return [this.informationService, this.otherService];
+    //return [this.informationService, this.otherService, this.otherController];
+	return [this.informationService, this.otherService];
 };
 
 AbstractItem.prototype.getOtherServices = () => {
