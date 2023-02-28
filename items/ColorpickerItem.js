@@ -29,7 +29,8 @@ ColorItem.prototype.callBack = function(value, uuid) {
     console.log("Got new state for color " + value + ", uuid: " + uuid);
 
     //incoming value is a HSV string that needs to be parsed
-    let m;
+    let m = value;
+    /*
     if (m = value.match(/^\W*hsv?\(([^)]*)\)\W*$/i)) {
         var params = m[1].split(',');
         const re = /^\s*(\d*)(\.\d+)?\s*$/;
@@ -49,7 +50,7 @@ ColorItem.prototype.callBack = function(value, uuid) {
             this.brightness = parseInt(v);
             this.power = this.brightness > 0;
         }
-    } else if (m = value.match(/^\W*temp?\(([^)]*)\)\W*$/i)) {
+    } else if (m = value.match(/^\W*temp?\(([^)]*)\)\W*$/i)) {*/
         var params = m[1].split(',');
 
         // could also be a colour temp update in the form: temp(100,4542)
@@ -57,7 +58,7 @@ ColorItem.prototype.callBack = function(value, uuid) {
         this.colorTemperature = parseInt(params[1]);
         this.power = this.brightness > 0;
 
-    }
+    //}
 
     //also make sure this change is directly communicated to HomeKit
     this.otherService
