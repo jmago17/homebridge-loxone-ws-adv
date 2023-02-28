@@ -46,6 +46,11 @@ DimmerItem.prototype.getOtherServices = function() {
     return otherService;
 };
 
+DimmerItem.prototype.getOtherControllers = function(value) {
+    
+    return [];
+}
+
 DimmerItem.prototype.getItemState = function(callback) {
     //returns brightness value
     callback(undefined, this.currentState);
