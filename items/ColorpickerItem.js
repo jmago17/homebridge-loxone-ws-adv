@@ -10,6 +10,7 @@ const ColorItem = function(widget,platform,homebridge) {
     this.saturation = 0;
     this.brightness = 0;
     this.power = false;
+    this.ColorTemperature = 0;
 
     ColorItem.super_.call(this, widget,platform,homebridge);
 };
@@ -66,6 +67,9 @@ ColorItem.prototype.callBack = function(value, uuid) {
     this.otherService
         .getCharacteristic(this.homebridge.hap.Characteristic.Saturation)
         .updateValue(this.saturation);
+    this.otherService
+        .getCharacteristic(this.homebridge.hap.Characteristic.ColorTemperature)
+        .updateValue(this.ColorTemperature);
 
 };
 
@@ -92,12 +96,24 @@ ColorItem.prototype.getOtherServices = function() {
         .on('set', this.setItemSaturationState.bind(this))
         .on('get', this.getItemSaturationState.bind(this))
         .updateValue(this.saturation);
-
+    
+    otherService.getCharacteristic(this.homebridge.hap.Characteristic.ColorTemperature)
+            .on("get", this.getColorTemperature.bind(this))
+            .on("set", this.setColorTemperature.bind(this))
+            .setProps({
+                minValue: this.colorTemperature.minValue,
+                maxValue: this.colorTemperature.maxValue
+            });
+    
     return otherService;
 };
 
 ColorItem.prototype.getItemPowerState = function(callback) {
     callback(undefined, this.power);
+    
+};
+ColorItem.prototype.getColorTemperature = function(callback) {
+    callback(undefined, this.ColorTemperature);
 };
 ColorItem.prototype.getItemBrightnessState = function(callback) {
     callback(undefined, this.brightness);
@@ -136,6 +152,14 @@ ColorItem.prototype.setItemBrightnessState = function(value, callback) {
     this.brightness = parseInt(value);
     this.power = this.brightness > 0;
     this.setColorState(callback);
+};
+
+ColorItem.prototype.setColorTemperature = function(callback) {
+    //compose hsv string
+    const command = `hsv(${this.hue},${this.saturation},${this.brightness})`;
+    this.log(`[color] iOS - send message to ${this.name}: ${command} uuid: ${this.uuid}`);
+    this.platform.ws.sendCommand(this.uuidAction, command);
+    callback();
 };
 
 ColorItem.prototype.setColorState = function(callback) {
