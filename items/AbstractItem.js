@@ -31,6 +31,7 @@ AbstractItem.prototype.getServices = function() {
 	     console.log("abstract if");//
     } else { return [this.informationService, this.otherService];
 	   console.log("abstract else");}
+	console.log("if passssssssssssssssssseeeeeeeedddddd")
     this.initListener();
     
 //	
