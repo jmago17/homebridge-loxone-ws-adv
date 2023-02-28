@@ -136,8 +136,12 @@ ColorItem.prototype.getColorTemperature = function(callback) {
 
 
 ColorItem.prototype.setColorTemperature = function(value, callback) {
-    
-    
+   //compose hsv string
+    const command = `temp(${this.colorTemperature},${this.brightness})`; //  temp({brightness},{temperature})
+    this.log(`[color] iOS - send message to ${this.name}: ${command} uuid: ${this.uuid}`);
+    this.platform.ws.sendCommand(this.uuidAction, command);
+    callback();
+};   
     
 
 ColorItem.prototype.setItemPowerState = function(value, callback) {
@@ -164,7 +168,7 @@ ColorItem.prototype.setItemBrightnessState = function(value, callback) {
 
 ColorItem.prototype.setColorState = function(callback) {
     //compose hsv string
-    const command = `hsv(${this.hue},${this.saturation},${this.brightness})`;
+    const command = `hsv(${this.hue},${this.saturation},${this.brightness})`; //hsv({hue},{saturation},{value})
     this.log(`[color] iOS - send message to ${this.name}: ${command} uuid: ${this.uuid}`);
     this.platform.ws.sendCommand(this.uuidAction, command);
     callback();
