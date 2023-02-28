@@ -27,7 +27,8 @@ AbstractItem.prototype.getServices = function() {
     this.otherService = this.getOtherServices();
     console.log("before                if");
     if (this.otherService.testCharacteristic(Characteristic.ColorTemperature) && this.otherService.testCharacteristic(Characteristic.Brightness))  {
-            this.adaptiveLightingController = new this.homebridge.hap.AdaptiveLightingController(newService);
+             console.log("INSIDE.                                                       if");
+	    this.adaptiveLightingController = new this.homebridge.hap.AdaptiveLightingController(newService);
         }
     console.log("after                if");
     this.initListener();	
