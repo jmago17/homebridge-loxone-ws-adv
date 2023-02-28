@@ -112,7 +112,7 @@ ColorItem.prototype.getOtherServices = function() {
         .updateValue(this.colorTemperature);
 
     otherService.setCharacteristic(this.homebridge.hap.Characteristic.AdaptiveLightingController)
-        .on('set', this.setItemAdaptiveLightingControllerState.bind(this))
+        //.on('set', this.setItemAdaptiveLightingControllerState.bind(this))
         .on('get', this.getItemAdaptiveLightingControllerState.bind(this))
         .updateValue(this.adaptive);
     return otherService;
