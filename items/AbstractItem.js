@@ -48,7 +48,7 @@ AbstractItem.prototype.getInformationServices = function() {
     return informationService;
 };
 
-getControllers: function() {
+AbstractItem.prototype.getControllers: function() {
         if (!this.adaptiveLightingController) {
             return [];
         } else {
