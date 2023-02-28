@@ -191,7 +191,7 @@ ColorItem.prototype.setItemSaturationState = function(value, callback) {
 ColorItem.prototype.setItemBrightnessState = function(value, callback) {
     this.brightness = parseInt(value);
     this.power = this.brightness > 0;
-    const command = `temp(${this.brightness},{this.colorTemperature})`; //  temp({brightness},{temperature})
+    const command = `temp(${this.brightness},${this.colorTemperature})`; //  temp({brightness},{temperature})
     this.log(`[color] iOS - send message to ${this.name}: ${command} uuid: ${this.uuid}`);
     this.platform.ws.sendCommand(this.uuidAction, command);
     callback();
