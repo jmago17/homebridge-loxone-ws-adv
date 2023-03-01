@@ -5,19 +5,26 @@ var Alarm = function (widget, platform, homebridge) {
     this.uuidAction = widget.uuidAction;
     this.stateUuid = widget.states.armed;
     this.stateUuidAlarm = widget.states.level;
+    this.stateMovementDisabled = widget.states.disabledMove;
     this.alarmsystem_method = platform.alarmsystem_method;
     this.alarmsystem_trigger = platform.alarmsystem_trigger;
 
     this.targetState = 0;
     this.alarmlevel = 0;
+    this.homeAlarm = 0;
 
     Alarm.super_.call(this, widget, platform, homebridge);
 };
 
 Alarm.prototype.initListener = function () {
     this.platform.ws.registerListenerForUUID(this.stateUuid, this.callBack.bind(this));
+    this.platform.ws.registerListenerForUUID(this.this.stateMovementDisabled, this.MovementDisabled.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateUuidAlarm, this.alarmTriggered.bind(this));
 };
+
+Alarm.prototype.MovementDisabled = function (value) {
+    this.homeAlarm = value;
+}
 
 Alarm.prototype.alarmTriggered = function (value) {
     if (value >= this.alarmsystem_trigger && this.targetState != Characteristic.SecuritySystemCurrentState.ALARM_TRIGGERED) {
@@ -27,6 +34,9 @@ Alarm.prototype.alarmTriggered = function (value) {
 
 Alarm.prototype.callBack = function (value) {
     if (value == 0) {
+        this.otherService.updateCharacteristic(this.homebridge.hap.Characteristic.SecuritySystemTargetState, 3);
+        this.otherService.updateCharacteristic(this.homebridge.hap.Characteristic.SecuritySystemCurrentState, 3);
+    } else if (value == 1 && this.homeAlarm) {
         this.otherService.updateCharacteristic(this.homebridge.hap.Characteristic.SecuritySystemTargetState, 0);
         this.otherService.updateCharacteristic(this.homebridge.hap.Characteristic.SecuritySystemCurrentState, 0);
     } else {
