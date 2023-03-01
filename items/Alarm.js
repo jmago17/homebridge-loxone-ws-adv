@@ -23,6 +23,7 @@ Alarm.prototype.initListener = function () {
 };
 
 Alarm.prototype.MovementDisabled = function (value) {
+    console.log("movement disable = " + value);
     this.homeAlarm = value;
 }
 
@@ -30,9 +31,11 @@ Alarm.prototype.alarmTriggered = function (value) {
     if (value >= this.alarmsystem_trigger && this.targetState != Characteristic.SecuritySystemCurrentState.ALARM_TRIGGERED) {
         this.otherService.updateCharacteristic(this.homebridge.hap.Characteristic.SecuritySystemCurrentState, 4);
     }
+    console.log("alarm triggered = " + value);
 }
 
 Alarm.prototype.callBack = function (value) {
+    console.log("alarm status = " + value);
     if (value == 0) {
         this.otherService.updateCharacteristic(this.homebridge.hap.Characteristic.SecuritySystemTargetState, 3);
         this.otherService.updateCharacteristic(this.homebridge.hap.Characteristic.SecuritySystemCurrentState, 3);
