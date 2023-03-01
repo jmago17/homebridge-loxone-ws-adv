@@ -36,7 +36,7 @@ Alarm.prototype.callBack = function(value, uuid) {
         } else {
             this.triggeredState = value;
         }
-        this.otherService.getCharacteristic(Characteristic.LockCurrentState).updateValue(this.armedtState);
+        this.otherService.getCharacteristic(Characteristic.SecuritySystemTargetState).updateValue(this.armedtState);
     }
 
     if (this.stateDisableMove == uuid) {
