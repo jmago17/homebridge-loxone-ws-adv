@@ -12,7 +12,7 @@ var Alarm = function(widget, platform, homebridge) {
 
 
 
-    this.AlarmType = 0;
+    
     this.armedState = 0;
     this.triggeredState = 0;
     this.targetState = 0;
@@ -32,24 +32,17 @@ Alarm.prototype.callBack = function(value, uuid) {
     if (this.stateLevel == uuid) {
         console.log("stateLevel " + value + " " + uuid);
         if (this.triggeredState > 0) {
-            this.armedtState = 4;
-            if(this.triggeredState == 0) {
-                this.AlarmType = 0;
-            } else { this.AlarmType = 1;
-            }
-            this.otherService.getCharacteristic(Characteristic.SecuritySystemAlarmType).updateValue(this.AlarmType);      
+            this.armedtState = 4;                       
         } else {
             this.triggeredState = value;
         }
         this.otherService.getCharacteristic(Characteristic.LockCurrentState).updateValue(this.armedtState);
-
     }
 
     if (this.stateDisableMove == uuid) {
         console.log("away mode " + value + " " + uuid);
         this.moveDisabled = value;
     }
-
     if (this.stateUuid == uuid) {
         console.log("state armed " + value + " " + uuid);
 
@@ -88,8 +81,7 @@ Alarm.prototype.getOtherServices = function() {
     var otherService = new this.homebridge.hap.Service.SecuritySystem();
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.SecuritySystemCurrentState)
         .on("get", this.getCurrentState.bind(this));
-    otherService.getCharacteristic(this.homebridge.hap.Characteristic.SecuritySystemAlarmType)
-        .on("get", this.getAlarmType.bind(this));
+    
 
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.SecuritySystemTargetState)
         .on('set', this.setItemTargetState.bind(this))
