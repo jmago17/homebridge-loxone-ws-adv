@@ -62,11 +62,9 @@ Alarm.prototype.callBack = function(value, uuid) {
         if (this.armedtState == 0) {
             this.otherService.setCharacteristic(Characteristic.SecuritySystemTargetState, Characteristic.SecuritySystemTargetState.DISARM);
 
-            }
-
         }
-    }
 
+    }
 };
 
 Alarm.prototype.getOtherServices = function() {
