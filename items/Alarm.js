@@ -133,7 +133,7 @@ Alarm.prototype.onCommand = function() {
     return 'On';
 };
 
-Alarm.prototype.setItemState = function(value, callback) {
+Alarm.prototype.setItemTargetState = function(value, callback) {
     //  this.log("Setting state to %s", value);
     var self = this;
     //var command = (value == '1') ? this.onCommand() : 'Off';
