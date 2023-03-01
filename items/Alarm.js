@@ -8,7 +8,7 @@ var Alarm = function(widget, platform, homebridge) {
     this.uuidAction = widget.uuidAction;
     this.stateUuid = widget.states.armed;
     this.stateLevel = widget.states.level;
-    this.stateDisableMove = widget.states.disableMove;
+    this.stateDisableMove = widget.states.disabledMove;
 
 
 
