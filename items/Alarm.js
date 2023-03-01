@@ -12,9 +12,10 @@ var Alarm = function(widget, platform, homebridge) {
 
 
 
-
+    this.AlarmType = 0;
     this.armedState = 0;
     this.triggeredState = 0;
+    this.targetState = 0;
 
 
     Alarm.super_.call(this, widget, platform, homebridge);
@@ -32,6 +33,11 @@ Alarm.prototype.callBack = function(value, uuid) {
         console.log("stateLevel " + value + " " + uuid);
         if (this.triggeredState > 0) {
             this.armedtState = 4;
+            if(this.triggeredState == 0) {
+                this.AlarmType = 0;
+            } else { this.AlarmType = 1;
+            }
+            this.otherService.getCharacteristic(Characteristic.SecuritySystemAlarmType).updateValue(this.AlarmType);      
         } else {
             this.triggeredState = value;
         }
@@ -82,6 +88,8 @@ Alarm.prototype.getOtherServices = function() {
     var otherService = new this.homebridge.hap.Service.SecuritySystem();
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.SecuritySystemCurrentState)
         .on("get", this.getCurrentState.bind(this));
+    otherService.getCharacteristic(this.homebridge.hap.Characteristic.SecuritySystemAlarmType)
+        .on("get", this.getAlarmType.bind(this));
 
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.SecuritySystemTargetState)
         .on('set', this.setItemTargetState.bind(this))
@@ -99,6 +107,11 @@ Alarm.prototype.getItemTargetState = function(callback) {
    callback(undefined, this.targetState);
 };
 
+Alarm.prototype.getItemAlarmType = function(callback) {
+   callback(undefined, this.AlarmType);
+};
+
+
 Alarm.prototype.onCommand = function() {
     return 'On';
 };
@@ -107,6 +120,7 @@ Alarm.prototype.setItemTargetState = function(value, callback) {
     //  this.log("Setting state to %s", value);
     if (!this.setFromLoxone) {
         var self = this;
+        this.targetState = value;
         //var command = (value == '1') ? this.onCommand() : 'Off';
         if (value == '0') {
             var command = 'on/0';
