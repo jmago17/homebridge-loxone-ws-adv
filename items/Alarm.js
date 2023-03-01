@@ -60,7 +60,7 @@ Alarm.prototype.callBack = function(value, uuid) {
         }
 
         if (this.armedtState == 0) {
-            this.otherService.setCharacteristic(Characteristic.SecuritySystemTargetState, Characteristic.SecuritySystemTargetState.DISARM
+            this.otherService.setCharacteristic(Characteristic.SecuritySystemTargetState, Characteristic.SecuritySystemTargetState.DISARM);
 
             }
 
@@ -76,7 +76,7 @@ Alarm.prototype.getOtherServices = function() {
 
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.SecuritySystemTargetState)
         .on('set', this.setItemTargetState.bind(this))
-        .on('get', this.getItemTargetState.bind(this))
+        .on('get', this.getItemTargetState.bind(this));
 
 
     return otherService;
