@@ -18,7 +18,7 @@ var Alarm = function (widget, platform, homebridge) {
 
 Alarm.prototype.initListener = function () {
     this.platform.ws.registerListenerForUUID(this.stateUuid, this.callBack.bind(this));
-    this.platform.ws.registerListenerForUUID(this.this.stateMovementDisabled, this.MovementDisabled.bind(this));
+    this.platform.ws.registerListenerForUUID(this.stateMovementDisabled, this.MovementDisabled.bind(this));
     this.platform.ws.registerListenerForUUID(this.stateUuidAlarm, this.alarmTriggered.bind(this));
 };
 
