@@ -45,7 +45,7 @@ Alarm.prototype.callBack = function(value, uuid) {
     }
     if (this.stateUuid == uuid) {
         console.log("state armed " + value + " " + uuid);
-
+        this.setFromLoxone = true;
         if (!value) {
             this.armedtState = 3;
         } else if (value && this.moveDisabled && this.triggeredState == 0) {
@@ -61,19 +61,21 @@ Alarm.prototype.callBack = function(value, uuid) {
         if (this.armedtState == 3) {
             this.targetState = 3;
             this.otherService.setCharacteristic(Characteristic.SecuritySystemTargetState, Characteristic.SecuritySystemTargetState.DISARM);
-         this.setFromLoxone = true;
+            
         }
         if (this.armedtState == 0) {
             this.targetState = 0;
             this.otherService.setCharacteristic(Characteristic.SecuritySystemTargetState, Characteristic.SecuritySystemTargetState.STAY_ARM);
-         this.setFromLoxone = true;
+         
         }
         if (this.armedtState == 1) {
             this.targetState = 1;
             this.otherService.setCharacteristic(Characteristic.SecuritySystemTargetState, Characteristic.SecuritySystemTargetState.AWAY_ARM);
-         this.setFromLoxone = true;
+         
         }
-        this.otherService.getCharacteristic(Characteristic.LockCurrentState).updateValue(this.armedState)
+        this.otherService.getCharacteristic(Characteristic.LockCurrentState).updateValue(this.armedState);
+        this.setFromLoxone = true;
+        
 
     }
 };
