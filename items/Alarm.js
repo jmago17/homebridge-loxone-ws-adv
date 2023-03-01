@@ -8,6 +8,7 @@ var Alarm = function (widget, platform, homebridge) {
   this.uuidAction = widget.uuidAction;
   this.stateUuid = widget.states.armed;	
   this.stateLevel = widget.states.level;
+  this.stateDisableMove = widget.states.disableMove;	
   
 	
 	
@@ -22,16 +23,51 @@ var Alarm = function (widget, platform, homebridge) {
 Alarm.prototype.initListener = function () {
   this.platform.ws.registerListenerForUUID(this.stateUuid, this.callBack.bind(this));
   this.platform.ws.registerListenerForUUID(this.stateLevel, this.callBack.bind(this));
+  this.platform.ws.registerListenerForUUID(this.stateDisableMove, this.callBack.bind(this));	
 };
 
 Alarm.prototype.callBack = function (value, uuid) {
-  console.log("Funtion value " + value + " " + uuid);
-   if (this.stateUuid == uuid) {
-	   console.log("state armed " + value + " " + uuid);
-   	this.armedtState = value;     }
-   if (this.stateLevel == uuid) {
+ // console.log("Funtion value " + value + " " + uuid);
+   	if (this.stateLevel == uuid) {
 	   console.log("stateLevel " + value + " " + uuid);
-   	this.triggeredState = value;     }
+   	this.triggeredState = value;
+	   if(this.triggeredState > 0){
+		   this.otherService.getCharacteristic(Characteristic.LockCurrentState).updateValue(4);}
+	   else { this.otherService.getCharacteristic(Characteristic.LockCurrentState).updateValue(this.armedtState);}
+   
+   
+   
+   }
+	
+	if (this.stateDisableMove == uuid) {
+	   console.log("away mode " + value + " " + uuid);
+	   this.moveDisabled = value;
+   	}
+	
+	if (this.stateUuid == uuid) {
+	   console.log("state armed " + value + " " + uuid);
+   	   
+		if (!value){
+			this.armedtState = 3;
+		} else if (value && this.moveDisabled){
+			this.armedState = 1;
+		} else {	this.armedState = 0; }
+		
+		
+   	
+	   if(this.triggeredState == 0){
+   	         this.otherService.getCharacteristic(Characteristic.LockCurrentState).updateValue(this.armedtState);
+	   }
+			
+	if (this.armedtState == 0){
+        this.otherService.setCharacteristic(Characteristic.SecuritySystemTargetState, Characteristic.SecuritySystemTargetState.DISARM
+        
+   }   
+	   
+	   
+   }
+	
+   
 	
 	
 	
