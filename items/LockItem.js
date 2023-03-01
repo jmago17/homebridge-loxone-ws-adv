@@ -1,47 +1,41 @@
-const request = require("request");
-
-const LockItem = function(widget,platform,homebridge) {
+const LockItem = function (widget, platform, homebridge) {
+    Characteristic = homebridge.hap.Characteristic;
 
     this.platform = platform;
     this.uuidAction = widget.uuidAction; //to control a switch, use the uuidAction
+    this.stateUuid = widget.states.active; //a switch always has a state called active, which is the uuid which will receive the event to read
     this.currentState = undefined; //will be 0 or 1 for Switch
     this.autoTimer = undefined;
 
-    this.autoLock = true;
-    this.autoLockDelay = 3;
-    this.setFromLoxone = undefined;
-    LockItem.super_.call(this, widget,platform,homebridge);
+    this.autoLock = platform.autoLock;
+    this.autoLockDelay = platform.autoLockDelay;
+
+    LockItem.super_.call(this, widget, platform, homebridge);
 };
 
 // Register a listener to be notified of changes in this items value
-LockItem.prototype.initListener = function() {
-    //this.platform.ws.registerListenerForUUID(this.stateUuid, this.callBack.bind(this));
-    this.platform.ws.registerListenerForUUID(this.uuidAction, this.callBack.bind(this));
+LockItem.prototype.initListener = function () {
+    this.platform.ws.registerListenerForUUID(this.stateUuid, this.callBack.bind(this));
 };
 
-LockItem.prototype.callBack = function(value) {
-    //function that gets called by the registered ws listener
-    console.log("Funtion value " + value + " " );
-    
-      if (value == 0) {
-        console.log("Got new state for door: off / closed");
-          this.currentState = 1;
-          
-    } else {
-        console.log("opened");
-          this.currentState = 0;   
+LockItem.prototype.callBack = function (value) {
+    //console.log("Got new state for lock: " + value);
+
+    this.currentState = !value;
+
+    this.otherService.getCharacteristic(Characteristic.LockCurrentState).updateValue(this.currentState == '1');
+
+    if (this.autoLock) {
+        if (this.currentState == 0) {
+            this.autoLockFunction()
+        } else {
+            clearTimeout(this.autoTimer);
+            this.log(`[Lock] Cancelled autolock`);
+        }
     }
-
-    //console.log('set currentState to: ' + this.currentState)
-
-   this.otherService.getCharacteristic(Characteristic.LockCurrentState).updateValue(this.currentState);
-   if (value == 0){
-   this.otherService.setCharacteristic(Characteristic.LockTargetState, Characteristic.LockTargetState.SECURED)
-    this.setFromLoxone = true;
-   }
 };
 
-LockItem.prototype.getOtherServices = function() {
+LockItem.prototype.getOtherServices = function () {
     const otherService = new this.homebridge.hap.Service.LockMechanism();
 
     otherService.setCharacteristic(Characteristic.LockCurrentState, Characteristic.LockCurrentState.SECURED);
@@ -49,39 +43,23 @@ LockItem.prototype.getOtherServices = function() {
 
     otherService.getCharacteristic(Characteristic.LockTargetState)
         .on('set', this.setItemState.bind(this))
+
     return otherService;
 };
 
-LockItem.prototype.getItemState = function(callback) {
-    //returns true if currentState is 1
-    callback(undefined, this.currentState);
+LockItem.prototype.autoLockFunction = function () {
+    this.log(`[Lock] Waiting ${this.autoLockDelay} seconds for autolock`);
+
+    this.autoTimer = setTimeout(() => {
+        this.otherService.setCharacteristic(Characteristic.LockTargetState, Characteristic.LockTargetState.SECURED)
+    }, this.autoLockDelay * 1000)
 };
 
-LockItem.prototype.setItemState = function(value, callback) {
-
-    //sending new state to loxone
-    //added some logic to prevent a loop when the change because of external event captured by callback
-
-
-    if(!this.setFromLoxone ){
-    let command = 0;
-    if (value == true) {
-        //this.log('perm on ***');
-        command = 'Off';//-1; // perm on
-    } else {
-        //this.log('off ***');
-        command = 'Pulse';//0; // off
-        
-    }
-
-    //this.log('setItemState value: ' + value);
-    //this.log('setItemState command: ' + command);
-
-    this.log(`[timedswitch] iOS - send message to ${this.name}: ${command}`);
+LockItem.prototype.setItemState = function (value, callback) {
+    const command = (value != '1') ? 'On' : 'Off';
+    this.log(`[Lock] - send message to ${this.name}: ${command}`);
     this.platform.ws.sendCommand(this.uuidAction, command);
     callback();
-    this.setFromLoxone = false;
-    } else { this.setFromLoxone = false;}
 };
 
 module.exports = LockItem;
