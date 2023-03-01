@@ -16,7 +16,7 @@ var Alarm = function(widget, platform, homebridge) {
     this.armedState = 0;
     this.triggeredState = 0;
     this.targetState = 0;
-
+    this.setFromLoxone = false;
 
     Alarm.super_.call(this, widget, platform, homebridge);
 };
