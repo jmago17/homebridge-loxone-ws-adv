@@ -5,21 +5,21 @@ const ValveItem = function(widget, platform, homebridge) {
     this.uuidAction = widget.uuidAction; //to control a switch, use the uuidAction
     if (this.uuidAction == '1a9bc5a7-008b-05ef-ffff8795bbcbc15c') {
         this.stateUuid = widget.states.value;
-        this.stateOverride = widget.states.override;
+        this.override = false;
     } else {
         this.stateUuid = widget.states.active; //a switch always has a state called active, which is the uuid which will receive the event to read
-        this.stateOverride = undefined;
+        
     }
     this.currentState = undefined; //will be 0 or 1 for Switch
     this.autoTimer = undefined;
-    this.override = 0;
+    
     ValveItem.super_.call(this, widget, platform, homebridge);
 };
 
 // Register a listener to be notified of changes in this items value
 ValveItem.prototype.initListener = function() {
     this.platform.ws.registerListenerForUUID(this.stateUuid, this.callBack.bind(this));
-    this.platform.ws.registerListenerForUUID(this.stateOverride, this.callBack.bind(this));
+    
     
 };
 
@@ -31,9 +31,7 @@ ValveItem.prototype.callBack = function(value, uuid) {
         this.otherService.getCharacteristic(Characteristic.Active).updateValue(this.currentState == '1');
         this.otherService.getCharacteristic(Characteristic.InUse).updateValue(this.currentState == '1');
     }
-    if (this.stateOverride == uuid) {
-        this.override = value;
-    }
+    
 };
 
 ValveItem.prototype.getOtherServices = function() {
@@ -59,16 +57,18 @@ ValveItem.prototype.setItemState = function(value, callback) {
     if (this.uuidAction == '1a9bc5a7-008b-05ef-ffff8795bbcbc15c') {
         if (value == 1) {
             command = 'startOverride/1/7200';
-        } else if (this.override == 0) {
-            var now = new Date();
-            var tomorrow = new Date();
-            tomorrow.setDate(now.getDate() + 1)
-            tomorrow.setHours(0, 0);
-            let timer = Math.round((Math.abs(tomorrow - now)) / 1000);
-            command = 'startOverride/0/' + timer;
+            this.override = true;
+        } else if(this.override) {
+            command = "stopOverride"; 
+            this.override = false;
         } else {
-            command = "stopOverride";     
-        }
+            var datenow = new Date();
+            var datetomorrow = new Date();
+            datetomorrow.setDate(datenow.getDate() + 1)
+            datetomorrow.setHours(0, 0);
+            //console.log("date now in seconds" + datenow.getTime())
+            let timer2 = Math.round((Math.abs(datetomorrow - datenow)) / 1000);
+             command = 'startOverride/0/7200';
     } else {
         command = (value == 1) ? 'On' : 'Off';
     }
