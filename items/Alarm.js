@@ -30,14 +30,14 @@ Alarm.prototype.initListener = function() {
 Alarm.prototype.callBack = function(value, uuid) {
     // console.log("Funtion value " + value + " " + uuid);
     if (this.stateLevel == uuid) {
-        console.log("stateLevel " + value + " " + uuid);
-        if (this.triggeredState > 0) {
-            this.armedtState = 4;                       
+        console.log("stateLevel " + value + " " + uuid);           
+        if (value > 0){
+             this.triggeredState = true;
         } else {
-            this.triggeredState = value;
+            this.triggeredState = false;
         }
-        this.otherService.getCharacteristic(Characteristic.SecuritySystemTargetState).updateValue(this.armedtState);
-    }
+        
+    
 
     if (this.stateDisableMove == uuid) {
         console.log("away mode " + value + " " + uuid);
@@ -48,11 +48,11 @@ Alarm.prototype.callBack = function(value, uuid) {
        
         if (!value) {
             this.armedtState = 3;
-        } else if (value && this.moveDisabled && this.triggeredState == 0) {
+        } else if (value && this.moveDisabled && !this.triggeredState) {
             this.armedState = 0;
         } else if (value && !this.moveDisabled && this.triggeredState == 0) {
             this.armedState = 1;
-        } else if (this.triggeredState > 0) {
+        } else if (this.triggeredState) {
             this.armedState = 4;
         }
 
