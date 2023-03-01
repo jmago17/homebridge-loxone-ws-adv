@@ -129,10 +129,10 @@ Alarm.prototype.setItemTargetState = function(value, callback) {
     } else if (value == '2') {
         var command = 'on/0';
     }
-    // this.log("[Alarm] iOS - send message to " + this.name + ": " + command);
+    this.log("[Alarm] iOS - send message to " + this.name + ": " + command);
     this.platform.ws.sendCommand(this.uuidAction, command);
     if (command == 'Off') {
-        //this.log("[Alarm] iOS - send message to " + this.name + ": " + "quit");
+        this.log("[Alarm] iOS - send message to " + this.name + ": " + "quit");
         this.platform.ws.sendCommand(this.uuidAction, 'quit');
     }
 
