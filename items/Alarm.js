@@ -16,7 +16,7 @@ var Alarm = function(widget, platform, homebridge) {
     this.armedState = 0;
     this.triggeredState = 0;
     this.targetState = 0;
-    this.setFromLoxone = false;
+    
 
     Alarm.super_.call(this, widget, platform, homebridge);
 };
@@ -45,7 +45,7 @@ Alarm.prototype.callBack = function(value, uuid) {
     }
     if (this.stateUuid == uuid) {
         console.log("state armed " + value + " " + uuid);
-        this.setFromLoxone = true;
+       
         if (!value) {
             this.armedtState = 3;
         } else if (value && this.moveDisabled && this.triggeredState == 0) {
@@ -74,7 +74,7 @@ Alarm.prototype.callBack = function(value, uuid) {
          
         }
         this.otherService.getCharacteristic(Characteristic.SecuritySystemCurrentState).updateValue(this.armedState);
-        this.setFromLoxone = false;
+        
         
 
     }
@@ -115,7 +115,7 @@ Alarm.prototype.onCommand = function() {
 
 Alarm.prototype.setItemTargetState = function(value, callback) {
     //  this.log("Setting state to %s", value);
-    if (!this.setFromLoxone) {
+   
         var self = this;
         this.targetState = value;
         //var command = (value == '1') ? this.onCommand() : 'Off';
@@ -134,9 +134,7 @@ Alarm.prototype.setItemTargetState = function(value, callback) {
             //this.log("[Alarm] iOS - send message to " + this.name + ": " + "quit");
             this.platform.ws.sendCommand(this.uuidAction, 'quit');
         }
-    } else {
-        this.setFromLoxone = false;
-    }
+    
 
     callback();
 };
