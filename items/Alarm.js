@@ -73,7 +73,7 @@ Alarm.prototype.callBack = function(value, uuid) {
             this.otherService.setCharacteristic(Characteristic.SecuritySystemTargetState, Characteristic.SecuritySystemTargetState.AWAY_ARM);
          
         }
-        this.otherService.getCharacteristic(Characteristic.LockCurrentState).updateValue(this.armedState);
+        this.otherService.getCharacteristic(Characteristic.SecuritySystemCurrentState).updateValue(this.armedState);
         this.setFromLoxone = true;
         
 
