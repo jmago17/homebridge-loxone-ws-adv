@@ -30,12 +30,12 @@ Alarm.prototype.callBack = function(value, uuid) {
     // console.log("Funtion value " + value + " " + uuid);
     if (this.stateLevel == uuid) {
         console.log("stateLevel " + value + " " + uuid);
-        this.triggeredState = value;
         if (this.triggeredState > 0) {
-            this.otherService.getCharacteristic(Characteristic.LockCurrentState).updateValue(4);
+            this.armedtState = 4;
         } else {
-            this.otherService.getCharacteristic(Characteristic.LockCurrentState).updateValue(this.armedtState);
+            this.triggeredState = value;
         }
+        this.otherService.getCharacteristic(Characteristic.LockCurrentState).updateValue(this.armedtState);
 
     }
 
@@ -57,17 +57,20 @@ Alarm.prototype.callBack = function(value, uuid) {
             this.armedState = 4;
         }
 
-        this.otherService.getCharacteristic(Characteristic.LockCurrentState).updateValue(this.armedtState)
+        this.otherService.getCharacteristic(Characteristic.LockCurrentState).updateValue(this.armedState)
 
         if (this.armedtState == 3) {
+            this.targetState = 3;
             this.otherService.setCharacteristic(Characteristic.SecuritySystemTargetState, Characteristic.SecuritySystemTargetState.DISARM);
          this.setFromLoxone = true;
         }
         if (this.armedtState == 0) {
+            this.targetState = 0;
             this.otherService.setCharacteristic(Characteristic.SecuritySystemTargetState, Characteristic.SecuritySystemTargetState.STAY_ARM);
          this.setFromLoxone = true;
         }
         if (this.armedtState == 1) {
+            this.targetState = 1;
             this.otherService.setCharacteristic(Characteristic.SecuritySystemTargetState, Characteristic.SecuritySystemTargetState.AWAY_ARM);
          this.setFromLoxone = true;
         }
@@ -89,52 +92,11 @@ Alarm.prototype.getOtherServices = function() {
 };
 
 Alarm.prototype.getCurrentState = function(callback) {
-    /* // this.log("Getting current state");
-    var status = this.currentState;
-    // this.log("callbackc current status : " + status);
-    if(status== '0'){
-    	var state = 3;
-    }
-    if(status == '1'){
-    	var state = 1;
-    }
-    if(status == '2'){
-    	var state = 0;
-    }
-    if(status == '4'){
-    	var state = 4;
-    }
-    // this.log("callbackc current: " + state);	
-    callback(undefined, state); //de aqui hasta la } es nuevo */
-    callback(undefined, this.currentState);
+   callback(undefined, this.armedState);
 };
 
-//  static readonly STAY_ARM = 0;
-// static readonly AWAY_ARM = 1;
-// static readonly NIGHT_ARM = 2;
-// static readonly DISARMED = 3;
-// static readonly ALARM_TRIGGERED = 4;
-
 Alarm.prototype.getItemTargetState = function(callback) {
-    //callback(undefined, this.currentState == '1'); //de aqui hasta la } es nuevo
-    // this.log("Getting item level");
-    /*	var status = this.currentState;
-    	// this.log("callbackc current status : " + status);
-    	if(status== '0'){
-    		var state = 3;
-    	}
-    	if(status == '1'){
-    		var state = 1;
-    	}
-    	if(status == '2'){
-    		var state = 0;
-    	}
-    	if(status == '4'){
-    		var state = 4;
-    	}
-    	// this.log("callbackc item: " + state);	
-    	callback(undefined, state); //de aqui hasta la } es nuevo*/
-    callback(undefined, this.targetState);
+   callback(undefined, this.targetState);
 };
 
 Alarm.prototype.onCommand = function() {
