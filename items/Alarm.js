@@ -48,12 +48,16 @@ Alarm.prototype.callBack = function(value, uuid) {
         console.log("state armed " + value + " " + uuid);
 
         if (!value) {
+            console.log("state armed this.armedtState = 3");
             this.armedtState = 3;
         } else if (value && this.moveDisabled && !this.triggeredState) {
+            console.log("state armed this.armedtState = 0");
             this.armedState = 0;
         } else if (value && !this.moveDisabled && this.triggeredState == 0) {
+            console.log("state armed this.armedtState = 1");
             this.armedState = 1;
         } else if (this.triggeredState) {
+            console.log("state armed this.armedtState = 4");
             this.armedState = 4;
         }
 
