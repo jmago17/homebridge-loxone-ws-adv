@@ -8,12 +8,12 @@ var Alarm = function (widget, platform, homebridge) {
   this.uuidAction = widget.uuidAction;
   this.stateUuid = widget.states.armed;	
   this.stateLevel = widget.states.level;
-  this.statestartTime = widget.states.startTime;
+  
 	
 	
 	
-  this.currentState = undefined;
-  this.targetState = undefined;
+  this.armedState = 0;
+  this.triggeredState = 0;
  
 	
   Alarm.super_.call(this, widget, platform, homebridge);
@@ -22,20 +22,17 @@ var Alarm = function (widget, platform, homebridge) {
 Alarm.prototype.initListener = function () {
   this.platform.ws.registerListenerForUUID(this.stateUuid, this.callBack.bind(this));
   this.platform.ws.registerListenerForUUID(this.stateLevel, this.callBack.bind(this));
-  this.platform.ws.registerListenerForUUID(this.statestartTime, this.callBack.bind(this));
 };
 
 Alarm.prototype.callBack = function (value, uuid) {
   console.log("Funtion value " + value + " " + uuid);
    if (this.stateUuid == uuid) {
 	   console.log("state armed " + value + " " + uuid);
-   	this.currentState = value;     }
+   	this.armedtState = value;     }
    if (this.stateLevel == uuid) {
 	   console.log("stateLevel " + value + " " + uuid);
-   	this.alarmLevel = value;     }
-	if (this.statestartTime == uuid) {
-	   console.log("this.statestartTime " + value + " " + uuid);
-   	this.alarmLevel = value;     }
+   	this.triggeredState = value;     }
+	
 	
 	
 	
