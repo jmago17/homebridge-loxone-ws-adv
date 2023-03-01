@@ -49,18 +49,26 @@ Alarm.prototype.callBack = function(value, uuid) {
 
         if (!value) {
             this.armedtState = 3;
-        } else if (value && this.moveDisabled) {
-            this.armedState = 1;
-        } else {
+        } else if (value && this.moveDisabled && this.triggeredState == 0) {
             this.armedState = 0;
+        } else if (value && !this.moveDisabled && this.triggeredState == 0) {
+            this.armedState = 1;
+        } else if (this.triggeredState > 0) {
+            this.armedState = 4;
         }
 
-        if (this.triggeredState == 0) {
-            this.otherService.getCharacteristic(Characteristic.LockCurrentState).updateValue(this.armedtState);
-        }
+        this.otherService.getCharacteristic(Characteristic.LockCurrentState).updateValue(this.armedtState)
 
-        if (this.armedtState == 0) {
+        if (this.armedtState == 3) {
             this.otherService.setCharacteristic(Characteristic.SecuritySystemTargetState, Characteristic.SecuritySystemTargetState.DISARM);
+
+        }
+        if (this.armedtState == 0) {
+            this.otherService.setCharacteristic(Characteristic.SecuritySystemTargetState, Characteristic.SecuritySystemTargetState.STAY_ARM);
+
+        }
+        if (this.armedtState == 1) {
+            this.otherService.setCharacteristic(Characteristic.SecuritySystemTargetState, Characteristic.SecuritySystemTargetState.AWAY_ARM);
 
         }
 
