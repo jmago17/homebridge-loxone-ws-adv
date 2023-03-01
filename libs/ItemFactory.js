@@ -162,7 +162,9 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
             }
         }
 
-
+        if(item.name.indexOf("Puerta ") !== -1)  {
+            item.type = "Lock"; 
+        }
 
         if (item.name.indexOf('Valve') !== -1) {
             item.type = "Valve";
