@@ -80,15 +80,15 @@ Alarm.prototype.getOtherServices = function () {
 		.on("get", this.getCurrentState.bind(this));
 	
 	otherService.getCharacteristic(this.homebridge.hap.Characteristic.SecuritySystemTargetState)
-		.on('set', this.setItemState.bind(this))
-		.on('get', this.getItemState.bind(this))
+		.on('set', this.setItemTargetState.bind(this))
+		.on('get', this.getItemTargetState.bind(this))
 		
 
   return otherService;
 };
 
 Alarm.prototype.getCurrentState = function(callback) {
-	// this.log("Getting current state");
+	/* // this.log("Getting current state");
 	var status = this.currentState;
 	// this.log("callbackc current status : " + status);
 	if(status== '0'){
@@ -104,7 +104,8 @@ Alarm.prototype.getCurrentState = function(callback) {
 		var state = 4;
 	}
 	// this.log("callbackc current: " + state);	
-	callback(undefined, state); //de aqui hasta la } es nuevo
+	callback(undefined, state); //de aqui hasta la } es nuevo */
+	callback(undefined, this.currentState);
 };
 
 //  static readonly STAY_ARM = 0;
@@ -113,10 +114,10 @@ Alarm.prototype.getCurrentState = function(callback) {
  // static readonly DISARMED = 3;
  // static readonly ALARM_TRIGGERED = 4;
 
-Alarm.prototype.getItemState = function (callback) {
+Alarm.prototype.getItemTargetState = function (callback) {
   //callback(undefined, this.currentState == '1'); //de aqui hasta la } es nuevo
   // this.log("Getting item level");
-	var status = this.currentState;
+/*	var status = this.currentState;
 	// this.log("callbackc current status : " + status);
 	if(status== '0'){
 		var state = 3;
@@ -131,7 +132,8 @@ Alarm.prototype.getItemState = function (callback) {
 		var state = 4;
 	}
 	// this.log("callbackc item: " + state);	
-	callback(undefined, state); //de aqui hasta la } es nuevo
+	callback(undefined, state); //de aqui hasta la } es nuevo*/
+	callback(undefined, this.targetState);
 };
 
 Alarm.prototype.onCommand = function () {
