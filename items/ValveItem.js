@@ -8,19 +8,19 @@ const ValveItem = function(widget, platform, homebridge) {
         this.override = false;
     } else {
         this.stateUuid = widget.states.active; //a switch always has a state called active, which is the uuid which will receive the event to read
-        
+
     }
     this.currentState = undefined; //will be 0 or 1 for Switch
     this.autoTimer = undefined;
-    
+
     ValveItem.super_.call(this, widget, platform, homebridge);
 };
 
 // Register a listener to be notified of changes in this items value
 ValveItem.prototype.initListener = function() {
     this.platform.ws.registerListenerForUUID(this.stateUuid, this.callBack.bind(this));
-    
-    
+
+
 };
 
 ValveItem.prototype.callBack = function(value, uuid) {
@@ -31,7 +31,7 @@ ValveItem.prototype.callBack = function(value, uuid) {
         this.otherService.getCharacteristic(Characteristic.Active).updateValue(this.currentState == '1');
         this.otherService.getCharacteristic(Characteristic.InUse).updateValue(this.currentState == '1');
     }
-    
+
 };
 
 ValveItem.prototype.getOtherServices = function() {
@@ -58,8 +58,8 @@ ValveItem.prototype.setItemState = function(value, callback) {
         if (value == 1) {
             command = 'startOverride/1/7200';
             this.override = true;
-        } else if(this.override) {
-            command = "stopOverride"; 
+        } else if (this.override) {
+            command = "stopOverride";
             this.override = false;
         } else {
             var datenow = new Date();
@@ -67,8 +67,9 @@ ValveItem.prototype.setItemState = function(value, callback) {
             datetomorrow.setDate(datenow.getDate() + 1)
             datetomorrow.setHours(0, 0);
             //console.log("date now in seconds" + datenow.getTime())
-            let timer2 = Math.round((Math.abs(datetomorrow - datenow)) / 1000);
-             command = 'startOverride/0/7200';
+            let timer = Math.round((Math.abs(datetomorrow - datenow)) / 1000);
+            command = 'startOverride/0/' + timer;
+        }
     } else {
         command = (value == 1) ? 'On' : 'Off';
     }
