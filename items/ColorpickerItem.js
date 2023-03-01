@@ -375,7 +375,7 @@ ColorItem.prototype.setItemBrightnessState = function(value, callback) {
 
 ColorItem.prototype.setColorState = function(callback) {
     this.lastUpdate = Date.now();
-
+    if(this.brightness > 0){
     //compose hsv or temp string
     let command = '';
     if (this.lastsetmode == 'color') {
@@ -390,7 +390,7 @@ ColorItem.prototype.setColorState = function(callback) {
     this.platform.ws.sendCommand(this.uuidAction, command);
 
     this.power = this.brightness > 0;
-    
+    }else {}
     callback();
 };
 
