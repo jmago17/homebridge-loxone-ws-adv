@@ -61,15 +61,15 @@ Alarm.prototype.callBack = function(value, uuid) {
 
         if (this.armedtState == 3) {
             this.otherService.setCharacteristic(Characteristic.SecuritySystemTargetState, Characteristic.SecuritySystemTargetState.DISARM);
-
+         this.setFromLoxone = true;
         }
         if (this.armedtState == 0) {
             this.otherService.setCharacteristic(Characteristic.SecuritySystemTargetState, Characteristic.SecuritySystemTargetState.STAY_ARM);
-
+         this.setFromLoxone = true;
         }
         if (this.armedtState == 1) {
             this.otherService.setCharacteristic(Characteristic.SecuritySystemTargetState, Characteristic.SecuritySystemTargetState.AWAY_ARM);
-
+         this.setFromLoxone = true;
         }
 
     }
@@ -143,22 +143,26 @@ Alarm.prototype.onCommand = function() {
 
 Alarm.prototype.setItemTargetState = function(value, callback) {
     //  this.log("Setting state to %s", value);
-    var self = this;
-    //var command = (value == '1') ? this.onCommand() : 'Off';
-    if (value == '0') {
-        var command = 'on/0';
-    } else if (value == '1') {
-        var command = 'on/1';
-    } else if (value == '3') {
-        var command = 'Off';
-    } else if (value == '2') {
-        var command = 'on/0';
-    }
-    // this.log("[Alarm] iOS - send message to " + this.name + ": " + command);
-    this.platform.ws.sendCommand(this.uuidAction, command);
-    if (command == 'Off') {
-        //this.log("[Alarm] iOS - send message to " + this.name + ": " + "quit");
-        this.platform.ws.sendCommand(this.uuidAction, 'quit');
+    if (!this.setFromLoxone) {
+        var self = this;
+        //var command = (value == '1') ? this.onCommand() : 'Off';
+        if (value == '0') {
+            var command = 'on/0';
+        } else if (value == '1') {
+            var command = 'on/1';
+        } else if (value == '3') {
+            var command = 'Off';
+        } else if (value == '2') {
+            var command = 'on/0';
+        }
+        // this.log("[Alarm] iOS - send message to " + this.name + ": " + command);
+        this.platform.ws.sendCommand(this.uuidAction, command);
+        if (command == 'Off') {
+            //this.log("[Alarm] iOS - send message to " + this.name + ": " + "quit");
+            this.platform.ws.sendCommand(this.uuidAction, 'quit');
+        }
+    } else {
+        this.setFromLoxone = false;
     }
 
     callback();
