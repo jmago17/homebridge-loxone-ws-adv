@@ -27,7 +27,7 @@ Alarm.prototype.alarmTriggered = function(value) {
         this.otherService.updateCharacteristic(this.homebridge.hap.Characteristic.SecuritySystemCurrentState, 4);
     }
 }
-Alarm.prototype.alarmTriggered = function(value) {
+Alarm.prototype.sensorsDisabled = function(value) {
     this.sensorDisabled = value;
 }
 
