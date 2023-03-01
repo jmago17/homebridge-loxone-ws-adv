@@ -1,4 +1,4 @@
-ar Alarm = function (widget, platform, homebridge) {
+var Alarm = function (widget, platform, homebridge) {
     Characteristic = homebridge.hap.Characteristic;
 
     this.platform = platform;
