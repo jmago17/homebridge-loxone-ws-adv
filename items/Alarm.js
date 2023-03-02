@@ -7,7 +7,7 @@ var Alarm = function(widget, platform, homebridge) {
     this.stateUuidAlarm = widget.states.level;
     this.stateMovementSensorsDisabled = widget.states.disabledMove;
     this.alarmsystem_method = platform.alarmsystem_method;
-    this.alarmsystem_trigger = 3;
+    this.alarmsystem_trigger = 2;
 
     this.targetState = 0;
     this.alarmlevel = 0;
