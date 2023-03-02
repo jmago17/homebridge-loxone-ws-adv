@@ -7,7 +7,7 @@ var Alarm = function(widget, platform, homebridge) {
     this.stateUuidAlarm = widget.states.level;
     this.stateMovementSensorsDisabled = widget.states.disabledMove;
     this.alarmsystem_method = platform.alarmsystem_method;
-    this.alarmsystem_trigger = platform.alarmsystem_trigger;
+   // this.alarmsystem_trigger = platform.alarmsystem_trigger;
 
     this.targetState = 0;
     this.alarmlevel = 0;
@@ -24,7 +24,7 @@ Alarm.prototype.initListener = function() {
 
 Alarm.prototype.alarmTriggered = function(value) {
     console.log("new state for alarm triggered: " + value + " " + Characteristic.SecuritySystemCurrentState.ALARM_TRIGGERED + "alarmsystemtrigger value:" + this.alarmsystem_trigger );
-    if (value >= this.alarmsystem_trigger && this.targetState != Characteristic.SecuritySystemCurrentState.ALARM_TRIGGERED) {
+    if (this.targetState != Characteristic.SecuritySystemCurrentState.ALARM_TRIGGERED) {
         this.otherService.updateCharacteristic(this.homebridge.hap.Characteristic.SecuritySystemCurrentState, 4);
     }
 }
