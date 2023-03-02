@@ -23,7 +23,7 @@ Alarm.prototype.initListener = function() {
 };
 
 Alarm.prototype.alarmTriggered = function(value) {
-    console.log("new state for alarm triggered: " + value + " " + Characteristic.SecuritySystemCurrentState.ALARM_TRIGGERED);
+    console.log("new state for alarm triggered: " + value + " " + Characteristic.SecuritySystemCurrentState.ALARM_TRIGGERED + "alarmsystemtrigger value:" + this.alarmsystem_trigger );
     if (value >= this.alarmsystem_trigger && this.targetState != Characteristic.SecuritySystemCurrentState.ALARM_TRIGGERED) {
         this.otherService.updateCharacteristic(this.homebridge.hap.Characteristic.SecuritySystemCurrentState, 4);
     }
