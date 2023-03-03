@@ -1,4 +1,4 @@
-const ColorItem = function(widget,platform,homebridge) {
+const WhiteTepmpItem = function(widget,platform,homebridge) {
 
     this.platform = platform;
     this.uuidAction = widget.uuidAction; //to control a colorpicker, use the uuidAction
@@ -11,11 +11,11 @@ const ColorItem = function(widget,platform,homebridge) {
     this.colortemperature = 153;
     this.lastsetmode = 'color';
     this.lastUpdate = 0;
-    ColorItem.super_.call(this, widget,platform,homebridge);
+    WhiteTepmpItem.super_.call(this, widget,platform,homebridge);
 };
 
 // Register a listener to be notified of changes in this items value
-ColorItem.prototype.initListener = function() {
+WhiteTepmpItem.prototype.initListener = function() {
     this.platform.ws.registerListenerForUUID(this.stateUuid, this.callBack.bind(this));
 };
 
@@ -193,7 +193,7 @@ function clamp( x, min, max ) {
     return x;
 }
 
-ColorItem.prototype.callBack = function(value) { // Update info from Loxone to Homebridge
+WhiteTepmpItem.prototype.callBack = function(value) { // Update info from Loxone to Homebridge
     if ((Date.now() - this.lastUpdate) > 500) { // Ignore callback when received change from homekit
 
     //incoming value is a HSV string that needs to be parsed
@@ -278,7 +278,7 @@ ColorItem.prototype.callBack = function(value) { // Update info from Loxone to H
         .updateValue(this.brightness);
 };
 
-ColorItem.prototype.getOtherServices = function() {
+WhiteTepmpItem.prototype.getOtherServices = function() {
 
     const otherService = new this.homebridge.hap.Service.Lightbulb();
 
@@ -305,18 +305,18 @@ ColorItem.prototype.getOtherServices = function() {
     return otherService;
 };
 
-ColorItem.prototype.getItemColorTemperatureState = function(callback) {
+WhiteTepmpItem.prototype.getItemColorTemperatureState = function(callback) {
     callback(undefined, this.colortemperature);
 };
-ColorItem.prototype.getItemPowerState = function(callback) {
+WhiteTepmpItem.prototype.getItemPowerState = function(callback) {
     callback(undefined, this.power);
 };
-ColorItem.prototype.getItemBrightnessState = function(callback) {
+WhiteTepmpItem.prototype.getItemBrightnessState = function(callback) {
     callback(undefined, this.brightness);
 };
 
 
-ColorItem.prototype.setItemColorTemperatureState = function(value, callback) {
+WhiteTepmpItem.prototype.setItemColorTemperatureState = function(value, callback) {
     //this.log(`setItemColorTemperatureState: ${value}`);
     this.lastsetmode = 'colortemperature';
     this.colortemperature = value;
@@ -324,7 +324,7 @@ ColorItem.prototype.setItemColorTemperatureState = function(value, callback) {
     this.setColorState(callback);
 };
 
-ColorItem.prototype.setItemPowerState = function(value, callback) {
+WhiteTepmpItem.prototype.setItemPowerState = function(value, callback) {
     this.lastUpdate = Date.now();
     //sending new power state to loxone
     if (!value) {
@@ -336,13 +336,13 @@ ColorItem.prototype.setItemPowerState = function(value, callback) {
 
 };
 
-ColorItem.prototype.setItemBrightnessState = function(value, callback) {
+WhiteTepmpItem.prototype.setItemBrightnessState = function(value, callback) {
     this.brightness = parseInt(value);
     this.power = this.brightness > 0;
     this.setColorState(callback);
 };
 
-ColorItem.prototype.setColorState = function(callback) {
+WhiteTepmpItem.prototype.setColorState = function(callback) {
     this.lastUpdate = Date.now();
     if(this.brightness > 0){
     //compose hsv or temp string
@@ -356,4 +356,4 @@ ColorItem.prototype.setColorState = function(callback) {
     callback();
 };
 
-module.exports = ColorItem;
+module.exports = WhiteTepmpItem;
