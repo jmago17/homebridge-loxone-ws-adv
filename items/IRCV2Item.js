@@ -23,7 +23,7 @@ var IRCV2Item = function(widget, platform, homebridge) {
     if (this.uuidAction == '1a9cca14-02d3-8b06-ffffe2a2b6f47eff') {
         this.stateMode = '10779045-01b8-1065-ffff8795bbcbc15c';
     } //juegos
-    //this.stateModeCocina = '10779045-01b8-1068-ffff8795bbcbc15c';
+    
     this.stateTarget = widget.states.tempTarget;
     this.stateHeatingTemp = widget.states.comfortTemperature;
     this.stateCoolingTemp = widget.states.comfortTemperatureCool;
