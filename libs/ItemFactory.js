@@ -18,6 +18,7 @@ moduleexports.Colorpicker = require('../items/ColorpickerItem.js');
 moduleexports.Gate = require('../items/GateItem.js');
 moduleexports.DoorBell = require('../items/DoorBellItem.js');
 moduleexports.MotionSensor = require('../items/MotionSensorItem.js');
+moduleexports.WhiteTempPicker = require('../items/WhiteTempColorPickerItem.js');
 moduleexports.ContactSensor = require('../items/ContactSensorItem.js');
 moduleexports.LightSensor = require('../items/LightSensorItem.js');
 moduleexports.TemperatureItem = require('../items/TemperatureItem.js');
@@ -162,8 +163,8 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
             }
         }
 
-        if(item.name.indexOf("Puerta ") !== -1)  {
-            item.type = "Lock"; 
+        if (item.name.indexOf("Puerta ") !== -1) {
+            item.type = "Lock";
         }
 
         if (item.name.indexOf('Valve') !== -1) {
@@ -183,11 +184,14 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
             item.type = "Lightbulb";
 
         } else if (item.type === "ColorPickerV2") {
-            
 
-             // Handle the new ColorPickerV2 which replaces the colorPicker in the new LightControllerV2
-                item.type = "Colorpicker";
-            
+            if (item.name.indexOf("White Temp ") {
+                    item.type = "WhiteTempPicker";
+                } else {
+                    // Handle the new ColorPickerV2 which replaces the colorPicker in the new LightControllerV2
+                    item.type = "Colorpicker";
+                }
+            }
         }
     }
 
@@ -216,18 +220,11 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
         } else if (item.defaultIcon == '00000000-0000-0004-2000000000000000') {
             item.type = "Outlet";
         }
-
-
-
     }
-
 
     if (item.type == "OccupancySensor") {
         item.type = "PresenceDetector";
     }
-
-
-
 
     if (item.type == "InfoOnlyAnalog") {
 
