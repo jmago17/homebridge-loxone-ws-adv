@@ -10,7 +10,7 @@ var IRCV2Item = function(widget, platform, homebridge) {
     this.stateOverride = widget.states.overrideEntries;
 
     if (this.platform.IRCV2.length == 0) {
-        this.stateMode. = this.uuidAction;
+        this.stateMode = this.uuidAction;
         console.log(" primer if, ircv2 lentght == 0");
     } else {
         for (const item in this.platform.IRCV2) {
