@@ -9,7 +9,7 @@ const WhiteTepmpItem = function(widget,platform,homebridge) {
     this.brightness = 0;
     this.power = false;
     this.colortemperature = 153;
-    this.lastsetmode = 'color';
+    this.lastsetmode = 'colortemperature';
     this.lastUpdate = 0;
     WhiteTepmpItem.super_.call(this, widget,platform,homebridge);
 };
