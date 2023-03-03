@@ -115,14 +115,14 @@ function LoxPlatform(log, config) {
     if (options['autoLockDelay']) {
         this.autoLockDelay = options['autoLockDelay'];
     }
-
 	
-    //* IRCV2 Output values*//
-	if (!config['IRCV2']) {
-        config['IRCV2'] = "";
+    //* IRCV2 *//
+    this.IRCV2 = [];
+    if (options['IRCV2']) {
+        this.IRCV2 = options["IRCV2"];
     }
-    const options = config['IRCV2'];
-	
+
+
     //Also make a WS connection
     this.ws = new WSListener(platform);
 }
@@ -147,6 +147,7 @@ LoxPlatform.prototype.accessories = function(callback) {
         })
     },8000);
 };
+
 
 
 
