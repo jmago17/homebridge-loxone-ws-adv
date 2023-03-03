@@ -8,6 +8,20 @@ var IRCV2Item = function(widget, platform, homebridge) {
     this.uuidAction = widget.uuidAction;
     this.stateActual = widget.states.tempActual;
     this.stateOverride = widget.states.overrideEntries;
+
+    if (this.platform.IRCV2.length == 0) {
+        this.stateMode. = this.uuidAction;
+        console.log(" primer if, ircv2 lentght == 0");
+    } else {
+        for (const item in this.platform.IRCV2) {
+            console.log(`${item}: ${this.platform.IRCV2[item]}`);
+            console.log("HA ENTRADO EN EL FOR");
+            if (this.uuidAction == item) {
+                this.stateMode = this.platform.IRCV2[item];
+            }
+        }
+    }
+    /*
     if (this.uuidAction == '1a98ec61-01b9-a928-ffff194a8a02e398') {
         this.stateMode = '1a3843ba-03d7-1ae3-ffff8795bbcbc15c';
     } //sala
@@ -22,8 +36,8 @@ var IRCV2Item = function(widget, platform, homebridge) {
     } //dormitorio
     if (this.uuidAction == '1a9cca14-02d3-8b06-ffffe2a2b6f47eff') {
         this.stateMode = '10779045-01b8-1065-ffff8795bbcbc15c';
-    } //juegos
-    
+    } //juegos */
+
     this.stateTarget = widget.states.tempTarget;
     this.stateHeatingTemp = widget.states.comfortTemperature;
     this.stateCoolingTemp = widget.states.comfortTemperatureCool;
