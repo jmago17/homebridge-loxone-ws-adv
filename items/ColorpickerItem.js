@@ -220,13 +220,16 @@ ColorItem.prototype.callBack = function(value) { // Update info from Loxone to H
             this.saturation = parseInt(s);
             this.brightness = parseInt(v);
             this.power = this.brightness > 0;
-
+if(this.name.indexOf("White Temp") == -1){
+} else {
+            
             this.otherService
                 .getCharacteristic(this.homebridge.hap.Characteristic.Hue)
                 .updateValue(this.hue);
             this.otherService
                 .getCharacteristic(this.homebridge.hap.Characteristic.Saturation)
                 .updateValue(this.saturation);
+}
             this.otherService
                     .getCharacteristic(this.homebridge.hap.Characteristic.ColorTemperature)
                     .updateValue(this.colortemperature);
@@ -258,13 +261,16 @@ ColorItem.prototype.callBack = function(value) { // Update info from Loxone to H
         
         this.hue = new_hue;
         this.saturation = new_sat;
-
+        
+if(this.name.indexOf("White Temp") == -1){
+} else {
         this.otherService
             .getCharacteristic(this.homebridge.hap.Characteristic.Hue)
             .updateValue(this.hue);
         this.otherService
             .getCharacteristic(this.homebridge.hap.Characteristic.Saturation)
             .updateValue(this.saturation);
+}
         this.otherService
             .getCharacteristic(this.homebridge.hap.Characteristic.ColorTemperature)
             .updateValue(this.colortemperature);
@@ -293,7 +299,8 @@ ColorItem.prototype.getOtherServices = function() {
         .on('set', this.setItemBrightnessState.bind(this))
         .on('get', this.getItemBrightnessState.bind(this))
         .updateValue(this.brightness);
-
+if(this.name.indexOf("White Temp") == -1){
+} else {
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.Hue)
         .on('set', this.setItemHueState.bind(this))
         .on('get', this.getItemHueState.bind(this))
@@ -303,6 +310,7 @@ ColorItem.prototype.getOtherServices = function() {
         .on('set', this.setItemSaturationState.bind(this))
         .on('get', this.getItemSaturationState.bind(this))
         .updateValue(this.saturation);
+}
 
     otherService.addOptionalCharacteristic(this.homebridge.hap.Characteristic.ColorTemperature);
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.ColorTemperature)
@@ -326,12 +334,14 @@ ColorItem.prototype.getItemPowerState = function(callback) {
 ColorItem.prototype.getItemBrightnessState = function(callback) {
     callback(undefined, this.brightness);
 };
+
 ColorItem.prototype.getItemHueState = function(callback) {
     callback(undefined, this.hue);
 };
 ColorItem.prototype.getItemSaturationState = function(callback) {
     callback(undefined, this.saturation);
 };
+
 
 ColorItem.prototype.setItemColorTemperatureState = function(value, callback) {
     //this.log(`setItemColorTemperatureState: ${value}`);
