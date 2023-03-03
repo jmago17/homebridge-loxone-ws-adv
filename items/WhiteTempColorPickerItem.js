@@ -1,4 +1,4 @@
-const WhiteTepmpItem = function(widget,platform,homebridge) {
+const ColorItem = function(widget,platform,homebridge) {
 
     this.platform = platform;
     this.uuidAction = widget.uuidAction; //to control a colorpicker, use the uuidAction
@@ -9,13 +9,13 @@ const WhiteTepmpItem = function(widget,platform,homebridge) {
     this.brightness = 0;
     this.power = false;
     this.colortemperature = 153;
-    this.lastsetmode = 'colortemperature';
+    this.lastsetmode = 'color';
     this.lastUpdate = 0;
-    WhiteTepmpItem.super_.call(this, widget,platform,homebridge);
+    ColorItem.super_.call(this, widget,platform,homebridge);
 };
 
 // Register a listener to be notified of changes in this items value
-WhiteTepmpItem.prototype.initListener = function() {
+ColorItem.prototype.initListener = function() {
     this.platform.ws.registerListenerForUUID(this.stateUuid, this.callBack.bind(this));
 };
 
@@ -193,7 +193,7 @@ function clamp( x, min, max ) {
     return x;
 }
 
-WhiteTepmpItem.prototype.callBack = function(value) { // Update info from Loxone to Homebridge
+ColorItem.prototype.callBack = function(value) { // Update info from Loxone to Homebridge
     if ((Date.now() - this.lastUpdate) > 500) { // Ignore callback when received change from homekit
 
     //incoming value is a HSV string that needs to be parsed
@@ -278,7 +278,7 @@ WhiteTepmpItem.prototype.callBack = function(value) { // Update info from Loxone
         .updateValue(this.brightness);
 };
 
-WhiteTepmpItem.prototype.getOtherServices = function() {
+ColorItem.prototype.getOtherServices = function() {
 
     const otherService = new this.homebridge.hap.Service.Lightbulb();
 
@@ -291,6 +291,16 @@ WhiteTepmpItem.prototype.getOtherServices = function() {
         .on('set', this.setItemBrightnessState.bind(this))
         .on('get', this.getItemBrightnessState.bind(this))
         .updateValue(this.brightness);
+
+    otherService.getCharacteristic(this.homebridge.hap.Characteristic.Hue)
+        .on('set', this.setItemHueState.bind(this))
+        .on('get', this.getItemHueState.bind(this))
+        .updateValue(this.hue);
+
+    otherService.getCharacteristic(this.homebridge.hap.Characteristic.Saturation)
+        .on('set', this.setItemSaturationState.bind(this))
+        .on('get', this.getItemSaturationState.bind(this))
+        .updateValue(this.saturation);
 
     otherService.addOptionalCharacteristic(this.homebridge.hap.Characteristic.ColorTemperature);
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.ColorTemperature)
@@ -305,18 +315,23 @@ WhiteTepmpItem.prototype.getOtherServices = function() {
     return otherService;
 };
 
-WhiteTepmpItem.prototype.getItemColorTemperatureState = function(callback) {
+ColorItem.prototype.getItemColorTemperatureState = function(callback) {
     callback(undefined, this.colortemperature);
 };
-WhiteTepmpItem.prototype.getItemPowerState = function(callback) {
+ColorItem.prototype.getItemPowerState = function(callback) {
     callback(undefined, this.power);
 };
-WhiteTepmpItem.prototype.getItemBrightnessState = function(callback) {
+ColorItem.prototype.getItemBrightnessState = function(callback) {
     callback(undefined, this.brightness);
 };
+ColorItem.prototype.getItemHueState = function(callback) {
+    callback(undefined, this.hue);
+};
+ColorItem.prototype.getItemSaturationState = function(callback) {
+    callback(undefined, this.saturation);
+};
 
-
-WhiteTepmpItem.prototype.setItemColorTemperatureState = function(value, callback) {
+ColorItem.prototype.setItemColorTemperatureState = function(value, callback) {
     //this.log(`setItemColorTemperatureState: ${value}`);
     this.lastsetmode = 'colortemperature';
     this.colortemperature = value;
@@ -324,7 +339,7 @@ WhiteTepmpItem.prototype.setItemColorTemperatureState = function(value, callback
     this.setColorState(callback);
 };
 
-WhiteTepmpItem.prototype.setItemPowerState = function(value, callback) {
+ColorItem.prototype.setItemPowerState = function(value, callback) {
     this.lastUpdate = Date.now();
     //sending new power state to loxone
     if (!value) {
@@ -336,18 +351,41 @@ WhiteTepmpItem.prototype.setItemPowerState = function(value, callback) {
 
 };
 
-WhiteTepmpItem.prototype.setItemBrightnessState = function(value, callback) {
+ColorItem.prototype.setItemHueState = function(value, callback) {
+    //this.log(`setItemHueState: ${value}`);
+    this.lastsetmode = 'color';
+    this.hue = parseInt(value);
+
+    this.setColorState(callback);
+};
+
+ColorItem.prototype.setItemSaturationState = function(value, callback) {
+    //this.log(`setItemSaturationState: ${value}`);
+    this.lastsetmode = 'color';
+    this.saturation = parseInt(value);
+    
+    this.setColorState(callback);
+};
+
+ColorItem.prototype.setItemBrightnessState = function(value, callback) {
     this.brightness = parseInt(value);
     this.power = this.brightness > 0;
     this.setColorState(callback);
 };
 
-WhiteTepmpItem.prototype.setColorState = function(callback) {
+ColorItem.prototype.setColorState = function(callback) {
     this.lastUpdate = Date.now();
     if(this.brightness > 0){
     //compose hsv or temp string
     let command = '';
-    command = `temp(${this.brightness},${homekitToLoxoneColorTemperature(this.colortemperature, this)})`;
+    if (this.lastsetmode == 'color') {
+        command = `hsv(${this.hue},${this.saturation},${this.brightness})`;
+        
+    } else if (this.lastsetmode == 'colortemperature') {
+        command = `temp(${this.brightness},${homekitToLoxoneColorTemperature(this.colortemperature, this)})`;
+
+    }
+
     this.log(`[Color] HomeKit - send message to ${this.name} ${command}`);
     this.platform.ws.sendCommand(this.uuidAction, command);
 
@@ -356,4 +394,4 @@ WhiteTepmpItem.prototype.setColorState = function(callback) {
     callback();
 };
 
-module.exports = WhiteTepmpItem;
+module.exports = ColorItem;
