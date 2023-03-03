@@ -6,7 +6,7 @@ const ColorItem = function(widget,platform,homebridge) {
     this.name = widget.name;
     console.log("nombre:                " + this.name);
     if(this.name.indexOf("White Temp ") !== -1){ this.NotUseHue = true;
-} else { this.NotUseHue = false;)
+} else { this.NotUseHue = false;}
     
     
     this.hue = 0;
