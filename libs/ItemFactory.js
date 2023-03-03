@@ -47,7 +47,14 @@ moduleexports.Factory.prototype.sitemapUrl = function() {
         serverString = `${encodeURIComponent(this.platform.username)}:${encodeURIComponent(this.platform.password)}@${serverString}:${serverPort}`;
     }
 
+    let IRCV2 = null;
+                if (this.platform.IRCV2.length == 0) {} else {
+                    for (const item in this.platform.IRCV2) {
+                        console.log(`${item}: ${this.platform.IRCV2[item]}`);
+                    }
+                }
     return `${this.platform.protocol}://${serverString}/data/LoxApp3.json`;
+    
 };
 
 moduleexports.Factory.prototype.parseSitemap = function(jsonSitemap) {
