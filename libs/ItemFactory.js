@@ -186,13 +186,13 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
         } else if (item.type === "ColorPickerV2") {
 
             if (item.name.indexOf("White Temp ") !== -1) {
-                    item.type = "WhiteTempPicker";
-                } else {
-                    // Handle the new ColorPickerV2 which replaces the colorPicker in the new LightControllerV2
-                    item.type = "Colorpicker";
-                }
+                item.type = "WhiteTempPicker";
+            } else {
+                // Handle the new ColorPickerV2 which replaces the colorPicker in the new LightControllerV2
+                item.type = "Colorpicker";
             }
         }
+
     }
 
     if (item.type === "Gate") {
