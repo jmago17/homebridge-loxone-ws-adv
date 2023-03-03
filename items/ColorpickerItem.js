@@ -14,6 +14,8 @@ const ColorItem = function(widget,platform,homebridge) {
     this.brightness = 0;
     this.power = false;
     this.colortemperature = 153;
+    this.previousTemperature = this.colortemperature;
+    this.previousBrightness = this.brightness;
     this.lastsetmode = 'color';
     this.lastUpdate = 0;
     ColorItem.super_.call(this, widget,platform,homebridge);
@@ -389,15 +391,18 @@ ColorItem.prototype.setItemBrightnessState = function(value, callback) {
 
 ColorItem.prototype.setColorState = function(callback) {
     this.lastUpdate = Date.now();
-    if(this.brightness > 0){
-    //compose hsv or temp string
-    let command = '';
-    if (this.lastsetmode == 'color') {
+    if(this.brightness > 0 || this.previousBrightness != this.brightness || this.previousTemperature != this.colortemperature;){
+    //compose hsv or temp string this.previousBrightness
+        if(this.colortemperature this.previousTemperature
+        let command = '';
+   
+        if (this.lastsetmode == 'color') {
         command = `hsv(${this.hue},${this.saturation},${this.brightness})`;
         
     } else if (this.lastsetmode == 'colortemperature') {
         command = `temp(${this.brightness},${homekitToLoxoneColorTemperature(this.colortemperature, this)})`;
-
+        this.previousTemperature = this.colortemperature;
+        this.previousBrightness = this.brightness;
     }
 
     this.log(`[Color] HomeKit - send message to ${this.name} ${command}`);
