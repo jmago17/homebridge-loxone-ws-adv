@@ -5,7 +5,7 @@ const ColorItem = function(widget,platform,homebridge) {
     this.stateUuid = widget.states.color; //a colorpicker always has a state called color, which is the uuid which will receive the event to read
     this.name = widget.name;
     console.log("nombre:                " + this.name);
-    if(this.name.indexOf("White Temp ") !== -1){ this.NotUseHue = true;);
+    if(this.name.indexOf("White Temp ") !== -1){ this.NotUseHue = true;
 } else { this.NotUseHue = false;)
     
     
