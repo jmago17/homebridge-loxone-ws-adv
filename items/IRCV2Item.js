@@ -11,13 +11,12 @@ var IRCV2Item = function(widget, platform, homebridge) {
 
     if (this.platform.IRCV2.length == 0) {
         this.stateMode = this.uuidAction;
-        console.log(" primer if, ircv2 lentght == 0");
-    } else {
+       } else {
         for (const item in this.platform.IRCV2) {
-            console.log(`${item}: ${this.platform.IRCV2[item]}`);
             console.log("HA ENTRADO EN EL FOR");
             if (this.uuidAction == item) {
                 this.stateMode = this.platform.IRCV2[item];
+                console.log(`${item}: ${this.platform.IRCV2[item]}` + this.uuidAction);
             }
         }
     }
