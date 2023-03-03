@@ -18,7 +18,6 @@ moduleexports.Colorpicker = require('../items/ColorpickerItem.js');
 moduleexports.Gate = require('../items/GateItem.js');
 moduleexports.DoorBell = require('../items/DoorBellItem.js');
 moduleexports.MotionSensor = require('../items/MotionSensorItem.js');
-moduleexports.WhiteTempPicker = require('../items/WhiteTempColorPickerItem.js');
 moduleexports.ContactSensor = require('../items/ContactSensorItem.js');
 moduleexports.LightSensor = require('../items/LightSensorItem.js');
 moduleexports.TemperatureItem = require('../items/TemperatureItem.js');
