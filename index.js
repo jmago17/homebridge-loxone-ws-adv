@@ -65,17 +65,56 @@ function LoxPlatform(log, config) {
     this.port           = config["port"];
     this.username       = config["username"];
     this.password       = config["password"];
-	if (this.config['rooms']) {
-        this.rooms = config["rooms"];
-    } else {
-        this.rooms =[];
-    } 
-	this.log(typeof this.rooms);
-    if (this.config['moodSwitches']) {
-        this.moodSwitches = config["moodSwitches"];
-    } else {
-        this.moodSwitches = 'none';
-    } 
+	
+    //* Options *//
+    if (!config['options']) {
+        config['options'] = "";
+    }
+    const options = config['options'];
+
+    this.rooms = [];
+    if (options['rooms']) {
+        this.rooms = options["rooms"];
+    }
+
+    this.moodSwitches = 'none';
+    if (options['moodSwitches']) {
+        this.moodSwitches = options["moodSwitches"];
+    }
+
+    this.radioSwitches = 1;
+    if (options['radioSwitches'] !== undefined) {
+        this.radioSwitches = options["radioSwitches"];
+    }
+
+    this.timedswitch_method = "pulse";
+    if (options['stairwellSwitch'] == "on") {
+        this.timedswitch_method = "on";
+    }
+
+    this.alarmsystem_method = "delayedon";
+    if (options['alarmSystem'] == "on") {
+        this.alarmsystem_method = "on";
+    }
+
+    this.alarmsystem_trigger = 5;
+    if (options['alarmTrigerLevel']) {
+        if (options['alarmTrigerLevel'] > 0 && options['alarmTrigerLevel'] < 7) {
+            this.alarmsystem_trigger = options['alarmTrigerLevel'];
+        } else {
+            this.log("Info: alarmTrigerLevel must be an integer between 1 and 6");
+        }
+    }
+
+    this.autoLock = 1;
+    if (options['autoLock']) {
+        this.autoLock = options['autoLock'];
+    }
+
+    this.autoLockDelay = 5;
+    if (options['autoLockDelay']) {
+        this.autoLockDelay = options['autoLockDelay'];
+    }
 
     //Also make a WS connection
     this.ws = new WSListener(platform);
