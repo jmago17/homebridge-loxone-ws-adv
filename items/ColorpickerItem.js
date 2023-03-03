@@ -5,6 +5,9 @@ const ColorItem = function(widget,platform,homebridge) {
     this.stateUuid = widget.states.color; //a colorpicker always has a state called color, which is the uuid which will receive the event to read
     this.name = widget.name;
     console.log("nombre:                " + this.name);
+    if(this.name.indexOf("White Temp ") !== -1){ this.NotUseHue = true;);
+} else { this.NotUseHue = false;)
+    
     
     this.hue = 0;
     this.saturation = 0;
@@ -220,9 +223,8 @@ ColorItem.prototype.callBack = function(value) { // Update info from Loxone to H
             this.saturation = parseInt(s);
             this.brightness = parseInt(v);
             this.power = this.brightness > 0;
-if(this.name.indexOf("White Temp ") !== -1){ console.log("yeaaaaaaaahhhhhhhhhhhhhhhhhhhhhhhhhh");
-} else {
-            console.log("shitttttt");
+if(!this.NotUseHue){
+            console.log("shiiiiiiiiiiiiiiiiiiiiiitttttttttttt");
             this.otherService
                 .getCharacteristic(this.homebridge.hap.Characteristic.Hue)
                 .updateValue(this.hue);
@@ -262,8 +264,8 @@ if(this.name.indexOf("White Temp ") !== -1){ console.log("yeaaaaaaaahhhhhhhhhhhh
         this.hue = new_hue;
         this.saturation = new_sat;
         
-if(this.name.indexOf("White Temp") !== -1){
-} else {
+if(!this.NotUseHue){
+
         this.otherService
             .getCharacteristic(this.homebridge.hap.Characteristic.Hue)
             .updateValue(this.hue);
@@ -299,8 +301,8 @@ ColorItem.prototype.getOtherServices = function() {
         .on('set', this.setItemBrightnessState.bind(this))
         .on('get', this.getItemBrightnessState.bind(this))
         .updateValue(this.brightness);
-if(this.name.indexOf("White Temp") == -1){
-} else {
+if(!this.NotUseHue){
+
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.Hue)
         .on('set', this.setItemHueState.bind(this))
         .on('get', this.getItemHueState.bind(this))
