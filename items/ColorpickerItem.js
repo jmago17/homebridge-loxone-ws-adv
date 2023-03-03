@@ -220,9 +220,9 @@ ColorItem.prototype.callBack = function(value) { // Update info from Loxone to H
             this.saturation = parseInt(s);
             this.brightness = parseInt(v);
             this.power = this.brightness > 0;
-if(this.name.indexOf("White Temp") !== -1){
+if(this.name.indexOf("White Temp ") !== -1){ console.log("yeaaaaaaaahhhhhhhhhhhhhhhhhhhhhhhhhh");
 } else {
-            
+            console.log("shitttttt");
             this.otherService
                 .getCharacteristic(this.homebridge.hap.Characteristic.Hue)
                 .updateValue(this.hue);
