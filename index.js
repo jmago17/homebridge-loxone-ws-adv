@@ -117,11 +117,14 @@ function LoxPlatform(log, config) {
     }
 	
     //* IRCV2 *//
-
-    if (!config['IRCV2']) {
-        config['IRCV2'] = "";
+    
+	this.IRCV2 = [];
+    if (config['IRCV2']) {
+        this.IRCV2 = config["IRCV2"];
     }
-    const IRCV2 = config['IRCV2'];
+	
+	
+    
 
     //Also make a WS connection
     this.ws = new WSListener(platform);
