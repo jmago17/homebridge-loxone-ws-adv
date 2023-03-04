@@ -3,7 +3,7 @@ const ValveItem = function(widget, platform, homebridge) {
 
     this.platform = platform;
     this.uuidAction = widget.uuidAction; //to control a switch, use the uuidAction
-
+    console.log("valves l" + this.uuidAction);
     if (this.platform.Valves.length == 0) {
         this.stateUuid = widget.states.active;
         this.daytimer = false;
