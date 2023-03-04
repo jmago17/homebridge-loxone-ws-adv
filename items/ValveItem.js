@@ -7,6 +7,7 @@ const ValveItem = function(widget, platform, homebridge) {
     if (this.platform.Valves.length == 0) {
         this.stateUuid = widget.states.active;
         this.daytimer = false;
+         console.log("valves length == 0");
     } else {
         for (const item in this.platform.Valves) {
 
