@@ -128,7 +128,7 @@ function LoxPlatform(log, config) {
     
     this.Valves = [];
     if (config['Valves']) {
-        this.IRCV2 = config["Valves"];
+        this.Valves = config["Valves"];
     }
 	   
 
