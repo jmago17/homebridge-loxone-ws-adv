@@ -121,6 +121,12 @@ function LoxPlatform(log, config) {
 	this.IRCV2 = [];
     if (config['IRCV2']) {
         this.IRCV2 = config["IRCV2"];
+	    
+    //* VALVES *//
+    
+    this.Valves = [];
+    if (config['Valves']) {
+        this.IRCV2 = config["Valves"];
     }
 	
 	
