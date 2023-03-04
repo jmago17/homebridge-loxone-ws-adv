@@ -14,6 +14,7 @@ const ValveItem = function(widget, platform, homebridge) {
                 this.stateUuid = this.platform.Valves[item];
                 this.override = false;
                 this.daytimer = true;
+                console.log("programa termoooooooooooo");
 
             }
         }
