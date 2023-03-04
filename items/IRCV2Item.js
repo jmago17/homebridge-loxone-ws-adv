@@ -20,23 +20,7 @@ var IRCV2Item = function(widget, platform, homebridge) {
             }
         }
     }
-    /*
-    if (this.uuidAction == '1a98ec61-01b9-a928-ffff194a8a02e398') {
-        this.stateMode = '1a3843ba-03d7-1ae3-ffff8795bbcbc15c';
-    } //sala
-    if (this.uuidAction == '1a9cc98f-01f5-b293-ffff999ed40fb5f4') {
-        this.stateMode = '10779045-01b8-1071-ffff8795bbcbc15c';
-    } //pasillo 2
-    if (this.uuidAction == '1a9910d0-000c-25bf-ffff367d547800c2') {
-        this.stateMode = '10779045-01b8-1068-ffff8795bbcbc15c';
-    } //cocina
-    if (this.uuidAction == '1a9cc9b6-01a3-3e5b-ffffb9a809cc7b75') {
-        this.stateMode = '18913a58-011f-e3d9-ffff8795bbcbc15c';
-    } //dormitorio
-    if (this.uuidAction == '1a9cca14-02d3-8b06-ffffe2a2b6f47eff') {
-        this.stateMode = '10779045-01b8-1065-ffff8795bbcbc15c';
-    } //juegos */
-
+    
     this.stateTarget = widget.states.tempTarget;
     this.stateHeatingTemp = widget.states.comfortTemperature;
     this.stateCoolingTemp = widget.states.comfortTemperatureCool;
