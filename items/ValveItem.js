@@ -70,6 +70,9 @@ ValveItem.prototype.getOtherServices = function() {
 
 ValveItem.prototype.setItemState = function(value, callback) {
     let command = "command";
+      console.log("this.uuidAction" + this.uuidAction);
+    console.log("this.stateUuid" + this.stateUuid);
+    console.log("this.daytimer" + this.daytimer);
     this.log(`[${this.item}] ${this.name} ${this.uuidAction} - send message to ${this.name}:` + value + command + "override" + this.override);
     if (this.daytimer) {
         if (value == 1) {
