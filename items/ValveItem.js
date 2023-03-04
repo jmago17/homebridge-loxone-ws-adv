@@ -4,7 +4,7 @@ const ValveItem = function(widget, platform, homebridge) {
     this.platform = platform;
     this.uuidAction = widget.uuidAction; //to control a switch, use the uuidAction
     console.log("valves l" + this.uuidAction);
-    if (this.platform.Valves.length == 0) {
+    if (!this.platform.Valves.length == 0) {
         this.stateUuid = widget.states.active;
         this.daytimer = false;
          console.log("valves length == 0");
@@ -73,6 +73,7 @@ ValveItem.prototype.setItemState = function(value, callback) {
       console.log("this.uuidAction" + this.uuidAction);
     console.log("this.stateUuid" + this.stateUuid);
     console.log("this.daytimer" + this.daytimer);
+    console.log("this.platform.Valves.length" + this.platform.Valves.length);
     this.log(`[${this.item}] ${this.name} ${this.uuidAction} - send message to ${this.name}:` + value + command + "override" + this.override);
     if (this.daytimer) {
         if (value == 1) {
