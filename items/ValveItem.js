@@ -3,19 +3,34 @@ const ValveItem = function(widget, platform, homebridge) {
 
     this.platform = platform;
     this.uuidAction = widget.uuidAction; //to control a switch, use the uuidAction
+
+    if (this.platform.Valves.length == 0) {
+        this.stateUuid = widget.states.active;
+        this.daytimer = false;
+    } else {
+        for (const item in this.platform.Valves) {
+
+            if (this.uuidAction == item) {
+                this.stateUuid = this.platform.Valves[item];
+                this.override = false;
+                this.daytimer = true;
+
+            }
+        }
+    }
+    /*
     if (this.uuidAction == '1a9bc5a7-008b-05ef-ffff8795bbcbc15c') {
         this.stateUuid = widget.states.value;
         this.override = false;
     } else {
         this.stateUuid = widget.states.active; //a switch always has a state called active, which is the uuid which will receive the event to read
 
-    }
+    }*/
     this.currentState = undefined; //will be 0 or 1 for Switch
     this.autoTimer = undefined;
 
     ValveItem.super_.call(this, widget, platform, homebridge);
 };
-
 // Register a listener to be notified of changes in this items value
 ValveItem.prototype.initListener = function() {
     this.platform.ws.registerListenerForUUID(this.stateUuid, this.callBack.bind(this));
@@ -54,7 +69,7 @@ ValveItem.prototype.getOtherServices = function() {
 ValveItem.prototype.setItemState = function(value, callback) {
     let command = "command";
     this.log(`[${this.item}] ${this.name} ${this.uuidAction} - send message to ${this.name}:` + value + command + "override" + this.override);
-    if (this.uuidAction == '1a9bc5a7-008b-05ef-ffff8795bbcbc15c') {
+    if (this.daytimer) {
         if (value == 1) {
             command = 'startOverride/1/7200';
             this.override = true;
