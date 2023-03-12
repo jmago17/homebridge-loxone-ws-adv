@@ -1,4 +1,4 @@
-let Accessory, Service, Characteristic, UUIDGen;
+let Accessory, Service, Characteristic, UUIDGen, FakeGatoHistoryService;
 const request = require("request");
 const ItemFactory = require('./libs/ItemFactory.js');
 const Utility = require('./libs/Utility.js');
