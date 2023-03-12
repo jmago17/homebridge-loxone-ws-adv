@@ -1,4 +1,4 @@
-let Accessory, Service, Characteristic, UUIDGen;
+let Accessory, Service, Characteristic, UUIDGen, FakeGatoHistoryService;
 const request = require("request");
 const ItemFactory = require('./libs/ItemFactory.js');
 const Utility = require('./libs/Utility.js');
@@ -6,6 +6,8 @@ const WSListener = require('./libs/WSListener.js');
 
 module.exports = homebridge => {
     console.log(`homebridge API version: ${homebridge.version}`);
+	
+	FakeGatoHistoryService = require('fakegato-history')(api);
 
     // Accessory must be created from PlatformAccessory Constructor
     Accessory = homebridge.platformAccessory;
