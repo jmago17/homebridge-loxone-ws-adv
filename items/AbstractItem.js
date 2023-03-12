@@ -15,7 +15,7 @@ const AbstractItem = function(widget,platform,homebridge) {
     this.setFromLoxone = false;
     
 	// console.log("Generating new homebridge accessory '" + this.name + "' with UUID: " + this.UUID + " from accessory with ID: " + widget.uuidAction);
-
+    this.FakeGatoHistoryService = require('fakegato-history')(this.homebridge);
     //Add as ACCESSORY (parent class)
     //AbstractItem.super_.call(this, this.name, this.UUID);
     new homebridge.platformAccessory(this.name, this.UUID);
