@@ -11,10 +11,10 @@ module.exports = homebridge => {
 
     // Accessory must be created from PlatformAccessory Constructor
     Accessory = homebridge.platformAccessory;
-    FakeGatoHistoryService = require('fakegato-history')(this.homebridge);
+    
     // Keep refference to the passes API object
     Homebridge = homebridge;
-    
+    FakeGatoHistoryService = require('fakegato-history')(Homebridge);
 
     //Add inheritance of the AbstractItem to the Accessory object
     Utility.addSupportTo(ItemFactory.AbstractItem, Accessory);
