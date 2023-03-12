@@ -7,14 +7,14 @@ const WSListener = require('./libs/WSListener.js');
 module.exports = homebridge => {
     console.log(`homebridge API version: ${homebridge.version}`);
 	
-	FakeGatoHistoryService = require('fakegato-history')(api);
+	
 
     // Accessory must be created from PlatformAccessory Constructor
     Accessory = homebridge.platformAccessory;
 
     // Keep refference to the passes API object
     Homebridge = homebridge;
-    
+    FakeGatoHistoryService = require('fakegato-history')(homebridge);
 
     //Add inheritance of the AbstractItem to the Accessory object
     Utility.addSupportTo(ItemFactory.AbstractItem, Accessory);
