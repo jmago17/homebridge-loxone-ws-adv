@@ -1,4 +1,4 @@
-let Accessory, Service, Characteristic, UUIDGen;
+let Accessory, Service, Characteristic, UUIDGen,FakeGatoHistoryService;
 const request = require("request");
 const ItemFactory = require('./libs/ItemFactory.js');
 const Utility = require('./libs/Utility.js');
@@ -12,7 +12,7 @@ module.exports = homebridge => {
 
     // Keep refference to the passes API object
     Homebridge = homebridge;
-    
+    FakeGatoHistoryService = require("fakegato-history")(homebridge);
 
     //Add inheritance of the AbstractItem to the Accessory object
     Utility.addSupportTo(ItemFactory.AbstractItem, Accessory);
@@ -157,6 +157,10 @@ LoxPlatform.prototype.accessories = function(callback) {
         })
     },8000);
 };
+
+
+
+
 
 
 
