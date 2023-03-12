@@ -11,7 +11,7 @@ module.exports = homebridge => {
 
     // Accessory must be created from PlatformAccessory Constructor
     Accessory = homebridge.platformAccessory;
-
+    FakeGatoHistoryService = require('fakegato-history')(this.homebridge);
     // Keep refference to the passes API object
     Homebridge = homebridge;
     
