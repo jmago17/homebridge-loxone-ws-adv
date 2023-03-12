@@ -2,7 +2,7 @@
 
 var request = require("request");
 
-var FakeGatoHistoryService = require('fakegato-history')(homebridge);
+
 
 var IRCV2Item = function(widget, platform, homebridge) {
 
