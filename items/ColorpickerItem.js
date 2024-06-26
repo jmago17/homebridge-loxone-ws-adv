@@ -355,7 +355,7 @@ ColorItem.prototype.setItemColorTemperatureState = function(value, callback) {
 };
 
 ColorItem.prototype.setItemPowerState = function(value, callback) {
-    this.lastUpdate = Date.now();
+   // this.lastUpdate = Date.now();
     //sending new power state to loxone
     if (!value) {
         this.brightness = 0;
