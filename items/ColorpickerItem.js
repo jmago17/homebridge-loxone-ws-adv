@@ -226,7 +226,6 @@ ColorItem.prototype.callBack = function(value) { // Update info from Loxone to H
             this.brightness = parseInt(v);
             this.power = this.brightness > 0;
 if(!this.NotUseHue){
-            console.log("shiiiiiiiiiiiiiiiiiiiiiitttttttttttt");
             this.otherService
                 .getCharacteristic(this.homebridge.hap.Characteristic.Hue)
                 .updateValue(this.hue);
