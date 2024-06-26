@@ -389,7 +389,7 @@ ColorItem.prototype.setItemBrightnessState = function(value, callback) {
 };
 
 ColorItem.prototype.setColorState = function(callback) {
-    if((Date.now() - this.lastUpdate) > 1500 || this.previousBrightness > this.brightness + 5 || this.previousBrightness < this.brightness - 5 ) {
+    if((Date.now() - this.lastUpdate) > 1500 ) {
     if(this.brightness > 0 && ( this.previousBrightness > this.brightness + 5 || this.previousBrightness < this.brightness - 5 || this.previousTemperature + 100 > this.colortemperature || this.previousTemperature - 100 < this.colortemperature)){
     //compose hsv or temp string this.previousBrightness
        
@@ -399,11 +399,17 @@ ColorItem.prototype.setColorState = function(callback) {
         command = `hsv(${this.hue},${this.saturation},${this.brightness})`;
         this.lastUpdate = Date.now();
              this.log(`[Color] HomeKit - HSV send message to ${this.name} ${command}`);
-    } else if (this.lastsetmode == 'colortemperature' && (this.brightness > 0 && ( (this.previousBrightness > this.brightness + 5 || this.previousBrightness < this.brightness - 5 || this.previousTemperature +100 > this.colortemperature || this.previousTemperature - 100 < this.colortemperature)))) {
-        command = `temp(${this.brightness},${homekitToLoxoneColorTemperature(this.colortemperature, this)})`;
-        this.previousTemperature = this.colortemperature;
+    } else if (this.lastsetmode == 'colortemperature' && (this.brightness > 0 && ( (this.previousBrightness > this.brightness + 5 || this.previousBrightness < this.brightness - 5)))) {
+        command = `temp(${this.brightness},${homekitToLoxoneColorTemperature(this.previousTemperature, this)})`;
+      
         this.previousBrightness = this.brightness;
              this.log(`[Color] HomeKit - COLORTEMP send message to ${this.name} ${command}`);
+           this.lastUpdate = Date.now(); 
+    }
+        else if ((this.previousBrightness == this.brightness) && this.lastsetmode == 'colortemperature' && ( this.previousTemperature +100 > this.colortemperature || this.previousTemperature - 100 < this.colortemperature)))) {
+        command = `temp(${this.brightness},${homekitToLoxoneColorTemperature(this.colortemperature, this)})`;
+        this.previousTemperature = this.colortemperature;
+        this.log(`[Color] HomeKit - COLORTEMP send message to ${this.name} ${command}`);
            this.lastUpdate = Date.now(); 
     }
 
