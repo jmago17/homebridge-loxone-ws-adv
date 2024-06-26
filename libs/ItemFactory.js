@@ -19,6 +19,7 @@ moduleexports.Gate = require('../items/GateItem.js');
 moduleexports.DoorBell = require('../items/DoorBellItem.js');
 moduleexports.MotionSensor = require('../items/MotionSensorItem.js');
 moduleexports.ContactSensor = require('../items/ContactSensorItem.js');
+moduleexports.BulbTempPicker = require('../items/BulbTemperaturePicker.js');
 moduleexports.LightSensor = require('../items/LightSensorItem.js');
 moduleexports.TemperatureItem = require('../items/TemperatureItem.js');
 moduleexports.Valve = require('../items/ValveItem.js');
@@ -187,8 +188,8 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
 
         } else if (item.type === "ColorPickerV2") {
              item.type = "Colorpicker";
-            if (item.name.indexOf("White Temp ") !== -1) {
-                item.type = "WhiteTempPicker";}
+            if (item.name.indexOf("CWW ") !== -1) {
+                item.type = "BulbTempPicker";}
             
             /*
            if (item.name.indexOf("White Temp ") !== -1) {
