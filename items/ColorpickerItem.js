@@ -404,7 +404,7 @@ ColorItem.prototype.setColorState = function(callback) {
         this.previousTemperature = this.colortemperature;
         this.previousBrightness = this.brightness;
              this.log(`[Color] HomeKit - COLORTEMP send message to ${this.name} ${command}`);
-            
+           this.lastUpdate = Date.now(); 
     }
 
    // this.log(`[Color] HomeKit - send message to ${this.name} ${command}`);
@@ -418,6 +418,7 @@ ColorItem.prototype.setColorState = function(callback) {
         command = "temp(" + this.brightness + "," + homekitToLoxoneColorTemperature(this.colortemperature, this) + ")";
         this.log("[color] iOS - BRIGTHNESS == 0 send message to " + this.name + ": " + command);
         this.platform.ws.sendCommand(this.uuidAction, command);
+            this.lastUpdate = Date.now();
         callback();   
         }
         }
