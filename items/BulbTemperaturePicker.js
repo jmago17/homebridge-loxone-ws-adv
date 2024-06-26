@@ -17,13 +17,10 @@ const ColorItem = function(widget,platform,homebridge) {
     this.previousBrightness = this.brightness;
     this.lastsetmode = 'color';
     this.lastUpdate = 0;
-    ColorItem.super_.call(this, widget,platform,homebridge);
+    
 };
 
-// Register a listener to be notified of changes in this items value
-ColorItem.prototype.initListener = function() {
-    this.platform.ws.registerListenerForUUID(this.stateUuid, this.callBack.bind(this));
-};
+
 
 // transform Loxone color temperature (expressed in Kelvins 2700-6500k to Homekit values 140-500)
 function loxoneToHomekitColorTemperature(ct, obj) {
