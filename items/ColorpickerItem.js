@@ -406,7 +406,7 @@ ColorItem.prototype.setColorState = function(callback) {
              this.log(`[Color] HomeKit - COLORTEMP send message to ${this.name} ${command}`);
            this.lastUpdate = Date.now(); 
     }
-        else if ((this.previousBrightness == this.brightness) && this.lastsetmode == 'colortemperature' && ( this.previousTemperature +100 > this.colortemperature || this.previousTemperature - 100 < this.colortemperature)))) {
+        else if ((this.previousBrightness == this.brightness) && this.lastsetmode == 'colortemperature' && ( this.previousTemperature +100 > this.colortemperature || this.previousTemperature - 100 < this.colortemperature)) {
         command = `temp(${this.brightness},${homekitToLoxoneColorTemperature(this.colortemperature, this)})`;
         this.previousTemperature = this.colortemperature;
         this.log(`[Color] HomeKit - COLORTEMP send message to ${this.name} ${command}`);
