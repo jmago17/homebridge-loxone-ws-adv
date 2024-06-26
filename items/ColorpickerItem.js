@@ -389,7 +389,7 @@ ColorItem.prototype.setItemBrightnessState = function(value, callback) {
 };
 
 ColorItem.prototype.setColorState = function(callback) {
-    if((Date.now() - this.lastUpdate) > 1500 ) {
+    if((Date.now() - this.lastUpdate) > 500 ) {
     if(this.brightness > 0 && ( this.previousBrightness > this.brightness + 5 || this.previousBrightness < this.brightness - 5 || this.previousTemperature + 100 > this.colortemperature || this.previousTemperature - 100 < this.colortemperature)){
     //compose hsv or temp string this.previousBrightness
        
