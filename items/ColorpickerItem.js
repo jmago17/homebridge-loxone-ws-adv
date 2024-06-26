@@ -410,7 +410,7 @@ ColorItem.prototype.setColorState = function(callback) {
 
     this.power = this.brightness > 0;
     }else {
-        if ((Date.now() - this.lastUpdate) > 500) && (this.previousBrightness != this.brightness || this.previousTemperature + 100 > this.colortemperature || this.previousTemperature - 100 < this.colortemperature)){
+        if (((Date.now() - this.lastUpdate) > 500)  && (this.previousBrightness != this.brightness || this.previousTemperature + 100 > this.colortemperature || this.previousTemperature - 100 < this.colortemperature)){
         this.previousBrightness = this.brightness;
         this.previousTemperature = this.colortemperature;
         command = "temp(" + this.brightness + "," + homekitToLoxoneColorTemperature(this.colortemperature, this) + ")";
