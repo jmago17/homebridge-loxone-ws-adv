@@ -398,7 +398,7 @@ ColorItem.prototype.setColorState = function(callback) {
         if (this.lastsetmode == 'color') {
         command = `hsv(${this.hue},${this.saturation},${this.brightness})`;
         this.lastUpdate = Date.now();
-    } else if (this.lastsetmode == 'colortemperature' && (this.brightness > 0 && (((Date.now() - this.lastUpdate) > 500) && (this.previousBrightness > this.brightness + 5 || this.previousBrightness < this.brightness - 5 || this.previousTemperature +100 > this.colortemperature || this.previousTemperature - 100 < this.colortemperature))) {
+    } else if (this.lastsetmode == 'colortemperature' && (this.brightness > 0 && (((Date.now() - this.lastUpdate) > 500) && (this.previousBrightness > this.brightness + 5 || this.previousBrightness < this.brightness - 5 || this.previousTemperature +100 > this.colortemperature || this.previousTemperature - 100 < this.colortemperature))))) {
         command = `temp(${this.brightness},${homekitToLoxoneColorTemperature(this.colortemperature, this)})`;
         this.previousTemperature = this.colortemperature;
         this.previousBrightness = this.brightness;
