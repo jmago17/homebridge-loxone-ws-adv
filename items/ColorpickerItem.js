@@ -390,7 +390,7 @@ ColorItem.prototype.setItemBrightnessState = function(value, callback) {
 
 ColorItem.prototype.setColorState = function(callback) {
     this.lastUpdate = Date.now();
-    if(this.brightness > 0 && ( this.previousBrightness != this.brightness || this.previousTemperature +100 > this.colortemperature || this.previousTemperature - 100 < this.colortemperature)){
+    if(this.brightness > 0 && ( this.previousBrightness != this.brightness || this.previousBrightness < this.brightness - 2 || this.previousTemperature +100 > this.colortemperature || this.previousTemperature - 100 < this.colortemperature)){
     //compose hsv or temp string this.previousBrightness
        
         let command = '';
@@ -409,7 +409,7 @@ ColorItem.prototype.setColorState = function(callback) {
 
     this.power = this.brightness > 0;
     }else {
-        if (this.previousBrightness != this.brightness || this.previousTemperature +100 > this.colortemperature || this.previousTemperature - 100 < this.colortemperature){
+        if (this.previousBrightness > this.brightness + 2 || this.previousBrightness < this.brightness - 2 || this.previousTemperature +100 > this.colortemperature || this.previousTemperature - 100 < this.colortemperature){
         this.previousBrightness = this.brightness;
         this.previousTemperature = this.colortemperature;
         command = "temp(" + this.brightness + "," + homekitToLoxoneColorTemperature(this.colortemperature, this) + ")";
