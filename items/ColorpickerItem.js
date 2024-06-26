@@ -327,11 +327,11 @@ if(!this.NotUseHue){
 
     return otherService;
 };
-if (this.previousBrightness == this.brightness){
-    ColorItem.prototype.getItemColorTemperatureState = function(callback) {
+
+ColorItem.prototype.getItemColorTemperatureState = function(callback) {
     callback(undefined, this.colortemperature);
-}
-        };
+};
+
 ColorItem.prototype.getItemPowerState = function(callback) {
     callback(undefined, this.power);
 };
