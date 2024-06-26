@@ -187,7 +187,10 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
 
         } else if (item.type === "ColorPickerV2") {
              item.type = "Colorpicker";
-/*
+            if (item.name.indexOf("White Temp ") !== -1) {
+                item.type = "WhiteTempPicker";}
+            
+            /*
            if (item.name.indexOf("White Temp ") !== -1) {
                 item.type = "WhiteTempPicker";
             } else {
@@ -252,6 +255,7 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
         item.type = "Dimmer";
     }
 
+    
 
     if (item.name.indexOf("Loxone") !== -1) {
         //this is a Loxone status or temperature, I don't need these in Siri
