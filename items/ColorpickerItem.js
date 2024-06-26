@@ -409,10 +409,14 @@ ColorItem.prototype.setColorState = function(callback) {
 
     this.power = this.brightness > 0;
     }else {
+        if (this.previousBrightness != this.brightness){
+        this.previousBrightness = this.brightness;
+        this.previousTemperature = this.colortemperature;
         command = "temp(" + this.brightness + "," + homekitToLoxoneColorTemperature(this.colortemperature, this) + ")";
         this.log("[color] iOS - send message to " + this.name + ": " + command);
         this.platform.ws.sendCommand(this.uuidAction, command);
         callback();   
+        }
         }
     
 };
