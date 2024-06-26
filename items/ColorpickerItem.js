@@ -408,7 +408,12 @@ ColorItem.prototype.setColorState = function(callback) {
     this.platform.ws.sendCommand(this.uuidAction, command);
 
     this.power = this.brightness > 0;
-    }else {}
+    }else {
+        this.brightness = 0;
+        command = `temp(${this.brightness},${homekitToLoxoneColorTemperature(this.colortemperature, this)})`;
+        this.previousTemperature = this.colortemperature;
+        this.previousBrightness = this.brightness;
+    }
     callback();
 };
 
