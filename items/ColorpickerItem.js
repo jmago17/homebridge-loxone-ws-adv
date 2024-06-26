@@ -407,7 +407,7 @@ ColorItem.prototype.setColorState = function(callback) {
             
     }
 
-    this.log(`[Color] HomeKit - send message to ${this.name} ${command}`);
+   // this.log(`[Color] HomeKit - send message to ${this.name} ${command}`);
     this.platform.ws.sendCommand(this.uuidAction, command);
 
     this.power = this.brightness > 0;
