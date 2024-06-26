@@ -398,10 +398,12 @@ ColorItem.prototype.setColorState = function(callback) {
         if (this.lastsetmode == 'color') {
         command = `hsv(${this.hue},${this.saturation},${this.brightness})`;
         this.lastUpdate = Date.now();
+             this.log(`[Color] HomeKit - HSV send message to ${this.name} ${command}`);
     } else if (this.lastsetmode == 'colortemperature' && (this.brightness > 0 && (((Date.now() - this.lastUpdate) > 500) && (this.previousBrightness > this.brightness + 5 || this.previousBrightness < this.brightness - 5 || this.previousTemperature +100 > this.colortemperature || this.previousTemperature - 100 < this.colortemperature)))) {
         command = `temp(${this.brightness},${homekitToLoxoneColorTemperature(this.colortemperature, this)})`;
         this.previousTemperature = this.colortemperature;
         this.previousBrightness = this.brightness;
+             this.log(`[Color] HomeKit - COLORTEMP send message to ${this.name} ${command}`);
             
     }
 
@@ -410,11 +412,11 @@ ColorItem.prototype.setColorState = function(callback) {
 
     this.power = this.brightness > 0;
     }else {
-        if (((Date.now() - this.lastUpdate) > 500)  && (this.previousBrightness != this.brightness) ){
+        if (((Date.now() - this.lastUpdate) > 500)  && (this.previousBrightness != this.brightness) && (this.brightness == 0){
         this.previousBrightness = this.brightness;
         this.previousTemperature = this.colortemperature;
         command = "temp(" + this.brightness + "," + homekitToLoxoneColorTemperature(this.colortemperature, this) + ")";
-        this.log("[color] iOS - send message to " + this.name + ": " + command);
+        this.log("[color] iOS - BRIGTHNESS == 0 send message to " + this.name + ": " + command);
         this.platform.ws.sendCommand(this.uuidAction, command);
         callback();   
         }
