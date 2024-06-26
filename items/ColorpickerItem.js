@@ -201,7 +201,7 @@ function clamp( x, min, max ) {
 }
 
 ColorItem.prototype.callBack = function(value) { // Update info from Loxone to Homebridge
-    if ((Date.now() - this.lastUpdate) > 500) { // Ignore callback when received change from homekit
+    if ((Date.now() - this.lastUpdate) > 1000) { // Ignore callback when received change from homekit
 
     //incoming value is a HSV string that needs to be parsed
     let m;
