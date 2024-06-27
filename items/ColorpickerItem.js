@@ -1,23 +1,18 @@
+const request = require("request");
+
 const ColorItem = function(widget,platform,homebridge) {
 
     this.platform = platform;
     this.uuidAction = widget.uuidAction; //to control a colorpicker, use the uuidAction
     this.stateUuid = widget.states.color; //a colorpicker always has a state called color, which is the uuid which will receive the event to read
-    this.name = widget.name;
-    console.log("nombre:                " + this.name);
-    if(this.name.indexOf("CWW ") !== -1){ this.NotUseHue = true;
-} else { this.NotUseHue = false;}
-    
-    
+
     this.hue = 0;
     this.saturation = 0;
     this.brightness = 0;
     this.power = false;
-    this.colortemperature = 153;
-    this.previousTemperature = this.colortemperature;
-    this.previousBrightness = this.brightness;
+    this.colortemperature = 0;
     this.lastsetmode = 'color';
-    this.lastUpdate = 0;
+
     ColorItem.super_.call(this, widget,platform,homebridge);
 };
 
@@ -200,8 +195,9 @@ function clamp( x, min, max ) {
     return x;
 }
 
-ColorItem.prototype.callBack = function(value) { // Update info from Loxone to Homebridge
-    if ((Date.now() - this.lastUpdate) > 1000) { // Ignore callback when received change from homekit
+ColorItem.prototype.callBack = function(value) {
+    //function that gets called by the registered ws listener
+    console.log(`Got new state for Color: ${value}`);
 
     //incoming value is a HSV string that needs to be parsed
     let m;
@@ -225,17 +221,13 @@ ColorItem.prototype.callBack = function(value) { // Update info from Loxone to H
             this.saturation = parseInt(s);
             this.brightness = parseInt(v);
             this.power = this.brightness > 0;
-if(!this.NotUseHue){
+
             this.otherService
                 .getCharacteristic(this.homebridge.hap.Characteristic.Hue)
                 .updateValue(this.hue);
             this.otherService
                 .getCharacteristic(this.homebridge.hap.Characteristic.Saturation)
                 .updateValue(this.saturation);
-}
-            this.otherService
-                    .getCharacteristic(this.homebridge.hap.Characteristic.ColorTemperature)
-                    .updateValue(this.colortemperature);
         }
 
 
@@ -260,33 +252,41 @@ if(!this.NotUseHue){
         const new_sat = parseInt(hsv.s * 100);
 
         //this.log('HSV          : ' + hsv.h + ' ' + hsv.s + ' ' + hsv.v);
-        //this.log(`hue: ${new_hue} sat: ${new_sat}`);
+        this.log(`hue: ${new_hue} sat: ${new_sat}`);
+        //this.log('');
+
+        // TODO - update the color Hue and Sat variables here also, from formula of the color temp
         
         this.hue = new_hue;
         this.saturation = new_sat;
-        
-if(!this.NotUseHue){
 
+        
         this.otherService
             .getCharacteristic(this.homebridge.hap.Characteristic.Hue)
             .updateValue(this.hue);
         this.otherService
             .getCharacteristic(this.homebridge.hap.Characteristic.Saturation)
             .updateValue(this.saturation);
-}
+        
+        
         this.otherService
             .getCharacteristic(this.homebridge.hap.Characteristic.ColorTemperature)
             .updateValue(this.colortemperature);
-        }
+        
+        
+
     }
 
     //also make sure this change is directly communicated to HomeKit
+    
     this.otherService
         .getCharacteristic(this.homebridge.hap.Characteristic.On)
         .updateValue(this.power);
     this.otherService
         .getCharacteristic(this.homebridge.hap.Characteristic.Brightness)
         .updateValue(this.brightness);
+    
+
 };
 
 ColorItem.prototype.getOtherServices = function() {
@@ -302,7 +302,6 @@ ColorItem.prototype.getOtherServices = function() {
         .on('set', this.setItemBrightnessState.bind(this))
         .on('get', this.getItemBrightnessState.bind(this))
         .updateValue(this.brightness);
-if(!this.NotUseHue){
 
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.Hue)
         .on('set', this.setItemHueState.bind(this))
@@ -313,7 +312,6 @@ if(!this.NotUseHue){
         .on('set', this.setItemSaturationState.bind(this))
         .on('get', this.getItemSaturationState.bind(this))
         .updateValue(this.saturation);
-}
 
     otherService.addOptionalCharacteristic(this.homebridge.hap.Characteristic.ColorTemperature);
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.ColorTemperature)
@@ -331,14 +329,12 @@ if(!this.NotUseHue){
 ColorItem.prototype.getItemColorTemperatureState = function(callback) {
     callback(undefined, this.colortemperature);
 };
-
 ColorItem.prototype.getItemPowerState = function(callback) {
     callback(undefined, this.power);
 };
 ColorItem.prototype.getItemBrightnessState = function(callback) {
     callback(undefined, this.brightness);
 };
-
 ColorItem.prototype.getItemHueState = function(callback) {
     callback(undefined, this.hue);
 };
@@ -346,19 +342,18 @@ ColorItem.prototype.getItemSaturationState = function(callback) {
     callback(undefined, this.saturation);
 };
 
-
 ColorItem.prototype.setItemColorTemperatureState = function(value, callback) {
-    //this.log(`setItemColorTemperatureState: ${value}`);
+    this.log(`setItemColorTemperatureState: ${value}`);
     this.lastsetmode = 'colortemperature';
     this.colortemperature = value;
-    
     this.setColorState(callback);
 };
 
 ColorItem.prototype.setItemPowerState = function(value, callback) {
-   // this.lastUpdate = Date.now();
+
     //sending new power state to loxone
     if (!value) {
+        //loxone does not understand 'on' or 'off', we interpret Homekit 'off' as setting brightness to 0
         this.brightness = 0;
         this.setColorState(callback);
     } else {
@@ -368,18 +363,16 @@ ColorItem.prototype.setItemPowerState = function(value, callback) {
 };
 
 ColorItem.prototype.setItemHueState = function(value, callback) {
-    //this.log(`setItemHueState: ${value}`);
+    this.log(`setItemHueState: ${value}`);
     this.lastsetmode = 'color';
     this.hue = parseInt(value);
-
     this.setColorState(callback);
 };
 
 ColorItem.prototype.setItemSaturationState = function(value, callback) {
-    //this.log(`setItemSaturationState: ${value}`);
+    this.log(`setItemSaturationState: ${value}`);
     this.lastsetmode = 'color';
     this.saturation = parseInt(value);
-    
     this.setColorState(callback);
 };
 
@@ -390,46 +383,22 @@ ColorItem.prototype.setItemBrightnessState = function(value, callback) {
 };
 
 ColorItem.prototype.setColorState = function(callback) {
-    if((Date.now() - this.lastUpdate) > 500 ) {
-    if(this.brightness > 0 && ( this.previousBrightness > this.brightness + 5 || this.previousBrightness < this.brightness - 5 || this.previousTemperature + 100 > this.colortemperature || this.previousTemperature - 100 < this.colortemperature)){
-    //compose hsv or temp string this.previousBrightness
-       
-        let command = '';
-   
-        if (this.lastsetmode == 'color') {
+    //compose hsv string
+
+    //compose hsv or temp string
+    let command = '';
+    if (this.lastsetmode == 'color') {
         command = `hsv(${this.hue},${this.saturation},${this.brightness})`;
-        this.lastUpdate = Date.now();
-             this.log(`[Color] HomeKit - HSV send message to ${this.name} ${command}`);
-    } else if (this.lastsetmode == 'colortemperature' && (this.brightness > 0 && ( (this.previousBrightness > this.brightness + 5 || this.previousBrightness < this.brightness - 5)))) {
-        command = `temp(${this.brightness},${homekitToLoxoneColorTemperature(this.previousTemperature, this)})`;
-      
-        this.previousBrightness = this.brightness;
-             this.log(`[Color] HomeKit - COLORTEMP send message to ${this.name} ${command}`);
-           this.lastUpdate = Date.now(); 
-    }
-        else if ((this.previousBrightness == this.brightness) && this.lastsetmode == 'colortemperature' && ( this.previousTemperature +100 > this.colortemperature || this.previousTemperature - 100 < this.colortemperature)) {
+        
+    } else if (this.lastsetmode == 'colortemperature') {
         command = `temp(${this.brightness},${homekitToLoxoneColorTemperature(this.colortemperature, this)})`;
-        this.previousTemperature = this.colortemperature;
-        this.log(`[Color] HomeKit - COLORTEMP send message to ${this.name} ${command}`);
-           this.lastUpdate = Date.now(); 
+
     }
 
-   // this.log(`[Color] HomeKit - send message to ${this.name} ${command}`);
+    //var command = "hsv(" + this.hue + "," + this.saturation + "," + this.brightness + ")";
+    this.log(`[color] iOS - send message to ${this.name} ${command}`);
     this.platform.ws.sendCommand(this.uuidAction, command);
-
-    this.power = this.brightness > 0;
-    }else {
-        if ( (this.previousBrightness != this.brightness) && (this.brightness == 0)){
-        this.previousBrightness = this.brightness;
-        this.previousTemperature = this.colortemperature;
-        command = "temp(" + this.brightness + "," + homekitToLoxoneColorTemperature(this.colortemperature, this) + ")";
-        this.log("[color] iOS - BRIGTHNESS == 0 send message to " + this.name + ": " + command);
-        this.platform.ws.sendCommand(this.uuidAction, command);
-            this.lastUpdate = Date.now();
-        callback();   
-        }
-        }
-    }
+    callback();
 };
 
 module.exports = ColorItem;
