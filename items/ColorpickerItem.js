@@ -5,8 +5,6 @@ const ColorItem = function(widget,platform,homebridge) {
     this.platform = platform;
     this.uuidAction = widget.uuidAction; //to control a colorpicker, use the uuidAction
     this.stateUuid = widget.states.color; //a colorpicker always has a state called color, which is the uuid which will receive the event to read
-
-
     this.name = widget.name;
     if(this.name.indexOf("CWW ") !== -1){ 
         this.NotUseHue = true;
@@ -229,7 +227,7 @@ ColorItem.prototype.callBack = function(value) {
             this.saturation = parseInt(s);
             this.brightness = parseInt(v);
             this.power = this.brightness > 0;
-
+            
             this.otherService
                 .getCharacteristic(this.homebridge.hap.Characteristic.Hue)
                 .updateValue(this.hue);
@@ -269,13 +267,16 @@ ColorItem.prototype.callBack = function(value) {
         this.saturation = new_sat;
 
         
-        this.otherService
-            .getCharacteristic(this.homebridge.hap.Characteristic.Hue)
-            .updateValue(this.hue);
-        this.otherService
-            .getCharacteristic(this.homebridge.hap.Characteristic.Saturation)
-            .updateValue(this.saturation);
+       
         
+        if(!this.NotUseHue){
+            this.otherService
+                .getCharacteristic(this.homebridge.hap.Characteristic.Hue)
+                .updateValue(this.hue);
+            this.otherService
+                .getCharacteristic(this.homebridge.hap.Characteristic.Saturation)
+                .updateValue(this.saturation);
+        }
         
         this.otherService
             .getCharacteristic(this.homebridge.hap.Characteristic.ColorTemperature)
@@ -311,15 +312,16 @@ ColorItem.prototype.getOtherServices = function() {
         .on('get', this.getItemBrightnessState.bind(this))
         .updateValue(this.brightness);
 
-    otherService.getCharacteristic(this.homebridge.hap.Characteristic.Hue)
-        .on('set', this.setItemHueState.bind(this))
-        .on('get', this.getItemHueState.bind(this))
-        .updateValue(this.hue);
-
-    otherService.getCharacteristic(this.homebridge.hap.Characteristic.Saturation)
-        .on('set', this.setItemSaturationState.bind(this))
-        .on('get', this.getItemSaturationState.bind(this))
-        .updateValue(this.saturation);
+    if(!this.NotUseHue){
+        otherService.getCharacteristic(this.homebridge.hap.Characteristic.Hue)
+            .on('set', this.setItemHueState.bind(this))
+            .on('get', this.getItemHueState.bind(this))
+            .updateValue(this.hue);
+        otherService.getCharacteristic(this.homebridge.hap.Characteristic.Saturation)
+            .on('set', this.setItemSaturationState.bind(this))
+            .on('get', this.getItemSaturationState.bind(this))
+            .updateValue(this.saturation);
+    }
 
     otherService.addOptionalCharacteristic(this.homebridge.hap.Characteristic.ColorTemperature);
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.ColorTemperature)
