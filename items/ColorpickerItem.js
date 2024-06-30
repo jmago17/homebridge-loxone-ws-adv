@@ -6,6 +6,14 @@ const ColorItem = function(widget,platform,homebridge) {
     this.uuidAction = widget.uuidAction; //to control a colorpicker, use the uuidAction
     this.stateUuid = widget.states.color; //a colorpicker always has a state called color, which is the uuid which will receive the event to read
 
+
+    this.name = widget.name;
+    if(this.name.indexOf("CWW ") !== -1){ 
+        this.NotUseHue = true;
+    } else { 
+        this.NotUseHue = false;
+    }
+                                         
     this.hue = 0;
     this.saturation = 0;
     this.brightness = 0;
