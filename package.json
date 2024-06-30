@@ -29,5 +29,5 @@
     "request": "^2.83.0",
     "ws": "^3.3.3"
   },
-  "homepage": "https://github.com/Lumoc/homebridge-loxone-ws-adv#readme"
+  "homepage": "https://github.com/jmago17/homebridge-loxone-ws-adv/blob/master/README.md"
 }
