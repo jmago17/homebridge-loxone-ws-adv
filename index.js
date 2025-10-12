@@ -47,6 +47,7 @@ module.exports = homebridge => {
 	    Utility.addSupportTo(ItemFactory.Lock, ItemFactory.AbstractItem);
             Utility.addSupportTo(ItemFactory.Valve, ItemFactory.AbstractItem);
 	    Utility.addSupportTo(ItemFactory.WaterHeater, ItemFactory.AbstractItem);
+		    Utility.addSupportTo(ItemFactory.WaterHeater, ItemFactory.AbstractItem);
 	   
     homebridge.registerPlatform("homebridge-loxoneWs", "LoxoneWs", LoxPlatform);
 };
