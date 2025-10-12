@@ -10,6 +10,7 @@ moduleexports.TimedSwitch = require('../items/TimedSwitchItem.js');
 moduleexports.Lightbulb = require('../items/LightbulbItem.js');
 moduleexports.Dimmer = require('../items/DimmerItem.js');
 moduleexports.Jalousie = require('../items/BlindsItem.js');
+moduleexports.WaterHeater = require('../items/WaterHeater.js');
 moduleexports.Pushbutton = require('../items/PushbuttonItem.js');
 moduleexports.Fan = require('../items/Fan.js');
 moduleexports.Lock = require('../items/LockItem.js');
@@ -210,7 +211,7 @@ moduleexports.Factory.prototype.checkCustomAttrs = (factory, itemId, platform, c
 
     if (item.type === "Daytimer") {
         if (item.name == "Programa Horario Termo") {
-            item.type = "Valve";
+            item.type = "WaterHeater";
         }
     }
     if (item.type == "InfoOnlyDigital") {
